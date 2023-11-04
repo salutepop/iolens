@@ -36,3 +36,44 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+.App{
+  display: flex;
+  flex-direction: row;
+}
+
+.left-container {
+  display: flex;
+  flex-direction: column; 
+  margin-top: 100px;
+  margin-left: 20px;
+}
+
+.right-container {
+  display: flex;
+  flex-direction: column; 
+  margin-top: 100px;
+  margin-left: 50px;
+  
+
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column; 
+  margin-top: 100px;
+  margin-left: 100px;
+}
+
+.checkboxContainer{
+  display: flex;
+  
+  margin-bottom: 10px;
+  
+}
+
+.summary-label{
+  
+}
