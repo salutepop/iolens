@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 
-
-import Summary from './SummaryView';
 import ControlView from './ControlView'
 import PlotView from './PlotView';
 import SummaryView from './SummaryView';
 
 const MainView = (props) => {
-
-
     
     const [graphVisibility, setGraphVisibility] = useState({
       queue: true,
@@ -37,7 +33,8 @@ const MainView = (props) => {
             />
 
             <PlotView
-                data = {props}
+                calc = {props.calc}
+                throughput = {props.throughput}
                 stateCheckbox = {graphVisibility}
                 //index
             />
@@ -45,7 +42,7 @@ const MainView = (props) => {
             <div className="right-container">
                 <h1>summary</h1>
                 <SummaryView
-                    data={props.queue}
+                    data={props.fio_calc}
                     //받은 데이터 계산해서 summary로 전달
                 />
             </div>

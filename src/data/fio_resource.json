@@ -1,0 +1,170 @@
+[
+  {
+    "timeStamp": 3038.19,
+    "cpu-user": 2,
+    "cpu-system": 4,
+    "mem-free(MB)": 5990
+  },
+  {
+    "timeStamp": 3039.19,
+    "cpu-user": 0,
+    "cpu-system": 1,
+    "mem-free(MB)": 6091
+  },
+  {
+    "timeStamp": 3040.19,
+    "cpu-user": 0,
+    "cpu-system": 0,
+    "mem-free(MB)": 6091
+  },
+  {
+    "timeStamp": 3041.19,
+    "cpu-user": 0,
+    "cpu-system": 0,
+    "mem-free(MB)": 6091
+  },
+  {
+    "timeStamp": 3042.19,
+    "cpu-user": 2,
+    "cpu-system": 9,
+    "mem-free(MB)": 5471
+  },
+  {
+    "timeStamp": 3043.19,
+    "cpu-user": 1,
+    "cpu-system": 14,
+    "mem-free(MB)": 5007
+  },
+  {
+    "timeStamp": 3044.19,
+    "cpu-user": 1,
+    "cpu-system": 11,
+    "mem-free(MB)": 4586
+  },
+  {
+    "timeStamp": 3045.19,
+    "cpu-user": 1,
+    "cpu-system": 10,
+    "mem-free(MB)": 4248
+  },
+  {
+    "timeStamp": 3046.19,
+    "cpu-user": 1,
+    "cpu-system": 8,
+    "mem-free(MB)": 4013
+  },
+  {
+    "timeStamp": 3047.19,
+    "cpu-user": 0,
+    "cpu-system": 7,
+    "mem-free(MB)": 3795
+  },
+  {
+    "timeStamp": 3048.19,
+    "cpu-user": 1,
+    "cpu-system": 7,
+    "mem-free(MB)": 3575
+  },
+  {
+    "timeStamp": 3049.19,
+    "cpu-user": 1,
+    "cpu-system": 7,
+    "mem-free(MB)": 3375
+  },
+  {
+    "timeStamp": 3050.19,
+    "cpu-user": 70,
+    "cpu-system": 21,
+    "mem-free(MB)": 1579
+  },
+  {
+    "timeStamp": 3051.19,
+    "cpu-user": 75,
+    "cpu-system": 25,
+    "mem-free(MB)": 1702
+  },
+  {
+    "timeStamp": 3052.19,
+    "cpu-user": 77,
+    "cpu-system": 23,
+    "mem-free(MB)": 2084
+  },
+  {
+    "timeStamp": 3053.19,
+    "cpu-user": 6,
+    "cpu-system": 11,
+    "mem-free(MB)": 2672
+  },
+  {
+    "timeStamp": 3054.19,
+    "cpu-user": 1,
+    "cpu-system": 7,
+    "mem-free(MB)": 2458
+  },
+  {
+    "timeStamp": 3055.19,
+    "cpu-user": 1,
+    "cpu-system": 6,
+    "mem-free(MB)": 2241
+  },
+  {
+    "timeStamp": 3056.19,
+    "cpu-user": 23,
+    "cpu-system": 15,
+    "mem-free(MB)": 1372
+  },
+  {
+    "timeStamp": 3057.19,
+    "cpu-user": 73,
+    "cpu-system": 27,
+    "mem-free(MB)": 656
+  },
+  {
+    "timeStamp": 3058.19,
+    "cpu-user": 73,
+    "cpu-system": 27,
+    "mem-free(MB)": 623
+  },
+  {
+    "timeStamp": 3059.19,
+    "cpu-user": 53,
+    "cpu-system": 20,
+    "mem-free(MB)": 1612
+  },
+  {
+    "timeStamp": 3060.19,
+    "cpu-user": 1,
+    "cpu-system": 8,
+    "mem-free(MB)": 1365
+  },
+  {
+    "timeStamp": 3061.19,
+    "cpu-user": 1,
+    "cpu-system": 7,
+    "mem-free(MB)": 1279
+  },
+  {
+    "timeStamp": 3062.19,
+    "cpu-user": 1,
+    "cpu-system": 10,
+    "mem-free(MB)": 1212
+  },
+  {
+    "timeStamp": 3063.19,
+    "cpu-user": 1,
+    "cpu-system": 8,
+    "mem-free(MB)": 1217
+  },
+  {
+    "timeStamp": 3064.19,
+    "cpu-user": 0,
+    "cpu-system": 2,
+    "mem-free(MB)": 1214
+  },
+  {
+    "timeStamp": 3065.19,
+    "cpu-user": 1,
+    "cpu-system": 0,
+    "mem-free(MB)": 1200
+  }
+]

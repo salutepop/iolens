@@ -1,21 +1,17 @@
 import './App.css';
 import MainView from './components/MainView'
 //import data
-import queue from "./data/queue.json";
-import latency from "./data/latency.json";
-import lba from "./data/LBA.json";
-import throughput from "./data/throughput.json";
-
+import fio_calc from "./data/fio_calc.json";
+import fio_throughput from "./data/fio_throughput.json";
+  
 function App() {
-
-  console.log(queue)
+  
+  console.log(fio_calc);
   return (
     <div className="App">
       <MainView
-        queue = {queue}
-        latency = {latency}
-        lba = {lba}
-        throughput = {throughput}
+        calc = {fio_calc}
+        throughput = {fio_throughput}
       />
     </div>
 

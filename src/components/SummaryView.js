@@ -14,11 +14,13 @@ const SummaryView = (props) => {
     useEffect(() => {
 
         const svg = d3.select(summarySvg.current);
-        // summary box
+        /*
         data.forEach(d => {
             d.time = parseFloat(d.time);
             d.queue = parseFloat(d.queue_depth);
         });
+        */
+        
         const summaryX = 0;
         const summaryY = 0;
 
@@ -29,7 +31,7 @@ const SummaryView = (props) => {
             .attr('height', svgHeight)
             .style('fill', 'white')
             .style('stroke', 'gray');
-
+/*
         const avgQueueDepth = d3.mean(data, d => d.queue);
 
         svg.append('text')
@@ -40,7 +42,7 @@ const SummaryView = (props) => {
             .style('fill', 'black')
             .style('textAlign', 'center')
             .text(`Avg Depth: ${avgQueueDepth.toFixed(2)}`);
-
+*/
     }, []);
 
     return (
