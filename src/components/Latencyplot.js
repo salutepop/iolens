@@ -32,8 +32,8 @@ const Latencyplot = (props) => {
             .domain([d3.min(data, d => d.queue_depth), d3.max(data, d => d.queue_depth)])
             .range([height, 0]);
 
-        console.log(d3.min(data, d => d.queue_depth));
-        console.log(d3.min(data, d => d.time));
+        // console.log(d3.min(data, d => d.queue_depth));
+        // console.log(d3.min(data, d => d.time));
 
 
         
@@ -41,7 +41,7 @@ const Latencyplot = (props) => {
              d3.selectAll('circle.element' + i).style("fill", "red");
         }
         let selectedData = d3.selectAll('circle');
-        console.log(selectedData);
+        // console.log(selectedData);
           
         
 

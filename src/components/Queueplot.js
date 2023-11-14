@@ -30,8 +30,8 @@ const Queueplot = (props) => {
             .domain([d3.min(data, d => d.queue_depth), d3.max(data, d => d.queue_depth)])
             .range([height, 0]);
 
-        console.log(d3.min(data, d => d.queue_depth));
-        console.log(d3.min(data, d => d.time));
+        // console.log(d3.min(data, d => d.queue_depth));
+        // console.log(d3.min(data, d => d.time));
 
         const xAxis = d3.axisBottom(xScale);
         const yAxis = d3.axisLeft(yScale);
