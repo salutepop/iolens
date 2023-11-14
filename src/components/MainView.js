@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Summary from './SummaryView';
 import ControlView from './ControlView'
 import PlotView from './PlotView';
+import SummaryView from './SummaryView';
 
 const MainView = (props) => {
 
@@ -15,6 +16,10 @@ const MainView = (props) => {
       lba: true,
       latency: true,
     });
+
+    const [brushedIndex, setBrushedIndex] = useState([]);
+    
+    //index 받아서 계산하는 로직 구현
   
     
     const handleCheckboxChange = (graphName) => {
@@ -34,12 +39,14 @@ const MainView = (props) => {
             <PlotView
                 data = {props}
                 stateCheckbox = {graphVisibility}
+                //index
             />
 
             <div className="right-container">
                 <h1>summary</h1>
-                <Summary
+                <SummaryView
                     data={props.queue}
+                    //받은 데이터 계산해서 summary로 전달
                 />
             </div>
         </div>
