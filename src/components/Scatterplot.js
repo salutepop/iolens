@@ -16,13 +16,13 @@ const Scatterplot = (props) => {
     useEffect(() => {
         
         const svg = d3.select(splotSvg.current);
-        console.log(data);
+        // console.log(data);
         
         const data_x = data.map((d) => Object.values(d)[0]);
         const data_y = data.map((d) => Object.values(d)[1]);
-        console.log(data_x);
-        console.log(data_y);
-        console.log(d3.min(data_x));
+        // console.log(data_x);
+        // console.log(data_y);
+        // console.log(d3.min(data_x));
 
         let xScale = d3.scaleLinear()
             .domain([d3.min(data_x), d3.max(data_x)])

@@ -24,8 +24,8 @@ const PlotView = (props) => {
     //scatterplot, linecplot에사  줌 구현 => 줌 자료 조사
     //y값 분포 line으로 그리기(논문)
     
-    console.log(calc);
-    console.log(throughput);
+    // console.log(calc);
+    // console.log(throughput);
 
     return (
         <div className="plot-container">

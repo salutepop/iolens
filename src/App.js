@@ -6,7 +6,7 @@ import fio_throughput from "./data/fio_throughput.json";
   
 function App() {
   
-  console.log(fio_calc);
+  // console.log(fio_calc);
   return (
     <div className="App">
       <MainView
