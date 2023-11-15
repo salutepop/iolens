@@ -9,7 +9,7 @@ const ControlView = (props) => {
             {"Control box"}
         </h1>
         <label>&nbsp;</label>
-        <div classname="checkbox-container">
+        <div className="checkbox-container">
             <input
                 type="checkbox"
                 checked={props.stateCheckbox.queue}
@@ -17,7 +17,7 @@ const ControlView = (props) => {
             />
             <label>Queue depth</label>
         </div>
-        <div classname="checkbox-container">
+        <div className="checkbox-container">
             <input
                 type="checkbox"
                 checked={props.stateCheckbox.throughput}
@@ -25,7 +25,7 @@ const ControlView = (props) => {
             />
             <label>Throughput </label>
         </div>
-        <div classname="checkbox-container">
+        <div className="checkbox-container">
             <input
                 type="checkbox"
                 checked={props.stateCheckbox.latency}
@@ -33,7 +33,7 @@ const ControlView = (props) => {
             />
             <label>Latency </label>
         </div>
-        <div classname="checkbox-container">
+        <div className="checkbox-container">
             <input
                 type="checkbox"
                 checked={props.stateCheckbox.lba}
