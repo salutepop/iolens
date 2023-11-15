@@ -29,25 +29,25 @@ const PlotView = (props) => {
 
     return (
         <div className="plot-container">
-            <div class="splotContainer">
+            <div classname="splotContainer">
                 {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
                     <Scatterplot size={svgSize} data={calc.map((d) => ({issue_time: d.issue_time, queue_cnt: d.queue_cnt}))} margin={svgMargin} radius={radius} />
                 )}
             </div>
 
-            <div class="splotContainer">
+            <div classname="splotContainer">
                 {stateCheckbox.throughput && (
                     <Lineplot size={svgSize} data={throughput.map((d) => ({timeStamp: d.timeStamp, throughput: d.throughput}))} margin={svgMargin} radius={radius} />
                 )}
             </div>
 
-            <div class="splotContainer">
+            <div classname="splotContainer">
                 {stateCheckbox.latency && (
                     <Scatterplot size={svgSize} data={calc.map((d) => ({issue_time: d.issue_time, latency: d.latency}))} margin={svgMargin} radius={radius} />
                 )}
             </div>
 
-            <div class="splotContainer">
+            <div classname="splotContainer">
                 {stateCheckbox.lba && (
                     <Scatterplot size={svgSize} data={calc.map((d) => ({ issue_time: d.issue_time, lba: d.lba}))} margin={svgMargin} radius={radius} />
                 )}
