@@ -1,7 +1,7 @@
 import React, { useRef, useEffect} from "react";
 import * as d3 from "d3";
 
-
+import Histogramplot from "./Histogramplot";
 const SummaryView = (props) => {
     const summarySvg = useRef(null);
     const svgMargin = 20;
@@ -49,6 +49,7 @@ const SummaryView = (props) => {
         <div>
             <svg ref={summarySvg} width={svgWidth} height={svgHeight}>
             </svg>
+            <Histogramplot/>
         </div>
     )
 };
