@@ -5,6 +5,7 @@ import * as d3 from "d3";
 const Scatterplot = (props) => {
 
     const splotSvg = useRef(null);
+    const canvasHist = useRef(null);
     const svgSize_w = props.margin * 2 + props.size * 7;
     const svgSize_h = props.margin * 2 + props.size;
     const width = props.size * 7;
@@ -12,6 +13,9 @@ const Scatterplot = (props) => {
     const data = props.data;
     const radius = props.radius;
     const margin = props.margin;
+
+    const histWidth = 50;
+
     //hyo
     const [Index, setIndex] = useState([]);
 
@@ -24,16 +28,16 @@ const Scatterplot = (props) => {
 
         const data_x = data.map((d) => Object.values(d)[0]);
         const data_y = data.map((d) => Object.values(d)[1]);
-        
+
         data.forEach((d, i) => {
-            
+
             d.x = parseFloat(d.issue_time)
             // d.y = parseFloat()
             d.y = data_y;
             // console.log("dd", d.x, d.y)
         })
 
-    
+
         // console.log(data_x);
         // console.log("data_y", data_y);
         // console.log(d3.min(data_x));
@@ -89,7 +93,7 @@ const Scatterplot = (props) => {
 
             if (selection === null) {
                 circles.classed("selected", false);
-                
+
                 console.log("brushed nothing")
                 return;
             } else {
@@ -101,7 +105,7 @@ const Scatterplot = (props) => {
                     let yCoord = yScale(d.y);
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
                 }).data()
-                    .map(({idx}) => ({
+                    .map(({ idx }) => ({
                         idx,
 
                     }));
@@ -112,11 +116,76 @@ const Scatterplot = (props) => {
             // console.log("brushed data ", Index);
         };
 
+
+
+        // console.log(data_y)
+        const nbin = 100;
+        let hist = d3.bin()
+            .value(d => d)
+            .domain(yScale.domain())
+            .thresholds(yScale.ticks(nbin));
+
+        let bins = hist(data_y);
+
+
+        let histScale = d3.scaleLinear()
+            .domain([0, d3.max(bins.map(d => d.length))])
+            .range([histWidth, 0]);
+
+
+        // d3.select(canvasHist.current)
+        //     .attr('transform', `translate(100, ${margin})`)
+        //     .append('g')
+        //     .selectAll('path')
+        //     .join(
+        //         enter => enter
+        //             .append('path')
+        //             .attr('stroke', 'black')
+        //             .attr('fill', 'blue')
+        //     );
+        drawHist(bins);
+
+        // function drawHist(bins) {
+        //     var context = d3.select(canvasHist.current).node().getContext('2d');
+        //     context.fillStyle = "red";
+        //     context.moveTo(histScale(0), yScale(0));
+        //     bins.forEach((bin) => {
+        //         context.lineTo(histScale(bin.length), yScale((bin.x1 + bin.x0) / 2));
+        //     })
+        //     context.closePath();
+        //     context.fill();
+        //     context.stroke();
+        //     // d3.select(canvasHist.current)
+        //     // .attr("transform", `translate(20,20)`)
+        // }
+
+        function drawHist(bins) {
+            d3.select(splotSvg.current)
+                .append('g')
+                .attr('transform', `translate(${margin}, ${margin})`)
+                .append('path')
+                .style('stroke', 'none')
+                .style('fill', 'red')
+                .attr('d', () => {
+                    let context = d3.path()
+                    context.moveTo(histWidth - histScale(histScale.domain()[0]), yScale(yScale.domain()[0]));
+                    bins.forEach((bin) => {
+                        context.lineTo(histWidth - histScale(bin.length), yScale((bin.x1 + bin.x0) / 2))
+                    })
+                    context.lineTo(histWidth - histScale(histScale.domain()[0]), yScale(yScale.domain()[0]));
+                    return context;
+                })
+
+            // d3.select(canvasHist.current)
+            // .attr("transform", `translate(20,20)`)
+        }
     }, []);
 
     return (
-        <div>
+        <div className='innerplot-container'>
+            {/* <canvas ref={canvasHist} width={histWidth} height={height}/>     */}
             <svg ref={splotSvg} width={svgSize_w} height={svgSize_h}>
+ 
             </svg>
         </div>
     )

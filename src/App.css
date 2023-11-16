@@ -16,11 +16,15 @@
 
 .plot-container {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   margin-top: 100px;
   margin-left: 100px;
 }
 
+.innerplot-container{
+  display: flex;
+  flex-direction: row;
+}
 .summary-container {
   display: flex;
   flex-direction: column; 
