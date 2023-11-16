@@ -1,3 +1,4 @@
+import React, { useRef, useEffect, useState } from "react";
 import Scatterplot from './Scatterplot';
 import Lineplot from './Lineplot';
 
@@ -8,6 +9,14 @@ const PlotView = (props) => {
     const svgMargin = 20;
     const svgSize = 200;
     const radius = 0.5;
+
+    //hyo
+    
+    useEffect(() => {
+
+        
+
+	}, []);
 
     /* 지원 */
     //scatter plot으로 통일
@@ -31,25 +40,28 @@ const PlotView = (props) => {
         <div className="plot-container">
             <div className="splotContainer">
                 {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
-                    <Scatterplot size={svgSize} data={calc.map((d) => ({issue_time: d.issue_time, queue_cnt: d.queue_cnt}))} margin={svgMargin} radius={radius} />
+                    <Scatterplot size={svgSize} data={calc.map((d) => ({issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx}))} margin={svgMargin} radius={radius}
+                    setBrushedIndex={props.setBrushedIndex} />
                 )}
             </div>
 
             <div className="splotContainer">
                 {stateCheckbox.throughput && (
-                    <Lineplot size={svgSize} data={throughput.map((d) => ({timeStamp: d.timeStamp, throughput: d.throughput}))} margin={svgMargin} radius={radius} />
+                    <Lineplot size={svgSize} data={throughput.map((d) => ({timeStamp: d.timeStamp, value: d.throughput}))} margin={svgMargin} radius={radius} />
                 )}
             </div>
 
             <div className="splotContainer">
                 {stateCheckbox.latency && (
-                    <Scatterplot size={svgSize} data={calc.map((d) => ({issue_time: d.issue_time, latency: d.latency}))} margin={svgMargin} radius={radius} />
+                    <Scatterplot size={svgSize} data={calc.map((d) => ({issue_time: d.issue_time, value: d.latency, idx: d.idx}))} margin={svgMargin} radius={radius}
+                    setBrushedIndex={props.setBrushedIndex} />
                 )}
             </div>
 
             <div className="splotContainer">
                 {stateCheckbox.lba && (
-                    <Scatterplot size={svgSize} data={calc.map((d) => ({ issue_time: d.issue_time, lba: d.lba}))} margin={svgMargin} radius={radius} />
+                    <Scatterplot size={svgSize} data={calc.map((d) => ({ issue_time: d.issue_time, value: d.lba, idx: d.idx}))} margin={svgMargin} radius={radius}
+                    setBrushedIndex={props.setBrushedIndex} />
                 )}
             </div>
         </div>

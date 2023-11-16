@@ -13,6 +13,7 @@ const MainView = (props) => {
       latency: true,
     });
 
+    //hyo
     const [brushedIndex, setBrushedIndex] = useState([]);
     
     //index 받아서 계산하는 로직 구현
@@ -43,7 +44,9 @@ const MainView = (props) => {
                 <h1>summary</h1>
                 <SummaryView
                     data={props.fio_calc}
-                    //받은 데이터 계산해서 summary로 전달
+                    //hyo
+                    setBrush={setBrushedIndex}
+                    
                 />
             </div>
         </div>

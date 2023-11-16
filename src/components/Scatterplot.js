@@ -12,16 +12,30 @@ const Scatterplot = (props) => {
     const data = props.data;
     const radius = props.radius;
     const margin = props.margin;
+    //hyo
+    const [Index, setIndex] = useState([]);
 
     useEffect(() => {
-        
+
         const svg = d3.select(splotSvg.current);
         // console.log(data);
-        
+        // props.setBrushedIndex(Index);
+
+
         const data_x = data.map((d) => Object.values(d)[0]);
         const data_y = data.map((d) => Object.values(d)[1]);
+        
+        data.forEach((d, i) => {
+            
+            d.x = parseFloat(d.issue_time)
+            // d.y = parseFloat()
+            d.y = data_y;
+            // console.log("dd", d.x, d.y)
+        })
+
+    
         // console.log(data_x);
-        // console.log(data_y);
+        // console.log("data_y", data_y);
         // console.log(d3.min(data_x));
 
         let xScale = d3.scaleLinear()
@@ -53,6 +67,50 @@ const Scatterplot = (props) => {
             .attr("cy", (d, i) => yScale(data_y[i]))
             .style("fill", "blue");
 
+        //hyo
+        const brush = d3.brush()
+            .extent([[0, 0], [width, height]])
+            .on("start end", brushed);
+
+        // svg.select(".brush").remove();
+        svg.append('g')
+            .attr('class', 'brush')
+            .attr('transform', `translate(${margin}, ${margin})`)
+        svg.select('.brush')
+            .join(
+                enter => enter,
+                update => update
+                    .call(brush),
+                exit => exit.remove()
+            )
+        function brushed({ selection }) {
+            const circles = svg.selectAll('circle');
+
+
+            if (selection === null) {
+                circles.classed("selected", false);
+                
+                console.log("brushed nothing")
+                return;
+            } else {
+
+                let [[x0, y0], [x1, y1]] = selection;
+                const selectedData = circles.filter((d) => {
+                    // console.log(data_x, data_y);
+                    let xCoord = xScale(d.x);
+                    let yCoord = yScale(d.y);
+                    return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
+                }).data()
+                    .map(({idx}) => ({
+                        idx,
+
+                    }));
+                console.log("Selected Data:", selectedData);
+                // setIndex(selectedData);
+
+            }
+            // console.log("brushed data ", Index);
+        };
 
     }, []);
 
