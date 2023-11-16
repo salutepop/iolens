@@ -7,13 +7,25 @@ const SummaryView = (props) => {
     const svgMargin = 20;
     const svgHeight = 200 + svgMargin;
     const svgWidth = 200 + svgMargin;
-
-    const data = props.data;
-
+    const brushedData = props.brushedData;
+    
+    const lineHeight = 30;
+    
     // console.log(data)
     useEffect(() => {
-
+        let textlines = [];
+        // console.log(data)
+        let avgQueue, avgLatency;
+        // data.map(d=>console.log(d))
+        // console.log(data.map(d=>d.idx))
+        // avgQueue = d3.mean(data.map(d=>d.queue_cnt))
+        // avgLatency = d3.mean(data.map(d=>d.latency))
+        textlines.push(`avgQueue: ${avgQueue}`)
+        textlines.push(`avgLatency: ${avgLatency}`)
+        
+        // console.log(avgQueue, avgLatency)
         const svg = d3.select(summarySvg.current);
+        svg.append('p')
         /*
         data.forEach(d => {
             d.time = parseFloat(d.time);
@@ -43,13 +55,13 @@ const SummaryView = (props) => {
             .style('textAlign', 'center')
             .text(`Avg Depth: ${avgQueueDepth.toFixed(2)}`);
 */
-    }, []);
+    }, [brushedData]);
 
     return (
         <div>
             <svg ref={summarySvg} width={svgWidth} height={svgHeight}>
             </svg>
-            <Histogramplot/>
+            <Histogramplot brushedData={brushedData}/>
         </div>
     )
 };

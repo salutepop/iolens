@@ -17,7 +17,7 @@ const MainView = (props) => {
     //hyo
     const calc = props.calc;
     const [brushedIndex, setBrushedIndex] = useState([]);
-    const [brushedData, setBrushedData] = useState([]);
+    const [brushedData, setBrushedData] = useState([calc]);
     
 
     useEffect(() => {
@@ -63,9 +63,7 @@ const MainView = (props) => {
             <div className="right-container">
                 <h1>summary</h1>
                 <SummaryView
-                    data={props.fio_calc}
-
-
+                    brushedData={brushedData}
                 />
             </div>
         </div>
