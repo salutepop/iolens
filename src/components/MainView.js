@@ -16,25 +16,25 @@ const MainView = (props) => {
 
     //hyo
     const calc = props.calc;
-    const [brushedIndex, setBrushedIndex] = useState([]);
-    const [brushedData, setBrushedData] = useState([]);
     
+    const [brushedData, setBrushedData] = useState([]);
+    // console.log(brushedData)    
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        let indexArray = brushedIndex.map(d => d.idx);
-        // console.log("indexArray", indexArray);
+    //     let indexArray = brushedIndex.map(d => d.idx);
+    //     // console.log("indexArray", indexArray);
 
-        const updatedBrushedData = calc
-            .filter(d => indexArray.includes(d.idx))
+    //     const updatedBrushedData = calc
+    //         .filter(d => indexArray.includes(d.idx))
 
-        // console.log("upbrushedData", updatedBrushedData);
-        setBrushedData(updatedBrushedData);
-
-
+    //     // console.log("upbrushedData", updatedBrushedData);
+    //     setBrushedData(updatedBrushedData);
 
 
-    }, [brushedIndex]);
+
+
+    // }, [brushedIndex]);
 
     const handleCheckboxChange = (graphName) => {
         setGraphVisibility((prevVisibility) => ({
@@ -55,7 +55,7 @@ const MainView = (props) => {
                 throughput={props.throughput}
                 stateCheckbox={graphVisibility}
                 //hyo
-                setBrushedIndex={setBrushedIndex}
+                setBrushedData={setBrushedData}
                 brushedData={brushedData}
             //index
             />

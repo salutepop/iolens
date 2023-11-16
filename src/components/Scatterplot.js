@@ -17,7 +17,9 @@ const Scatterplot = (props) => {
     const histWidth = 50;
 
     //hyo
-    // const [Index, setIndex] = useState([]);
+    //index
+    const [Index, setIndex] = useState([]);
+    const brushedData = props.brushedData;
 
     useEffect(() => {
         // props.setBrushedIndex(Index)
@@ -69,7 +71,8 @@ const Scatterplot = (props) => {
             .attr("r", radius)
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
-            .style("fill", "blue");
+            .style("fill", "blue")
+            .attr("class", (d, i) => "element" + i);
 
         //hyo
         const brush = d3.brush()
@@ -93,7 +96,7 @@ const Scatterplot = (props) => {
 
             if (selection === null) {
                 circles.classed("selected", false);
-
+                
                 console.log("brushed nothing")
                 return;
             } else {
@@ -104,13 +107,22 @@ const Scatterplot = (props) => {
                     let xCoord = xScale(d.x);
                     let yCoord = yScale(d.y);
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
-                }).data()
-                    .map(({ idx }) => ({
-                        idx,
+                }).data();
+                // console.log(selectedData)
 
-                    }));
+                    // .map( d => {
+                    //         // console.log(d.idx);
+                    //         return d;
+                            
+                    //     });
+                  
+                    // selectedCircle.nodes().map((d, i) => {
+						
+                    //     d3.selectAll('circle.'+ d.classList[0]).style("fill", "red");
+                    // });
                 // console.log("Selected Data:", selectedData);
-                props.setBrushedIndex(selectedData);
+                props.setBrushedData(selectedData);
+                // setIndex(selectedData);
                 // setIndex(selectedData);
 
             }
@@ -180,7 +192,21 @@ const Scatterplot = (props) => {
             // d3.select(canvasHist.current)
             // .attr("transform", `translate(20,20)`)
         }
+        
     }, []);
+
+    useEffect(() => {
+        
+        // const svg = d3.select(splotSvg.current);
+        brushedData.map((d) => {
+                // console.log(d3.select(splotSvg.current).selectAll('circle.element11').style("fill"));
+                //console.log( d3.select(splotSvg.current).selectAll('circle').select('.element'+ d.idx))
+				//rect 그리기		
+                // console.log(d, props.data)
+            d3.select(splotSvg.current).selectAll('circle').select('.element'+ d.idx).enter().style("fill", "red");
+        });
+
+    }, [brushedData]);
 
     return (
         <div className='innerplot-container'>
