@@ -5,16 +5,19 @@ import * as d3 from "d3";
 const Scatterplot = (props) => {
 
     const splotSvg = useRef(null);
-    const canvasHist = useRef(null);
-    const svgSize_w = props.margin * 2 + props.size * 7;
-    const svgSize_h = props.margin * 2 + props.size;
-    const width = props.size * 7;
-    const height = props.size;
+
+    const width = props.width;
+    const height = props.height;
     const data = props.data;
     const radius = props.radius;
     const margin = props.margin;
 
+    const svgWidth = margin * 2 + width;
+    const svgHeight = margin * 2 + height;
+
+    // to Histogram
     const histWidth = 50;
+    const nbin = 100;
 
     //hyo
     // const [Index, setIndex] = useState([]);
@@ -119,8 +122,6 @@ const Scatterplot = (props) => {
 
 
 
-        // console.log(data_y)
-        const nbin = 100;
         let hist = d3.bin()
             .value(d => d)
             .domain(yScale.domain())
@@ -133,32 +134,7 @@ const Scatterplot = (props) => {
             .domain([0, d3.max(bins.map(d => d.length))])
             .range([histWidth, 0]);
 
-
-        // d3.select(canvasHist.current)
-        //     .attr('transform', `translate(100, ${margin})`)
-        //     .append('g')
-        //     .selectAll('path')
-        //     .join(
-        //         enter => enter
-        //             .append('path')
-        //             .attr('stroke', 'black')
-        //             .attr('fill', 'blue')
-        //     );
         drawHist(bins);
-
-        // function drawHist(bins) {
-        //     var context = d3.select(canvasHist.current).node().getContext('2d');
-        //     context.fillStyle = "red";
-        //     context.moveTo(histScale(0), yScale(0));
-        //     bins.forEach((bin) => {
-        //         context.lineTo(histScale(bin.length), yScale((bin.x1 + bin.x0) / 2));
-        //     })
-        //     context.closePath();
-        //     context.fill();
-        //     context.stroke();
-        //     // d3.select(canvasHist.current)
-        //     // .attr("transform", `translate(20,20)`)
-        // }
 
         function drawHist(bins) {
             d3.select(splotSvg.current)
@@ -169,24 +145,26 @@ const Scatterplot = (props) => {
                 .style('fill', 'red')
                 .attr('d', () => {
                     let context = d3.path()
-                    context.moveTo(histWidth - histScale(histScale.domain()[0]), yScale(yScale.domain()[0]));
+                    context.moveTo(
+                        histWidth - histScale(histScale.domain()[0]), 
+                        yScale(yScale.domain()[0]));
                     bins.forEach((bin) => {
-                        context.lineTo(histWidth - histScale(bin.length), yScale((bin.x1 + bin.x0) / 2))
+                        context.lineTo(
+                            histWidth - histScale(bin.length), 
+                            yScale((bin.x1 + bin.x0) / 2))
                     })
-                    context.lineTo(histWidth - histScale(histScale.domain()[0]), yScale(yScale.domain()[0]));
+                    context.lineTo(
+                        histWidth - histScale(histScale.domain()[0]), 
+                        yScale(yScale.domain()[0]));
                     return context;
                 })
 
-            // d3.select(canvasHist.current)
-            // .attr("transform", `translate(20,20)`)
         }
     }, []);
 
     return (
         <div className='innerplot-container'>
-            {/* <canvas ref={canvasHist} width={histWidth} height={height}/>     */}
-            <svg ref={splotSvg} width={svgSize_w} height={svgSize_h}>
- 
+            <svg ref={splotSvg} width={svgWidth} height={svgHeight}>
             </svg>
         </div>
     )

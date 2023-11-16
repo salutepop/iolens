@@ -10,15 +10,15 @@
 .control-container {
   display: flex;
   flex-direction: column; 
-  margin-top: 100px;
+  /* margin-top: 50px; */
   margin-left: 20px;
 }
 
 .plot-container {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
-  margin-left: 100px;
+  /* margin-top: 50px; */
+  margin-left: 50px;
 }
 
 .innerplot-container{
@@ -28,14 +28,17 @@
 .summary-container {
   display: flex;
   flex-direction: column; 
-  margin-top: 100px;
-  margin-left: 50px;
+  /* margin-top: 100px;
+  margin-left: 50px; */
 }
-
 
 .checkbox-container{
   display: flex;
   margin-bottom: 10px;
 }
 
+.checkbox-label {
+  font-size: 20px;
+  font-weight: bold;
+}
 

@@ -14,8 +14,6 @@ const SummaryView = (props) => {
     useEffect(() => {
         const textlines = [];
 
-        brushedData.map(d => console.log(d))
-
         // KB/s -> MB/s
         let throughput = d3.sum(brushedData.map(d => d.size))
             / (d3.max(brushedData.map(d => d.comp_time))

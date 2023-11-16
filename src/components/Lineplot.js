@@ -5,13 +5,15 @@ import * as d3 from "d3";
 const Lineplot = (props) => {
 
     const splotSvg = useRef(null);
-    const svgSize_w = props.margin * 2 + props.size * 7;
-    const svgSize_h = props.margin * 2 + props.size;
-    const width = props.size * 7;
-    const height = props.size;
+
+    const width = props.width;
+    const height = props.height;
     const data = props.data;
-    const radius = props.radius;
     const margin = props.margin;
+
+    const svgWidth = margin * 2 + width;
+    const svgHeight = margin * 2 + height;
+
 
     useEffect(() => {
 
@@ -57,7 +59,7 @@ const Lineplot = (props) => {
 
     return (
         <div>
-            <svg ref={splotSvg} width={svgSize_w} height={svgSize_h}>
+            <svg ref={splotSvg} width={svgWidth} height={svgHeight}>
             </svg>
         </div>
     )

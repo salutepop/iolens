@@ -47,7 +47,7 @@ const MainView = (props) => {
         <div className='main-container'>
             <ControlView
                 stateCheckbox={graphVisibility}
-                handleCheckbox={handleCheckboxChange}
+                handleCheckboxChange={handleCheckboxChange}
             />
 
             <PlotView

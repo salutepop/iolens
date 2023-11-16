@@ -7,8 +7,9 @@ const PlotView = (props) => {
     const calc = props.calc;
     const throughput = props.throughput;
     const stateCheckbox = props.stateCheckbox
-    const svgMargin = 20;
-    const svgSize = 200;
+    const plotMargin = 20;
+    const plotWidth = 1200;
+    const plotHeight = 200;
     const radius = 0.5;
 
     //hyo
@@ -54,27 +55,47 @@ const PlotView = (props) => {
         <div className="plot-container">
             <div>
                 {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
-                    <Scatterplot size={svgSize} data={calc.map((d) => ({ issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx }))} margin={svgMargin} radius={radius}
+                    <Scatterplot 
+                        width={plotWidth}
+                        height={plotHeight}
+                        data={calc.map((d) => ({ issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx }))}
+                        margin={plotMargin}
+                        radius={radius}
                         setBrushedIndex={props.setBrushedIndex} />
                 )}
             </div>
 
             <div>
                 {stateCheckbox.throughput && (
-                    <Lineplot size={svgSize} data={throughput.map((d) => ({ timeStamp: d.timeStamp, value: d.throughput }))} margin={svgMargin} radius={radius} />
+                    <Lineplot 
+                        width={plotWidth}
+                        height={plotHeight}
+                        data={throughput.map((d) => ({ timeStamp: d.timeStamp, value: d.throughput }))}
+                        margin={plotMargin}
+                        radius={radius} />
                 )}
             </div>
 
             <div>
                 {stateCheckbox.latency && (
-                    <Scatterplot size={svgSize} data={calc.map((d) => ({ issue_time: d.issue_time, value: d.latency, idx: d.idx }))} margin={svgMargin} radius={radius}
+                    <Scatterplot
+                        width={plotWidth}
+                        height={plotHeight}
+                        data={calc.map((d) => ({ issue_time: d.issue_time, value: d.latency, idx: d.idx }))}
+                        margin={plotMargin}
+                        radius={radius}
                         setBrushedIndex={props.setBrushedIndex} />
                 )}
             </div>
 
             <div>
                 {stateCheckbox.lba && (
-                    <Scatterplot size={svgSize} data={calc.map((d) => ({ issue_time: d.issue_time, value: d.lba, idx: d.idx }))} margin={svgMargin} radius={radius}
+                    <Scatterplot
+                        width={plotWidth}
+                        height={plotHeight}
+                        data={calc.map((d) => ({ issue_time: d.issue_time, value: d.lba, idx: d.idx }))}
+                        margin={plotMargin}
+                        radius={radius}
                         setBrushedIndex={props.setBrushedIndex} />
                 )}
             </div>
