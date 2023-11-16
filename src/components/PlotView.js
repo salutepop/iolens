@@ -13,33 +13,24 @@ const PlotView = (props) => {
 
     //hyo
 
-    let brushedIndex = props.brushedIndex;
+    let brushedData = props.brushedData;
     const [brushedx, setBrushedx] = useState([]);
-    // let brushedIndex = [100, 200, 300];
-
-    // console.log(typeof brushedIndex[1])
-    // console.log(typeof calc[1].idx)
 
     useEffect(() => {
 
-        let indexArray = brushedIndex.map(d => d.idx);
-        console.log("indexArray", indexArray);
+        const updatedBrushedx = brushedData.map(d => d.issue_time);
 
 
-        const updatedBrushedx = calc
-            .filter(d => indexArray.includes(d.idx))
-            // .filter(d => console.log( d.idx))
-            .map(d => d.issue_time);
+        // console.log("updatedBrushedx", updatedBrushedx);
 
-
-
-        // console.log("upbrushedx", brushedx);
         setBrushedx(updatedBrushedx);
+        
+        // console.log("upbrushedx", brushedx);
 
 
 
 
-    }, [brushedIndex]);
+    }, [brushedData]);
 
     /* 지원 */
     //scatter plot으로 통일

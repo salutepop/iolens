@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect, useState } from "react";
 
 import ControlView from './ControlView'
 import PlotView from './PlotView';
@@ -15,12 +15,26 @@ const MainView = (props) => {
     });
 
     //hyo
+    const calc = props.calc;
     const [brushedIndex, setBrushedIndex] = useState([]);
+    const [brushedData, setBrushedData] = useState([]);
+    
 
-    // console.log("brushedIndex", brushedIndex)
-    //index 받아서 계산하는 로직 구현
+    useEffect(() => {
+
+        let indexArray = brushedIndex.map(d => d.idx);
+        // console.log("indexArray", indexArray);
+
+        const updatedBrushedData = calc
+            .filter(d => indexArray.includes(d.idx))
+
+        // console.log("upbrushedData", updatedBrushedData);
+        setBrushedData(updatedBrushedData);
 
 
+
+
+    }, [brushedIndex]);
 
     const handleCheckboxChange = (graphName) => {
         setGraphVisibility((prevVisibility) => ({
@@ -42,7 +56,7 @@ const MainView = (props) => {
                 stateCheckbox={graphVisibility}
                 //hyo
                 setBrushedIndex={setBrushedIndex}
-                brushedIndex={brushedIndex}
+                brushedData={brushedData}
             //index
             />
 

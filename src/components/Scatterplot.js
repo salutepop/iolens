@@ -109,7 +109,7 @@ const Scatterplot = (props) => {
                         idx,
 
                     }));
-                console.log("Selected Data:", selectedData);
+                // console.log("Selected Data:", selectedData);
                 props.setBrushedIndex(selectedData);
                 // setIndex(selectedData);
 
