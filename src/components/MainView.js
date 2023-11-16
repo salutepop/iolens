@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ControlView from './ControlView'
 import PlotView from './PlotView';
 import SummaryView from './SummaryView';
+import { brushSelection } from 'd3';
 
 const MainView = (props) => {
     
@@ -16,6 +17,7 @@ const MainView = (props) => {
     //hyo
     const [brushedIndex, setBrushedIndex] = useState([]);
     
+    // console.log("brushedIndex", brushedIndex)
     //index 받아서 계산하는 로직 구현
   
     
@@ -37,6 +39,8 @@ const MainView = (props) => {
                 calc = {props.calc}
                 throughput = {props.throughput}
                 stateCheckbox = {graphVisibility}
+                //hyo
+                setBrush={setBrushedIndex}
                 //index
             />
 
@@ -44,8 +48,7 @@ const MainView = (props) => {
                 <h1>summary</h1>
                 <SummaryView
                     data={props.fio_calc}
-                    //hyo
-                    setBrush={setBrushedIndex}
+                    
                     
                 />
             </div>

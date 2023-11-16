@@ -11,7 +11,7 @@ const PlotView = (props) => {
     const radius = 0.5;
 
     //hyo
-    
+    // const [Index, setIndex] = useState([]);
     useEffect(() => {
 
         
@@ -41,7 +41,7 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
                     <Scatterplot size={svgSize} data={calc.map((d) => ({issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx}))} margin={svgMargin} radius={radius}
-                    setBrushedIndex={props.setBrushedIndex} />
+                    setBrushedIndex={props.setBrush} />
                 )}
             </div>
 
@@ -54,14 +54,14 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.latency && (
                     <Scatterplot size={svgSize} data={calc.map((d) => ({issue_time: d.issue_time, value: d.latency, idx: d.idx}))} margin={svgMargin} radius={radius}
-                    setBrushedIndex={props.setBrushedIndex} />
+                    setBrushedIndex={props.setBrush} />
                 )}
             </div>
 
             <div>
                 {stateCheckbox.lba && (
                     <Scatterplot size={svgSize} data={calc.map((d) => ({ issue_time: d.issue_time, value: d.lba, idx: d.idx}))} margin={svgMargin} radius={radius}
-                    setBrushedIndex={props.setBrushedIndex} />
+                    setBrush={props.setBrush} />
                 )}
             </div>
         </div>

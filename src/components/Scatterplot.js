@@ -17,10 +17,10 @@ const Scatterplot = (props) => {
     const histWidth = 50;
 
     //hyo
-    const [Index, setIndex] = useState([]);
+    // const [Index, setIndex] = useState([]);
 
     useEffect(() => {
-
+        // props.setBrushedIndex(Index)
         const svg = d3.select(splotSvg.current);
         // console.log(data);
         // props.setBrushedIndex(Index);
@@ -33,11 +33,11 @@ const Scatterplot = (props) => {
 
             d.x = parseFloat(d.issue_time)
             // d.y = parseFloat()
-            d.y = data_y;
-            // console.log("dd", d.x, d.y)
+            d.y = parseFloat(d.value);
+            
         })
 
-
+        
         // console.log(data_x);
         // console.log("data_y", data_y);
         // console.log(d3.min(data_x));
@@ -63,12 +63,12 @@ const Scatterplot = (props) => {
         svg.append("g")
             .attr("transform", `translate(${margin}, ${margin})`)
             .selectAll("circle")
-            .data(data_x)
+            .data(data)
             .enter()
             .append("circle")
             .attr("r", radius)
-            .attr("cx", (d, i) => xScale(d))
-            .attr("cy", (d, i) => yScale(data_y[i]))
+            .attr("cx", d => xScale(d.x))
+            .attr("cy", d => yScale(d.y))
             .style("fill", "blue");
 
         //hyo
@@ -89,7 +89,7 @@ const Scatterplot = (props) => {
             )
         function brushed({ selection }) {
             const circles = svg.selectAll('circle');
-
+            
 
             if (selection === null) {
                 circles.classed("selected", false);
@@ -100,7 +100,7 @@ const Scatterplot = (props) => {
 
                 let [[x0, y0], [x1, y1]] = selection;
                 const selectedData = circles.filter((d) => {
-                    // console.log(data_x, data_y);
+                    // console.log("d.x, d.y", d.x, d.y);
                     let xCoord = xScale(d.x);
                     let yCoord = yScale(d.y);
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
@@ -110,6 +110,7 @@ const Scatterplot = (props) => {
 
                     }));
                 console.log("Selected Data:", selectedData);
+                props.setBrushedIndex(selectedData);
                 // setIndex(selectedData);
 
             }
