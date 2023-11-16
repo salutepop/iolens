@@ -13,6 +13,7 @@ const Histogramplot = (props) => {
     const plotSize = 200;
     const svgHeight = plotSize + svgMargin * 2;
     const svgWidth = plotSize + svgMargin * 2;
+    const canvasHist = useRef(null);
 
     const latencyArray = data.map(d=>d.latency / 1000);
     let nbin = 100;
@@ -44,9 +45,6 @@ const Histogramplot = (props) => {
             .attr('transform', `translate( ${svgMargin}, ${svgMargin})`)
             .call(d3.axisLeft(yScale));
         
-
-        // console.log(bins)
-        console.log(bins.map(d=>d.length))
         d3.select(svgHist.current)
             .append('g')
             .selectAll('rect')
@@ -64,8 +62,6 @@ const Histogramplot = (props) => {
                 exit => exit.remove()
             )
 
-        
-
         d3.select(svgHist.current)
             .append('rect')
             .attr('x', 0)
@@ -82,6 +78,7 @@ const Histogramplot = (props) => {
             <svg ref={svgHist} height={svgHeight} width={svgWidth}>
 
             </svg>
+            <canvas ref={canvasHist} height={svgHeight} width={svgWidth}/>
         </div>
     )
 };
