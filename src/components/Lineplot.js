@@ -22,7 +22,7 @@ const Lineplot = (props) => {
         const brushedX = brushedData.map(d => d.issue_time)
         let minX = d3.min(brushedX)
         let maxX = d3.max(brushedX)
-        let rectWidth = maxX - minX;
+        // let rectWidth = maxX - minX;
         // console.log("min", d3.min(brushedX));
         // console.log("max", d3.max(brushedX));
 
@@ -70,24 +70,31 @@ const Lineplot = (props) => {
             .style("fill", "rgba(255, 0, 0, 0.5)"); 
         
         // svg.select('rect').remove();
-        svg.selectAll('rect')
-            .join(
-                enter => enter,
-                update => update
-                    .attr("x", xScale(minX))
-                    .attr("y", -margin)
-                    .attr("widht", xScale(maxX) - xScale(minX))
-                    .attr("height", svgHeight)
-                    .style("fill", "rgba(255, 0, 0, 0.5)")
-                    ,
-                exit => exit.remove()
-            )
-        // svg.append('rect')
-        //     .attr("x", xScale(minX))
-        //     .attr("y", -margin)
-        //     .attr("width", xScale(maxX) - xScale(minX))
-        //     .attr("height", svgHeight)
-        //     .style("fill", "rgba(255, 0, 0, 0.5)"); 
+        svg.selectAll('rect').remove();
+        // svg.selectAll('rect')
+        //     .join(
+        //         enter => enter.append('rect')
+        //             .attr("x", xScale(minX))
+        //             .attr("y", -margin)
+        //             .attr("widht", xScale(maxX) - xScale(minX))
+        //             .attr("height", svgHeight)
+        //             .style("fill", "rgba(255, 0, 0, 0.5)")
+        //         ,
+        //         update => update
+        //             .attr("x", xScale(minX))
+        //             .attr("y", -margin)
+        //             .attr("widht", xScale(maxX) - xScale(minX))
+        //             .attr("height", svgHeight)
+        //             .style("fill", "rgba(255, 0, 0, 0.5)")
+        //             ,
+        //         exit => exit.remove()
+        //     )
+        svg.append('rect')
+            .attr("x", xScale(minX))
+            .attr("y", -margin)
+            .attr("width", xScale(maxX) - xScale(minX))
+            .attr("height", svgHeight)
+            .style("fill", "rgba(255, 0, 0, 0.5)"); 
         
         
     }, [brushedData]);

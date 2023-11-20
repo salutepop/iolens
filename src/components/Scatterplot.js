@@ -72,7 +72,7 @@ const Scatterplot = (props) => {
             .attr("r", radius)
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
-            .style("fill", "blue")
+            .style("fill", "grey")
             .attr("class", (d, i) => "element" + i);
 
         //hyo
@@ -81,31 +81,37 @@ const Scatterplot = (props) => {
             .on("end", brushed);
 
         // svg.select(".brush").remove();
+        // svg.select('.brush').remove();
+
         svg.append('g')
             .attr('class', 'brush')
             .attr('transform', `translate(${margin}, ${margin})`)
-        svg.select('.brush')
-            .join(
-                enter => enter,
-                update => update
-                    .call(brush),
-                exit => exit.remove()
-            )
+        // svg.select('.brush')
+        //     .join(
+        //         enter => enter,
+        //         update => update
+        //             .call(brush),
+        //         exit => exit.remove()
+        //     )
+         svg.select('.brush').call(brush);
+         
         function brushed({ selection }) {
             const circles = svg.selectAll('circle');
-            d3.selectAll('circle').style("fill", "blue")
+            d3.selectAll('circle').style("fill", "grey")
             d3.selectAll('circle').style("stroke", "none")
 
             if (selection === null) {
                 
-                
-                d3.selectAll('circle').style("fill", "blue")
+                // svg.select('.brush .selection').style("fill-opacity", 0)
+                d3.selectAll('circle').style("fill", "grey")
                 d3.selectAll('circle').style("stroke", "none")
                 console.log("brushed nothing")
+                let selectedData = [];
+                props.setBrushedIndex(selectedData);
                 
                 return;
             } else {
-                d3.selectAll("circle").style("fill", "blue")
+                d3.selectAll("circle").style("fill", "grey")
                 let [[x0, y0], [x1, y1]] = selection;
                 const selectedData = circles.filter((d) => {
                     // console.log("d.x, d.y", d.x, d.y);
@@ -126,22 +132,40 @@ const Scatterplot = (props) => {
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
                     
                 });
+                const notSelectedCircle = circles.filter((d) => {
+                    // console.log("d.x, d.y", d.x, d.y);
+                    let xCoord = xScale(d.x);
+                    let yCoord = yScale(d.y);
+                    
+                    // console.log("xCoord", d3.max(xCoord));
+                    return x0 > xCoord || xCoord > x1 || y0 > yCoord || yCoord > y1;
+                    
+                });
                 // console.log("selectedCircle", selectedCircle)
-
+                console.log("notselected", notSelectedCircle)
                 selectedCircle.nodes().map((d, i) => {
 					
                     d3.selectAll('circle.'+ d.classList[0]).style("fill", "red");
                     d3.selectAll('circle.'+ d.classList[0]).style("stroke", "red");
                 });
+                // notSelectedCircle.nodes().map((d, i ) =>{
+                //     d3.selectAll('circle.'+ d.classList[0]).style("fill", "grey");
+                //     d3.selectAll('circle.'+ d.classList[0]).style("opacity", 0.5);
+                // });
                 // console.log("Selected Data:", selectedData);
                 props.setBrushedIndex(selectedData);
+                // svg.select('.brush').remove();
+                svg.select('.brush .selection').style("fill-opacity", 0)
+                // svg.select('.brush').call(brush)
+                
+                
                 // setIndex(selectedData);
 
             }
             // console.log("brushed data ", Index);
         };
 
-
+       
 
         let hist = d3.bin()
             .value(d => d)
