@@ -14,11 +14,18 @@ const Lineplot = (props) => {
     const svgWidth = margin * 2 + width;
     const svgHeight = margin * 2 + height;
 
-
+    let brushedData = props.brushedData;
     useEffect(() => {
 
         const svg = d3.select(splotSvg.current);
         // console.log(data);
+        const brushedX = brushedData.map(d => d.issue_time)
+        let minX = d3.min(brushedX)
+        let maxX = d3.max(brushedX)
+        let rectWidth = maxX - minX;
+        // console.log("min", d3.min(brushedX));
+        // console.log("max", d3.max(brushedX));
+
 
         const data_x = data.map((d) => Object.values(d)[0]);
         const data_y = data.map((d) => Object.values(d)[1]);
@@ -55,7 +62,35 @@ const Lineplot = (props) => {
             .attr("stroke-width", 1.0)
             .attr("d", line);
 
-    }, []);
+            svg.append('rect')
+            .attr("x", xScale(minX))
+            .attr("y", -margin)
+            .attr("width", xScale(maxX) - xScale(minX))
+            .attr("height", svgHeight)
+            .style("fill", "rgba(255, 0, 0, 0.5)"); 
+        
+        // svg.select('rect').remove();
+        svg.selectAll('rect')
+            .join(
+                enter => enter,
+                update => update
+                    .attr("x", xScale(minX))
+                    .attr("y", -margin)
+                    .attr("widht", xScale(maxX) - xScale(minX))
+                    .attr("height", svgHeight)
+                    .style("fill", "rgba(255, 0, 0, 0.5)")
+                    ,
+                exit => exit.remove()
+            )
+        // svg.append('rect')
+        //     .attr("x", xScale(minX))
+        //     .attr("y", -margin)
+        //     .attr("width", xScale(maxX) - xScale(minX))
+        //     .attr("height", svgHeight)
+        //     .style("fill", "rgba(255, 0, 0, 0.5)"); 
+        
+        
+    }, [brushedData]);
 
     return (
         <div>

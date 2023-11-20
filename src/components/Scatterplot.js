@@ -37,10 +37,10 @@ const Scatterplot = (props) => {
             d.x = parseFloat(d.issue_time)
             // d.y = parseFloat()
             d.y = parseFloat(d.value);
-            
+
         })
 
-        
+
         // console.log(data_x);
         // console.log("data_y", data_y);
         // console.log(d3.min(data_x));
@@ -72,12 +72,13 @@ const Scatterplot = (props) => {
             .attr("r", radius)
             .attr("cx", d => xScale(d.x))
             .attr("cy", d => yScale(d.y))
-            .style("fill", "blue");
+            .style("fill", "blue")
+            .attr("class", (d, i) => "element" + i);
 
         //hyo
         const brush = d3.brush()
             .extent([[0, 0], [width, height]])
-            .on("start end", brushed);
+            .on("end", brushed);
 
         // svg.select(".brush").remove();
         svg.append('g')
@@ -92,15 +93,19 @@ const Scatterplot = (props) => {
             )
         function brushed({ selection }) {
             const circles = svg.selectAll('circle');
-            
+            d3.selectAll('circle').style("fill", "blue")
+            d3.selectAll('circle').style("stroke", "none")
 
             if (selection === null) {
-                circles.classed("selected", false);
-
+                
+                
+                d3.selectAll('circle').style("fill", "blue")
+                d3.selectAll('circle').style("stroke", "none")
                 console.log("brushed nothing")
+                
                 return;
             } else {
-
+                d3.selectAll("circle").style("fill", "blue")
                 let [[x0, y0], [x1, y1]] = selection;
                 const selectedData = circles.filter((d) => {
                     // console.log("d.x, d.y", d.x, d.y);
@@ -112,6 +117,22 @@ const Scatterplot = (props) => {
                         idx,
 
                     }));
+                const selectedCircle = circles.filter((d) => {
+                    // console.log("d.x, d.y", d.x, d.y);
+                    let xCoord = xScale(d.x);
+                    let yCoord = yScale(d.y);
+                    
+                    // console.log("xCoord", d3.max(xCoord));
+                    return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
+                    
+                });
+                // console.log("selectedCircle", selectedCircle)
+
+                selectedCircle.nodes().map((d, i) => {
+					
+                    d3.selectAll('circle.'+ d.classList[0]).style("fill", "red");
+                    d3.selectAll('circle.'+ d.classList[0]).style("stroke", "red");
+                });
                 // console.log("Selected Data:", selectedData);
                 props.setBrushedIndex(selectedData);
                 // setIndex(selectedData);
@@ -146,15 +167,15 @@ const Scatterplot = (props) => {
                 .attr('d', () => {
                     let context = d3.path()
                     context.moveTo(
-                        histWidth - histScale(histScale.domain()[0]), 
+                        histWidth - histScale(histScale.domain()[0]),
                         yScale(yScale.domain()[0]));
                     bins.forEach((bin) => {
                         context.lineTo(
-                            histWidth - histScale(bin.length), 
+                            histWidth - histScale(bin.length),
                             yScale((bin.x1 + bin.x0) / 2))
                     })
                     context.lineTo(
-                        histWidth - histScale(histScale.domain()[0]), 
+                        histWidth - histScale(histScale.domain()[0]),
                         yScale(yScale.domain()[0]));
                     return context;
                 })

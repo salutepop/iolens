@@ -19,8 +19,9 @@ const PlotView = (props) => {
 
     useEffect(() => {
 
+        //brush된 X좌표
         const updatedBrushedx = brushedData.map(d => d.issue_time);
-
+        
 
         // console.log("updatedBrushedx", updatedBrushedx);
 
@@ -72,7 +73,8 @@ const PlotView = (props) => {
                         height={plotHeight}
                         data={throughput.map((d) => ({ timeStamp: d.timeStamp, value: d.throughput }))}
                         margin={plotMargin}
-                        radius={radius} />
+                        radius={radius} 
+                        brushedData={brushedData}/>
                 )}
             </div>
 
