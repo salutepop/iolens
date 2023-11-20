@@ -99,12 +99,14 @@ const Scatterplot = (props) => {
             const circles = svg.selectAll('circle');
             d3.selectAll('circle').style("fill", "grey")
             d3.selectAll('circle').style("stroke", "none")
+            d3.selectAll('circle').attr("r", 0.5);
 
             if (selection === null) {
                 
                 // svg.select('.brush .selection').style("fill-opacity", 0)
                 d3.selectAll('circle').style("fill", "grey")
                 d3.selectAll('circle').style("stroke", "none")
+                d3.selectAll('circle').attr("r", 0.5);
                 console.log("brushed nothing")
                 let selectedData = [];
                 props.setBrushedIndex(selectedData);
@@ -147,6 +149,7 @@ const Scatterplot = (props) => {
 					
                     d3.selectAll('circle.'+ d.classList[0]).style("fill", "red");
                     d3.selectAll('circle.'+ d.classList[0]).style("stroke", "red");
+                    d3.selectAll('circle.'+ d.classList[0]).attr("r", 2);
                 });
                 // notSelectedCircle.nodes().map((d, i ) =>{
                 //     d3.selectAll('circle.'+ d.classList[0]).style("fill", "grey");
