@@ -68,8 +68,8 @@ const Lineplot = (props) => {
                 enter => enter
                     .append('rect')
                     .attr('transform', `translate(${margin}, ${margin})`)
-                    .attr("y", -margin)
-                    .attr("height", svgHeight)
+                    .attr("y", 0)
+                    .attr("height", height)
                     // .attr("width",
                     //     xScale(maxX) - xScale(minX)
                     // )
