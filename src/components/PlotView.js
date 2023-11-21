@@ -17,23 +17,6 @@ const PlotView = (props) => {
     let brushedData = props.brushedData;
     const [brushedx, setBrushedx] = useState([]);
 
-    useEffect(() => {
-
-        //brush된 X좌표
-        const updatedBrushedx = brushedData.map(d => d.issue_time);
-
-
-        // console.log("updatedBrushedx", updatedBrushedx);
-
-        setBrushedx(updatedBrushedx);
-
-        // console.log("upbrushedx", brushedx);
-
-
-
-
-    }, [brushedData]);
-
     /* 지원 */
     //scatter plot으로 통일
     //line plot 추가 (throughput, resorce) = > y축 짧게

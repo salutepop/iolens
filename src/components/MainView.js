@@ -16,24 +16,22 @@ const MainView = (props) => {
 
     //hyo
     const calc = props.calc;
-    const [brushedIndex, setBrushedIndex] = useState([]);
-    const [brushedData, setBrushedData] = useState([calc]);
+    const defaultIndex = calc.map(d=>d.idx);
+    const [brushedData, setBrushedData] = useState(calc);
+    const [brushedIndex, setBrushedIndex] = useState(defaultIndex);
 
 
     useEffect(() => {
-
         let indexArray = brushedIndex.map(d => d.idx);
         // console.log("indexArray", indexArray);
 
         const updatedBrushedData = calc
             .filter(d => indexArray.includes(d.idx))
-
         // console.log("upbrushedData", updatedBrushedData);
         setBrushedData(updatedBrushedData);
 
-
-
-
+        // console.log(brushedData)
+        // console.log(brushedIndex)
     }, [brushedIndex]);
 
     const handleCheckboxChange = (graphName) => {

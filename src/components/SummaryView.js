@@ -48,6 +48,7 @@ const SummaryView = (props) => {
                     .attr('y', (textline, i) => {
                         return lineHeight * i + svgMargin;
                     })
+                    .style('font-family','monospace')
                     .attr('fill', 'black')
                     .attr('text-anchor', 'start')
                     .attr('textbaseline', 'bottom')

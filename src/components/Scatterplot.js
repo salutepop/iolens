@@ -116,7 +116,6 @@ const Scatterplot = (props) => {
                 d3.selectAll('circle').style("stroke", "none")
                 d3.selectAll('circle').attr("r", 0.5);
                 console.log("brushed nothing")
-                let selectedData = [];
                 props.setBrushedIndex(data);
                 
                 return;
