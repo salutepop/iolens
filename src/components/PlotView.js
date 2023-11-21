@@ -93,35 +93,35 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.latency && (
                     <div style={{ display: "flex" }}>
-                    <h2 className="vertical-heading">
-                        {"Latency(us)"}
-                    </h2>
-                    <Scatterplot
-                        width={plotWidth}
-                        height={plotHeight}
-                        data={calc.map((d) => ({ issue_time: d.issue_time, value: d.latency, idx: d.idx }))}
-                        margin={plotMargin}
-                        radius={radius}
-                        setBrushedIndex={props.setBrushedIndex} />
-                        </div>
+                        <h2 className="vertical-heading">
+                            {"Latency(us)"}
+                        </h2>
+                        <Scatterplot
+                            width={plotWidth}
+                            height={plotHeight}
+                            data={calc.map((d) => ({ issue_time: d.issue_time, value: d.latency, idx: d.idx }))}
+                            margin={plotMargin}
+                            radius={radius}
+                            setBrushedIndex={props.setBrushedIndex} />
+                    </div>
                 )}
             </div>
 
             <div>
                 {stateCheckbox.lba && (
                     <div style={{ display: "flex" }}>
-                    <h2 className="vertical-heading">
-                        {"LBA"}
-                    </h2>
-                    <Scatterplot
-                        width={plotWidth}
-                        height={plotHeight}
-                        data={calc.map((d) => ({ issue_time: d.issue_time, value: d.lba, idx: d.idx }))}
-                        margin={plotMargin}
-                        radius={radius}
-                        setBrushedIndex={props.setBrushedIndex} />
-                        </div>
-                        
+                        <h2 className="vertical-heading">
+                            {"LBA"}
+                        </h2>
+                        <Scatterplot
+                            width={plotWidth}
+                            height={plotHeight}
+                            data={calc.map((d) => ({ issue_time: d.issue_time, value: d.lba, idx: d.idx }))}
+                            margin={plotMargin}
+                            radius={radius}
+                            setBrushedIndex={props.setBrushedIndex} />
+                    </div>
+
                 )}
             </div>
         </div>

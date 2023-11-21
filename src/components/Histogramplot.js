@@ -10,7 +10,7 @@ import data from '../data/fio_calc.json'
 const Histogramplot = (props) => {
     const svgHist = useRef(null);
     const svgMargin = 30;
-    const plotSize = 200;
+    const plotSize = 250;
     const svgHeight = plotSize + svgMargin * 3;
     const svgWidth = plotSize + svgMargin * 3;
 
@@ -78,7 +78,7 @@ const Histogramplot = (props) => {
                     .attr('width', d => xScale(d.x1) - xScale(d.x0))
                     .attr('height', d => plotSize - yScale(d.length))
                     .style('fill', 'blue')
-                    .style('stroke', 'none'),
+                    .style('stroke-width', '0'),
                 update => update
                     .attr('transform', d => `translate(${xScale(d.x0)},${yScale(d.length)})`)
                     .attr('width', d => xScale(d.x1) - xScale(d.x0))
@@ -98,7 +98,7 @@ const Histogramplot = (props) => {
             .append('text')
             .style('transform', 'rotate(270deg)')
             .attr('x', -(plotSize + svgMargin * 2)/2)
-            .attr('y', svgMargin) 
+            .attr('y', svgMargin)
             .style('text-anchor', 'middle')
             // .style('vertical-align', 'baseline')
             .text('Counts')

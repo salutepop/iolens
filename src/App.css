@@ -19,10 +19,9 @@
   display: flex;
   flex-direction: column;
   /* margin-top: 50px; */
-  margin-left: 50px;
 }
 
-.innerplot-container{
+.plotview-container{
   display: flex;
   flex-direction: row;
 }
@@ -58,7 +57,6 @@
 
 .vertical-heading {
   display: flex;
-  
   font-size: 25px;
   writing-mode: vertical-lr; 
   /* text-orientation: upright;  */
@@ -76,4 +74,8 @@
   background-color: black; /* 구분선의 색상을 설정하세요. */
   margin: 1px; /* 구분선의 좌우 여백을 설정하세요. */
   height: 100; /* 수평선으로 만들기 위해 높이를 100%로 설정합니다. */
+}
+
+.header {
+  text-align: center;
 }

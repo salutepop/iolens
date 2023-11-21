@@ -7,7 +7,7 @@ const SummaryView = (props) => {
     const svgMargin = 30;
     const textWidth = 250;
     const lineHeight = 30;
-    const svgHeight = lineHeight * 4 + svgMargin;
+    const svgHeight = lineHeight * 4 + 2 *svgMargin;
     const svgWidth = textWidth + svgMargin * 2;
     const brushedData = props.brushedData;
 

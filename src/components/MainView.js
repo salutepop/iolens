@@ -49,8 +49,8 @@ const MainView = (props) => {
                 stateCheckbox={graphVisibility}
                 handleCheckboxChange={handleCheckboxChange}
             />
-            <hr color="black" width="1600" />
-            <div className=" views" style={{ display: "flex", marginTop: "35px" }}>
+            <hr color="black"/>
+            <div className="plotview-container">
                 <PlotView
                     calc={props.calc}
                     throughput={props.throughput}
@@ -62,7 +62,7 @@ const MainView = (props) => {
                 />
 
                 <div className="right-container">
-                    <h1>Summary</h1>
+                    <h1 className='header'>Summary</h1>
                     <SummaryView
                         brushedData={brushedData}
                     />
