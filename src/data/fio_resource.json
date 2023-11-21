@@ -1,5 +1,41 @@
 [
   {
+    "timeStamp": 3032.19,
+    "cpu_user": 2,
+    "cpu_system": 3,
+    "mem_free": 6001
+  },
+  {
+    "timeStamp": 3033.19,
+    "cpu_user": 0,
+    "cpu_system": 0,
+    "mem_free": 5995
+  },
+  {
+    "timeStamp": 3034.19,
+    "cpu_user": 0,
+    "cpu_system": 0,
+    "mem_free": 6091
+  },
+  {
+    "timeStamp": 3035.19,
+    "cpu_user": 0,
+    "cpu_system": 0,
+    "mem_free": 6091
+  },
+  {
+    "timeStamp": 3036.19,
+    "cpu_user": 1,
+    "cpu_system": 1,
+    "mem_free": 6024
+  },
+  {
+    "timeStamp": 3037.19,
+    "cpu_user": 2,
+    "cpu_system": 2,
+    "mem_free": 6091
+  },
+  {
     "timeStamp": 3038.19,
     "cpu_user": 2,
     "cpu_system": 4,
@@ -156,15 +192,9 @@
     "mem_free": 1217
   },
   {
-    "timeStamp": 3064.19,
+    "timeStamp": 3063.63,
     "cpu_user": 0,
     "cpu_system": 2,
     "mem_free": 1214
-  },
-  {
-    "timeStamp": 3065.19,
-    "cpu_user": 1,
-    "cpu_system": 0,
-    "mem_free": 1200
   }
 ]
