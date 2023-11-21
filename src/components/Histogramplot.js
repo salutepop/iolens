@@ -9,11 +9,10 @@ import data from '../data/fio_calc.json'
 
 const Histogramplot = (props) => {
     const svgHist = useRef(null);
-    const svgMargin = 40;
+    const svgMargin = 30;
     const plotSize = 200;
-    const svgHeight = plotSize + svgMargin * 2;
-    const svgWidth = plotSize + svgMargin * 2;
-    const canvasHist = useRef(null);
+    const svgHeight = plotSize + svgMargin * 3;
+    const svgWidth = plotSize + svgMargin * 3;
 
     let nbin = 100;
 
@@ -25,7 +24,7 @@ const Histogramplot = (props) => {
         // console.log(d3.min(latencyArray))
         let xScale = d3.scaleLinear()
             .domain([0, maxLatency])
-            .range([svgMargin, plotSize + svgMargin]);
+            .range([svgMargin * 2, plotSize + svgMargin]);
         xScale.ticks(nbin);
 
         d3.select(svgHist.current)
@@ -54,7 +53,7 @@ const Histogramplot = (props) => {
 
         d3.select(svgHist.current)
             .append('g')
-            .attr('transform', `translate( ${svgMargin}, ${svgMargin})`)
+            .attr('transform', `translate( ${svgMargin * 2}, ${svgMargin})`)
             .attr('class', 'yAxis');
 
         d3.select(svgHist.current)
@@ -78,7 +77,8 @@ const Histogramplot = (props) => {
                     .attr('transform', d => `translate(${xScale(d.x0)},${yScale(d.length)})`)
                     .attr('width', d => xScale(d.x1) - xScale(d.x0))
                     .attr('height', d => plotSize - yScale(d.length))
-                    .style('fill', 'blue'),
+                    .style('fill', 'blue')
+                    .style('stroke', 'none'),
                 update => update
                     .attr('transform', d => `translate(${xScale(d.x0)},${yScale(d.length)})`)
                     .attr('width', d => xScale(d.x1) - xScale(d.x0))
@@ -86,6 +86,22 @@ const Histogramplot = (props) => {
                 exit => exit.remove()
             )
 
+            d3.select(svgHist.current)
+            .append('text')
+            .attr('x', svgWidth/2)
+            .attr('y', svgHeight - svgMargin)
+            .style('text-anchor', 'middle')
+            .style('vertical-align', 'baseline')
+            .text('Latency (ms)')
+
+            d3.select(svgHist.current)
+            .append('text')
+            .style('transform', 'rotate(270deg)')
+            .attr('x', -(plotSize + svgMargin * 2)/2)
+            .attr('y', svgMargin) 
+            .style('text-anchor', 'middle')
+            // .style('vertical-align', 'baseline')
+            .text('Counts')
         // d3.select(svgHist.current)
         //     .append('rect')
         //     .attr('x', 0)
@@ -98,11 +114,9 @@ const Histogramplot = (props) => {
 
     return (
         <div>
-            <h1>HistogramPlot!</h1>
             <svg ref={svgHist} height={svgHeight} width={svgWidth}>
 
             </svg>
-            <canvas ref={canvasHist} height={svgHeight} width={svgWidth} />
         </div>
     )
 };

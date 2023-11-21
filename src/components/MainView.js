@@ -61,7 +61,7 @@ const MainView = (props) => {
             />
 
             <div className="right-container">
-                <h1>summary</h1>
+                <h1>Summary</h1>
                 <SummaryView
                     brushedData={brushedData}
                 />
