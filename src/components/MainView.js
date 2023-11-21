@@ -18,7 +18,7 @@ const MainView = (props) => {
     const calc = props.calc;
     const [brushedIndex, setBrushedIndex] = useState([]);
     const [brushedData, setBrushedData] = useState([calc]);
-    
+
 
     useEffect(() => {
 
@@ -49,22 +49,24 @@ const MainView = (props) => {
                 stateCheckbox={graphVisibility}
                 handleCheckboxChange={handleCheckboxChange}
             />
-
-            <PlotView
-                calc={props.calc}
-                throughput={props.throughput}
-                stateCheckbox={graphVisibility}
-                //hyo
-                setBrushedIndex={setBrushedIndex}
-                brushedData={brushedData}
-            //index
-            />
-
-            <div className="right-container">
-                <h1>summary</h1>
-                <SummaryView
+            <hr color="black" width="1600"/>
+            <div className=" views" style={{display: "flex", marginTop: "35px"}}>
+                <PlotView
+                    calc={props.calc}
+                    throughput={props.throughput}
+                    stateCheckbox={graphVisibility}
+                    //hyo
+                    setBrushedIndex={setBrushedIndex}
                     brushedData={brushedData}
+                //index
                 />
+
+                <div className="right-container">
+                    <h1>summary</h1>
+                    <SummaryView
+                        brushedData={brushedData}
+                    />
+                </div>
             </div>
         </div>
 

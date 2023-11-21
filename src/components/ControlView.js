@@ -3,13 +3,12 @@ import React, { useRef, useEffect, useState } from "react";
 const ControlView = (props) => {
     return (
         <div className="control-container">
-            <h1 style={{ marginRight: 5 }}>
-                {"Control box"}
-            </h1>
+          
             <label className='checkbox-label'>&nbsp;</label>
             <div className="checkbox-container">
                 <input
                     type="checkbox"
+                    className="checkbox-input"
                     checked={props.stateCheckbox.queue}
                     onChange={() => props.handleCheckboxChange('queue')}
                 />
@@ -18,6 +17,7 @@ const ControlView = (props) => {
             <div className="checkbox-container">
                 <input
                     type="checkbox"
+                    className="checkbox-input"
                     checked={props.stateCheckbox.throughput}
                     onChange={() => props.handleCheckboxChange('throughput')}
                 />
@@ -26,6 +26,7 @@ const ControlView = (props) => {
             <div className="checkbox-container">
                 <input
                     type="checkbox"
+                    className="checkbox-input"
                     checked={props.stateCheckbox.latency}
                     onChange={() => props.handleCheckboxChange('latency')}
                 />
@@ -34,6 +35,7 @@ const ControlView = (props) => {
             <div className="checkbox-container">
                 <input
                     type="checkbox"
+                    className="checkbox-input"
                     checked={props.stateCheckbox.lba}
                     onChange={() => props.handleCheckboxChange('lba')}
                 />

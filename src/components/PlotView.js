@@ -21,12 +21,12 @@ const PlotView = (props) => {
 
         //brush된 X좌표
         const updatedBrushedx = brushedData.map(d => d.issue_time);
-        
+
 
         // console.log("updatedBrushedx", updatedBrushedx);
 
         setBrushedx(updatedBrushedx);
-        
+
         // console.log("upbrushedx", brushedx);
 
 
@@ -56,31 +56,46 @@ const PlotView = (props) => {
         <div className="plot-container">
             <div>
                 {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
-                    <Scatterplot 
-                        width={plotWidth}
-                        height={plotHeight}
-                        data={calc.map((d) => ({ issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx }))}
-                        margin={plotMargin}
-                        radius={radius}
-                        setBrushedIndex={props.setBrushedIndex} />
+                    <div style={{ display: "flex" }}>
+                        <h2 className="vertical-heading">
+                            {"Queue Count"}
+                        </h2>
+                        <Scatterplot
+                            width={plotWidth}
+                            height={plotHeight}
+                            data={calc.map((d) => ({ issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx }))}
+                            margin={plotMargin}
+                            radius={radius}
+                            setBrushedIndex={props.setBrushedIndex} />
+                    </div>
+
                 )}
             </div>
 
             <div>
                 {stateCheckbox.throughput && (
-                    <Lineplot 
-                        width={plotWidth}
-                        height={plotHeight}
-                        data={throughput.map((d) => ({ timeStamp: d.timeStamp, value: d.throughput }))}
-                        timeData={calc.map((d) => (d.issue_time))}
-                        margin={plotMargin}
-                        radius={radius} 
-                        brushedData={brushedData}/>
+                    <div style={{ display: "flex" }}>
+                        <h2 className="vertical-heading">
+                            {"Throughput(MB/s)"}
+                        </h2>
+                        <Lineplot
+                            width={plotWidth}
+                            height={plotHeight}
+                            data={throughput.map((d) => ({ timeStamp: d.timeStamp, value: d.throughput }))}
+                            timeData={calc.map((d) => (d.issue_time))}
+                            margin={plotMargin}
+                            radius={radius}
+                            brushedData={brushedData} />
+                    </div>
                 )}
             </div>
 
             <div>
                 {stateCheckbox.latency && (
+                    <div style={{ display: "flex" }}>
+                    <h2 className="vertical-heading">
+                        {"Latency(us)"}
+                    </h2>
                     <Scatterplot
                         width={plotWidth}
                         height={plotHeight}
@@ -88,11 +103,16 @@ const PlotView = (props) => {
                         margin={plotMargin}
                         radius={radius}
                         setBrushedIndex={props.setBrushedIndex} />
+                        </div>
                 )}
             </div>
 
             <div>
                 {stateCheckbox.lba && (
+                    <div style={{ display: "flex" }}>
+                    <h2 className="vertical-heading">
+                        {"LBA"}
+                    </h2>
                     <Scatterplot
                         width={plotWidth}
                         height={plotHeight}
@@ -100,6 +120,8 @@ const PlotView = (props) => {
                         margin={plotMargin}
                         radius={radius}
                         setBrushedIndex={props.setBrushedIndex} />
+                        </div>
+                        
                 )}
             </div>
         </div>
