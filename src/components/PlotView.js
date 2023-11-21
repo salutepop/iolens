@@ -12,6 +12,7 @@ const PlotView = (props) => {
     const plotMargin = 20;
     const plotWidth = 1200;
     const plotHeight = 200;
+    const linePlotHeight = 50;
     const radius = 0.5;
 
     //jw
@@ -53,12 +54,12 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.cpu_user && (
                     <div style={{ display: "flex" }}>
-                        <h2 className="vertical-heading">
-                            {"CPU_User"}
+                        <h2 className="header-linleplot">
+                            {"(%)\nCPU User"}
                         </h2>
                         <Lineplot
                             width={plotWidth}
-                            height={plotHeight}
+                            height={linePlotHeight}
                             data={resource.map((d) => ({ timeStamp: d.timeStamp, value: d.cpu_user }))}
                             timeData={calc.map((d) => (d.issue_time))}
                             margin={plotMargin}
@@ -71,12 +72,12 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.cpu_system && (
                     <div style={{ display: "flex" }}>
-                        <h2 className="vertical-heading">
-                            {"CPU_System"}
+                        <h2 className="header-linleplot">
+                            {"(%)\nCPU System"}
                         </h2>
                         <Lineplot
                             width={plotWidth}
-                            height={plotHeight}
+                            height={linePlotHeight}
                             data={resource.map((d) => ({ timeStamp: d.timeStamp, value: d.cpu_system }))}
                             timeData={calc.map((d) => (d.issue_time))}
                             margin={plotMargin}
@@ -89,12 +90,12 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.mem_free && (
                     <div style={{ display: "flex" }}>
-                        <h2 className="vertical-heading">
-                            {"Free Memory(%)"}
+                        <h2 className="header-linleplot">
+                            {"(%)\nFree Memory"}
                         </h2>
                         <Lineplot
                             width={plotWidth}
-                            height={plotHeight}
+                            height={linePlotHeight}
                             data={resource.map((d) => ({ timeStamp: d.timeStamp, value: d.mem_free }))}
                             timeData={calc.map((d) => (d.issue_time))}
                             margin={plotMargin}
@@ -107,12 +108,12 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.throughput && (
                     <div style={{ display: "flex" }}>
-                        <h2 className="vertical-heading">
-                            {"Throughput(MB/s)"}
+                        <h2 className="header-linleplot">
+                            {"(MB/s)\nThroughput"}
                         </h2>
                         <Lineplot
                             width={plotWidth}
-                            height={plotHeight}
+                            height={linePlotHeight}
                             data={throughput.map((d) => ({ timeStamp: d.timeStamp, value: d.throughput }))}
                             timeData={calc.map((d) => (d.issue_time))}
                             margin={plotMargin}

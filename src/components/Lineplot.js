@@ -40,6 +40,8 @@ const Lineplot = (props) => {
 
         const xAxis = d3.axisBottom(xScale);
         const yAxis = d3.axisLeft(yScale);
+        
+        yAxis.ticks(3);
 
         svg.append('g')
             .attr('transform', `translate(${margin}, ${height + margin})`)

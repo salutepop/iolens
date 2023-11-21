@@ -68,6 +68,19 @@
   
 }
 
+.header-linleplot {
+  display: flex;
+  font-size: 12px;
+  writing-mode: vertical-lr; 
+  /* text-orientation: upright;  */
+  
+  white-space: pre; /* 줄 바꿈을 방지합니다. */
+  transform: rotate(180deg); 
+  /* position: relative; */
+  justify-content: center;
+  width: 50px;
+  
+}
 /* CSS 파일에 구분선 스타일을 정의합니다. */
 .separator {
   width: 100px; /* 구분선의 너비를 설정하세요. */

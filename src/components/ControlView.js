@@ -12,7 +12,7 @@ const ControlView = (props) => {
                     checked={props.stateCheckbox.cpu_user}
                     onChange={() => props.handleCheckboxChange('cpu_user')}
                 />
-                <label className='checkbox-label'>CPU_User</label>
+                <label className='checkbox-label'>CPU User</label>
             </div>
             <div className="checkbox-container">
                 <input
@@ -21,7 +21,7 @@ const ControlView = (props) => {
                     checked={props.stateCheckbox.cpu_system}
                     onChange={() => props.handleCheckboxChange('cpu_system')}
                 />
-                <label className='checkbox-label'>CPU_Memory</label>
+                <label className='checkbox-label'>CPU System</label>
             </div>
             <div className="checkbox-container">
                 <input
