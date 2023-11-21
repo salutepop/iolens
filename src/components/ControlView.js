@@ -9,10 +9,28 @@ const ControlView = (props) => {
                 <input
                     type="checkbox"
                     className="checkbox-input"
-                    checked={props.stateCheckbox.queue}
-                    onChange={() => props.handleCheckboxChange('queue')}
+                    checked={props.stateCheckbox.cpu_user}
+                    onChange={() => props.handleCheckboxChange('cpu_user')}
                 />
-                <label className='checkbox-label'>Queue depth</label>
+                <label className='checkbox-label'>CPU_User</label>
+            </div>
+            <div className="checkbox-container">
+                <input
+                    type="checkbox"
+                    className="checkbox-input"
+                    checked={props.stateCheckbox.cpu_system}
+                    onChange={() => props.handleCheckboxChange('cpu_system')}
+                />
+                <label className='checkbox-label'>CPU_Memory</label>
+            </div>
+            <div className="checkbox-container">
+                <input
+                    type="checkbox"
+                    className="checkbox-input"
+                    checked={props.stateCheckbox.mem_free}
+                    onChange={() => props.handleCheckboxChange('mem_free')}
+                />
+                <label className='checkbox-label'>Free Memory</label>
             </div>
             <div className="checkbox-container">
                 <input
@@ -22,6 +40,15 @@ const ControlView = (props) => {
                     onChange={() => props.handleCheckboxChange('throughput')}
                 />
                 <label className='checkbox-label'>Throughput </label>
+            </div>
+            <div className="checkbox-container">
+                <input
+                    type="checkbox"
+                    className="checkbox-input"
+                    checked={props.stateCheckbox.queue}
+                    onChange={() => props.handleCheckboxChange('queue')}
+                />
+                <label className='checkbox-label'>Queue depth</label>
             </div>
             <div className="checkbox-container">
                 <input

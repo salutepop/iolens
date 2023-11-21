@@ -1,4 +1,4 @@
-timeStamp,cpu-user,cpu-system,mem-free(MB)
+timeStamp,cpu_user,cpu_system,mem_free
 3038.19,2,4,5990
 3039.19,0,1,6091
 3040.19,0,0,6091

@@ -1,16 +1,28 @@
 import React, { useRef, useEffect, useState } from "react";
 import Scatterplot from './Scatterplot';
 import Lineplot from './Lineplot';
+import * as d3 from "d3";
 import { brush } from "d3";
 
 const PlotView = (props) => {
     const calc = props.calc;
     const throughput = props.throughput;
+    const resource = props.resource;
     const stateCheckbox = props.stateCheckbox
     const plotMargin = 20;
     const plotWidth = 1200;
     const plotHeight = 200;
     const radius = 0.5;
+
+    //jw
+    let memFreeScale = d3.scaleLinear()
+        .domain([d3.min(resource, d => d.mem_free), d3.max(resource, d => d.mem_free)])
+        .range([0, 100]);
+
+    resource.forEach(d => {
+        d.mem_free = memFreeScale(d.mem_free);
+    });
+
 
     //hyo
 
@@ -37,21 +49,58 @@ const PlotView = (props) => {
 
     return (
         <div className="plot-container">
+
             <div>
-                {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
+                {stateCheckbox.cpu_user && (
                     <div style={{ display: "flex" }}>
                         <h2 className="vertical-heading">
-                            {"Queue Count"}
+                            {"CPU_User"}
                         </h2>
-                        <Scatterplot
+                        <Lineplot
                             width={plotWidth}
                             height={plotHeight}
-                            data={calc.map((d) => ({ issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx }))}
+                            data={resource.map((d) => ({ timeStamp: d.timeStamp, value: d.cpu_user }))}
+                            timeData={calc.map((d) => (d.issue_time))}
                             margin={plotMargin}
                             radius={radius}
-                            setBrushedIndex={props.setBrushedIndex} />
+                            brushedData={brushedData} />
                     </div>
+                )}
+            </div>
 
+            <div>
+                {stateCheckbox.cpu_system && (
+                    <div style={{ display: "flex" }}>
+                        <h2 className="vertical-heading">
+                            {"CPU_System"}
+                        </h2>
+                        <Lineplot
+                            width={plotWidth}
+                            height={plotHeight}
+                            data={resource.map((d) => ({ timeStamp: d.timeStamp, value: d.cpu_system }))}
+                            timeData={calc.map((d) => (d.issue_time))}
+                            margin={plotMargin}
+                            radius={radius}
+                            brushedData={brushedData} />
+                    </div>
+                )}
+            </div>
+
+            <div>
+                {stateCheckbox.mem_free && (
+                    <div style={{ display: "flex" }}>
+                        <h2 className="vertical-heading">
+                            {"Free Memory(%)"}
+                        </h2>
+                        <Lineplot
+                            width={plotWidth}
+                            height={plotHeight}
+                            data={resource.map((d) => ({ timeStamp: d.timeStamp, value: d.mem_free }))}
+                            timeData={calc.map((d) => (d.issue_time))}
+                            margin={plotMargin}
+                            radius={radius}
+                            brushedData={brushedData} />
+                    </div>
                 )}
             </div>
 
@@ -70,6 +119,24 @@ const PlotView = (props) => {
                             radius={radius}
                             brushedData={brushedData} />
                     </div>
+                )}
+            </div>
+
+            <div>
+                {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
+                    <div style={{ display: "flex" }}>
+                        <h2 className="vertical-heading">
+                            {"Queue Count"}
+                        </h2>
+                        <Scatterplot
+                            width={plotWidth}
+                            height={plotHeight}
+                            data={calc.map((d) => ({ issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx }))}
+                            margin={plotMargin}
+                            radius={radius}
+                            setBrushedIndex={props.setBrushedIndex} />
+                    </div>
+
                 )}
             </div>
 

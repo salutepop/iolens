@@ -12,6 +12,9 @@ const MainView = (props) => {
         throughput: true,
         lba: true,
         latency: true,
+        cpu_user: true,
+        cpu_system: true,
+        mem_free: true,
     });
 
     //hyo
@@ -52,6 +55,7 @@ const MainView = (props) => {
                 <PlotView
                     calc={props.calc}
                     throughput={props.throughput}
+                    resource={props.resource}
                     stateCheckbox={graphVisibility}
                     //hyo
                     setBrushedIndex={setBrushedIndex}
