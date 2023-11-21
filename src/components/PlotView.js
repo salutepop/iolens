@@ -72,6 +72,7 @@ const PlotView = (props) => {
                         width={plotWidth}
                         height={plotHeight}
                         data={throughput.map((d) => ({ timeStamp: d.timeStamp, value: d.throughput }))}
+                        timeData={calc.map((d) => (d.issue_time))}
                         margin={plotMargin}
                         radius={radius} 
                         brushedData={brushedData}/>

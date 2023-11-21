@@ -19,7 +19,7 @@ const Histogramplot = (props) => {
 
     useEffect(() => {
         const latencyArray = props.brushedData.map(d => d.latency / 1000);
-        console.log(props.brushedData)
+        // console.log(props.brushedData)
         const maxLatency = d3.max(latencyArray)
 
         // console.log(d3.min(latencyArray))

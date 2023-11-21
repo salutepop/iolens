@@ -78,6 +78,7 @@ const Scatterplot = (props) => {
         //hyo
         const brush = d3.brush()
             .extent([[0, 0], [width, height]])
+            // .on('start', clearBrushed)
             .on("end", brushed);
 
         // svg.select(".brush").remove();
@@ -85,7 +86,8 @@ const Scatterplot = (props) => {
 
         svg.append('g')
             .attr('class', 'brush')
-            .attr('transform', `translate(${margin}, ${margin})`)
+            .attr('transform', `translate(${margin}, ${margin})`);
+            // .attr('class', 'brushArea');
         // svg.select('.brush')
         //     .join(
         //         enter => enter,
@@ -94,8 +96,14 @@ const Scatterplot = (props) => {
         //         exit => exit.remove()
         //     )
          svg.select('.brush').call(brush);
-         
+        // function clearBrushed({selection}){
+        //     console.log(d3.selectAll('.brush').selectAll('rect'))
+        //     d3.selectAll('.brush').selectAll('rect').remove();
+        //     // d3.selectAll('.brush').remove();
+            
+        // }
         function brushed({ selection }) {
+            // console.log(d3.select('.brush'))
             const circles = svg.selectAll('circle');
             d3.selectAll('circle').style("fill", "grey")
             d3.selectAll('circle').style("stroke", "none")
@@ -109,7 +117,7 @@ const Scatterplot = (props) => {
                 d3.selectAll('circle').attr("r", 0.5);
                 console.log("brushed nothing")
                 let selectedData = [];
-                props.setBrushedIndex(selectedData);
+                props.setBrushedIndex(data);
                 
                 return;
             } else {
@@ -134,17 +142,17 @@ const Scatterplot = (props) => {
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
                     
                 });
-                const notSelectedCircle = circles.filter((d) => {
-                    // console.log("d.x, d.y", d.x, d.y);
-                    let xCoord = xScale(d.x);
-                    let yCoord = yScale(d.y);
+                // const notSelectedCircle = circles.filter((d) => {
+                //     // console.log("d.x, d.y", d.x, d.y);
+                //     let xCoord = xScale(d.x);
+                //     let yCoord = yScale(d.y);
                     
-                    // console.log("xCoord", d3.max(xCoord));
-                    return x0 > xCoord || xCoord > x1 || y0 > yCoord || yCoord > y1;
+                //     // console.log("xCoord", d3.max(xCoord));
+                //     return x0 > xCoord || xCoord > x1 || y0 > yCoord || yCoord > y1;
                     
-                });
+                // });
                 // console.log("selectedCircle", selectedCircle)
-                console.log("notselected", notSelectedCircle)
+                // console.log("notselected", notSelectedCircle)
                 selectedCircle.nodes().map((d, i) => {
 					
                     d3.selectAll('circle.'+ d.classList[0]).style("fill", "red");

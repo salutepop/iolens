@@ -13,28 +13,25 @@ const Lineplot = (props) => {
 
     const svgWidth = margin * 2 + width;
     const svgHeight = margin * 2 + height;
-
+    const timeData = props.timeData;
     let brushedData = props.brushedData;
-    useEffect(() => {
 
+    useEffect(() => {
+        timeData.map(d=>parseFloat(d))
         const svg = d3.select(splotSvg.current);
-        // console.log(data);
-        const brushedX = brushedData.map(d => d.issue_time)
+        const brushedX = brushedData.map(d => parseFloat(d.issue_time))
         let minX = d3.min(brushedX)
         let maxX = d3.max(brushedX)
-        // let rectWidth = maxX - minX;
-        // console.log("min", d3.min(brushedX));
-        // console.log("max", d3.max(brushedX));
-
-
-        const data_x = data.map((d) => Object.values(d)[0]);
-        const data_y = data.map((d) => Object.values(d)[1]);
-        // console.log(data_x);
-        // console.log(data_y);
-        // console.log(d3.min(data_x));
+        
+        data.map(d=>{
+            d.timeStamp = parseFloat(d.timeStamp)
+            d.value = parseFloat(d.value)
+        })
+        const data_x = data.map((d) => d.timeStamp);
+        const data_y = data.map((d) => d.value);
 
         let xScale = d3.scaleLinear()
-            .domain([d3.min(data_x), d3.max(data_x)])
+            .domain([d3.min(timeData), d3.max(timeData)])
             .range([0, width]);
 
         let yScale = d3.scaleLinear()
@@ -50,27 +47,55 @@ const Lineplot = (props) => {
         svg.append('g')
             .attr('transform', `translate(${margin}, ${margin})`)
             .call(yAxis);
-        
+
         const line = d3.line()
             .x((d, i) => xScale(data_x[i]))
             .y((d, i) => yScale(data_y[i]));
 
         svg.append("path")
+            .attr('transform', `translate(${margin}, ${margin})`)
             .datum(data)
             .attr("fill", "none")
             .attr("stroke", "blue")
             .attr("stroke-width", 1.0)
             .attr("d", line);
 
-            svg.append('rect')
-            .attr("x", xScale(minX))
-            .attr("y", -margin)
-            .attr("width", xScale(maxX) - xScale(minX))
-            .attr("height", svgHeight)
-            .style("fill", "rgba(255, 0, 0, 0.5)"); 
-        
+
+
+        svg.selectAll('rect')
+            .data(brushedX)
+            .join(
+                enter => enter
+                    .append('rect')
+                    .attr('transform', `translate(${margin}, ${margin})`)
+                    .attr("y", -margin)
+                    .attr("height", svgHeight)
+                    // .attr("width",
+                    //     xScale(maxX) - xScale(minX)
+                    // )
+                    .style("fill", "rgba(255, 0, 0, 0.5)"),
+                update => update
+                    .attr("x", d => {
+                        // console.log(xScale(minX))
+                        if (xScale(minX) < 0) {
+                            return 0
+                        }
+                        else if (xScale(minX) > width) {
+                            return width;
+                        }
+                        else return xScale(minX)
+                    })
+                    .attr("width",
+                        d => {
+                            let r_width = xScale(maxX) - xScale(minX);
+                            if (r_width >= width) { return 0 }
+                            else { return r_width };
+                        }),
+                exit => exit
+            )
+
+
         // svg.select('rect').remove();
-        svg.selectAll('rect').remove();
         // svg.selectAll('rect')
         //     .join(
         //         enter => enter.append('rect')
@@ -89,14 +114,7 @@ const Lineplot = (props) => {
         //             ,
         //         exit => exit.remove()
         //     )
-        svg.append('rect')
-            .attr("x", xScale(minX))
-            .attr("y", -margin)
-            .attr("width", xScale(maxX) - xScale(minX))
-            .attr("height", svgHeight)
-            .style("fill", "rgba(255, 0, 0, 0.5)"); 
-        
-        
+
     }, [brushedData]);
 
     return (
