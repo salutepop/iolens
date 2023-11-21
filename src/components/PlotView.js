@@ -11,8 +11,8 @@ const PlotView = (props) => {
     const stateCheckbox = props.stateCheckbox
     const plotMargin = 20;
     const plotWidth = 1200;
-    const plotHeight = 200;
-    const linePlotHeight = 50;
+    const scatterPlotHeight = 150;
+    const linePlotHeight = 60;
     const radius = 0.5;
 
     //jw
@@ -126,12 +126,12 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
                     <div style={{ display: "flex" }}>
-                        <h2 className="vertical-heading">
+                        <h2 className="header-scatterplot">
                             {"Queue Count"}
                         </h2>
                         <Scatterplot
                             width={plotWidth}
-                            height={plotHeight}
+                            height={scatterPlotHeight}
                             data={calc.map((d) => ({ issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx }))}
                             margin={plotMargin}
                             radius={radius}
@@ -144,12 +144,12 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.latency && (
                     <div style={{ display: "flex" }}>
-                        <h2 className="vertical-heading">
+                        <h2 className="header-scatterplot">
                             {"Latency(us)"}
                         </h2>
                         <Scatterplot
                             width={plotWidth}
-                            height={plotHeight}
+                            height={scatterPlotHeight}
                             data={calc.map((d) => ({ issue_time: d.issue_time, value: d.latency, idx: d.idx }))}
                             margin={plotMargin}
                             radius={radius}
@@ -161,12 +161,12 @@ const PlotView = (props) => {
             <div>
                 {stateCheckbox.lba && (
                     <div style={{ display: "flex" }}>
-                        <h2 className="vertical-heading">
+                        <h2 className="header-scatterplot">
                             {"LBA"}
                         </h2>
                         <Scatterplot
                             width={plotWidth}
-                            height={plotHeight}
+                            height={scatterPlotHeight}
                             data={calc.map((d) => ({ issue_time: d.issue_time, value: d.lba, idx: d.idx }))}
                             margin={plotMargin}
                             radius={radius}

@@ -55,9 +55,9 @@
   margin-right: 5px; /* 체크박스와 레이블 사이의 간격을 설정 */
 }
 
-.vertical-heading {
+.header-scatterplot {
   display: flex;
-  font-size: 25px;
+  font-size: 20px;
   writing-mode: vertical-lr; 
   /* text-orientation: upright;  */
   
@@ -65,12 +65,12 @@
   transform: rotate(180deg); 
   /* position: relative; */
   justify-content: center;
-  
+  width: 50px;
 }
 
 .header-linleplot {
   display: flex;
-  font-size: 12px;
+  font-size: 15px;
   writing-mode: vertical-lr; 
   /* text-orientation: upright;  */
   
@@ -78,7 +78,7 @@
   transform: rotate(180deg); 
   /* position: relative; */
   justify-content: center;
-  width: 50px;
+  width: 55px;
   
 }
 /* CSS 파일에 구분선 스타일을 정의합니다. */
