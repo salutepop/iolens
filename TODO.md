@@ -44,5 +44,6 @@
 ### 전처리
 - (완료) f2fs_status
 - (완료) top
+- (완료) trace_scsi **[points]**
 - trace_func
-- trace_scsi > heatmap 
+- trace_scsi **[points -> heatmap]**
