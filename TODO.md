@@ -1,6 +1,6 @@
 ### Graph
 - LBA Heatmap
-  - 5,000,000 Points rendering 불가 (약 450초 data)
+  - 5,000,000 Points rendering 불가 (전체 450초, 실질적으로 300초 data)
   - x 축은 1초 단위로 분할
   - y 축은 실험해보고 결정 (20~30개 수준?)
   - cell value는 points 수 (point = i/o request)
