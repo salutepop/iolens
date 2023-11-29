@@ -51,15 +51,15 @@
 
 
 
-### Stack Area chart (필수)
+### Stack Area chart (필수) (https://d3-graph-gallery.com/stackedarea.html)
  - Memory
-### Heatmap + Line chart => Scatter (필수)
+### Heatmap + Line chart => Scatter (필수) (https://d3-graph-gallery.com/graph/heatmap_basic.html)
  - CPU
-### Correlation chart (필수)
+### Correlation chart (필수) (https://d3-graph-gallery.com/graph/density2d_shading.html)
  - User가 X/Y 선택 할 수 있는 View
 ### Func Top 10 data
  - Hovering
 ### F2FS Status 표현
 ### UI 꾸미기 / Color 배색
-### Spider/Star chart (후순위)
+### Spider/Star chart (후순위) (https://d3-graph-gallery.com/spider.html)
  - Summary data에 전체 / 브러싱
