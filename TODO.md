@@ -47,3 +47,19 @@
 - (완료) trace_scsi **[points]**
 - trace_func
 - trace_scsi **[points -> heatmap]**
+
+
+
+
+### Stack Area chart (필수)
+ - Memory
+### Heatmap + Line chart => Scatter (필수)
+ - CPU
+### Correlation chart (필수)
+ - User가 X/Y 선택 할 수 있는 View
+### Func Top 10 data
+ - Hovering
+### F2FS Status 표현
+### UI 꾸미기 / Color 배색
+### Spider/Star chart (후순위)
+ - Summary data에 전체 / 브러싱
