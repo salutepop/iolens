@@ -5,6 +5,7 @@ import PlotView from './PlotView';
 import SummaryView from './SummaryView';
 import { brushSelection } from 'd3';
 
+import Correlationplot from "./Correlationplot";
 const MainView = (props) => {
 
     const [graphVisibility, setGraphVisibility] = useState({
@@ -46,6 +47,9 @@ const MainView = (props) => {
 
     return (
         <div className='main-container'>
+            <Correlationplot brushedData={brushedData}>
+
+            </Correlationplot>
             <ControlView
                 stateCheckbox={graphVisibility}
                 handleCheckboxChange={handleCheckboxChange}
