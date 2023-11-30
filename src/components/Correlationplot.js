@@ -15,13 +15,17 @@ const Correlationplot = (props) => {
     const svgWidth = (plotSize + plotMargin * 2) + svgMargin;
     const radius = 1;
 
+
     useEffect(() => {
+        let sel_X = props.useStateX[0].value;
+        let sel_Y = props.useStateY[0].value;
+        // console.log(typeof sel_X,typeof sel_Y)
         // 데이터 바뀌면, 여기 수정 필요
         let drawData =
             props.brushedData.map(d => {
-                return { x: parseFloat(d.latency), y: parseFloat(d.queue_cnt) }
+                return { x: parseFloat(d[sel_X]), y: parseFloat(d[sel_Y]) }
             })
-
+        console.log(drawData)
         // console.log(d3.min(drawData, d=>d.x), d3.max(drawData, d=>d.x))
         // console.log(d3.min(drawData, d=>d.y), d3.max(drawData, d=>d.y))
         let xMin = d3.min(drawData, d => d.x)
@@ -164,7 +168,7 @@ const Correlationplot = (props) => {
         //     .attr('stroke', 'black');
 
 
-    }, [props.brushedData])
+    }, [props.brushedData, props.useStateY, props.useStateX])
 
     return (
         <div>

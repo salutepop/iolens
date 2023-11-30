@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import ControlView from './ControlView'
 import PlotView from './PlotView';
 import SummaryView from './SummaryView';
+import CorrelationView from './CorrelationView';
 import { brushSelection } from 'd3';
 
 import Correlationplot from "./Correlationplot";
@@ -48,9 +49,9 @@ const MainView = (props) => {
 
     return (
         <div className='main-container'>
-            <Correlationplot brushedData={brushedData}>
+            <CorrelationView brushedData={brushedData}>
 
-            </Correlationplot>
+            </CorrelationView>
             <ControlView
                 stateCheckbox={graphVisibility}
                 handleCheckboxChange={handleCheckboxChange}
