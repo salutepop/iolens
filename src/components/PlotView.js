@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Scatterplot from './Scatterplot';
 import Lineplot from './Lineplot';
-import Scatterplot from "./Scatterplot";
+import Stackareaplot from "./Stackareaplot";
 import HeatMaps from './HeatMaps';
 
 import * as d3 from "d3";
