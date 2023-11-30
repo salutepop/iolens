@@ -53,13 +53,20 @@
 
 ### Stack Area chart (필수) (https://d3-graph-gallery.com/stackedarea.html)
  - Memory
+ - 같이 디버깅하기
 ### Heatmap + Line chart => Scatter (필수) (https://d3-graph-gallery.com/graph/heatmap_basic.html)
- - CPU
+ - Y축 Align 수정
+ - 모듈형태로 바꿔서 latency, qd 그리기
+ - legend
+ - histogram -> line plot으로
+ - 기존 brushedData 형식 유지해서 brush 구현 (데이터 머지)
 ### Correlation chart (필수) (https://d3-graph-gallery.com/graph/density2d_shading.html)
  - User가 X/Y 선택 할 수 있는 View
+ - 히스토그램 그리기
 ### Func Top 10 data
  - Hovering
 ### F2FS Status 표현
 ### UI 꾸미기 / Color 배색
 ### Spider/Star chart (후순위) (https://d3-graph-gallery.com/spider.html)
  - Summary data에 전체 / 브러싱
+
