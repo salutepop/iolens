@@ -21,6 +21,7 @@ const MainView = (props) => {
 
     //hyo
     const calc = props.calc;
+    const top = props.top;
     const heatmap_lba = props.heatmap_lba;
     const heatmap_latency = props.heatmap_latency;
     const heatmap_queue = props.heatmap_queue;
@@ -65,6 +66,7 @@ const MainView = (props) => {
                     calc={props.calc}
                     throughput={props.throughput}
                     resource={props.resource}
+                    top={props.top}
                     stateCheckbox={graphVisibility}
                     //hyo
                     heatmap_lba={heatmap_lba}

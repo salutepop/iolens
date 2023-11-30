@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Scatterplot from './Scatterplot';
 import Lineplot from './Lineplot';
+import Scatterplot from "./Scatterplot";
 import HeatMaps from './HeatMaps';
 
 import * as d3 from "d3";
@@ -10,6 +11,7 @@ const PlotView = (props) => {
     const calc = props.calc;
     const throughput = props.throughput;
     const resource = props.resource;
+    const top = props.top;
     const stateCheckbox = props.stateCheckbox
     const plotMargin = 20;
     const plotWidth = 1200;
@@ -226,6 +228,21 @@ const PlotView = (props) => {
                             
                             setBrushedIndex={props.setBrushedIndex} />
                     </div>
+            </div>
+
+            <div>
+                <div style={{ display: "flex" }}>
+                    <h2 className="header-scatterplot">
+                        {"Memory"}
+                    </h2>
+                    <HeatMaps
+                        width={plotWidth}
+                        height={scatterPlotHeight}
+                        data={top.map((d) => ({ time: d.time, value1: d.mem_free, value2: d.mem_used, value3: d.mem_buff }))}
+                        margin={plotMargin}
+
+                        setBrushedIndex={props.setBrushedIndex} />
+                </div>
             </div>
         </div>
     )
