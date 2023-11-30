@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
+import Statistics from "statistics.js";
 
 // import drawData from '../drawData/fio_calc.json'
 
@@ -8,24 +9,51 @@ import * as d3 from "d3";
 
 const Correlationplot = (props) => {
     const svgCorr = useRef(null);
-    const svgMargin = 30;
+    const svgMargin = 0;
     const plotSize = 300;
-    const plotMargin = 50;
+    const plotMargin = 40;
     const svgHeight = (plotSize + plotMargin * 2) + svgMargin;
     const svgWidth = (plotSize + plotMargin * 2) + svgMargin;
     const radius = 1;
 
 
     useEffect(() => {
+
+        d3.select(svgCorr.current)
+        .append('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', svgWidth)
+        .attr('height', svgHeight)
+        .attr('fill', 'none')
+        .attr('stroke', 'gray')
+
         let sel_X = props.useStateX[0].value;
         let sel_Y = props.useStateY[0].value;
         // console.log(typeof sel_X,typeof sel_Y)
         // 데이터 바뀌면, 여기 수정 필요
-        let drawData =
-            props.brushedData.map(d => {
-                return { x: parseFloat(d[sel_X]), y: parseFloat(d[sel_Y]) }
-            })
-        console.log(drawData)
+        let drawData = []
+        if ((sel_X === 'none') || (sel_Y === 'none'))
+            return
+
+        drawData = props.brushedData.map(d => {
+            return { x: parseFloat(d[sel_X]), y: parseFloat(d[sel_Y]) }
+        })
+
+        if (drawData.length === 0)
+            return
+
+        // console.log(drawData)
+        let selVars = { x: 'metric', y: 'metric' };
+
+        let stats = new Statistics(drawData, selVars);
+        let cef = stats.correlationCoefficient('x', 'y').correlationCoefficient;
+        let r2 = (cef * cef).toFixed(2);
+        // call setStateR2()
+        props.useStateR2[1](r2) 
+        
+
+        // console.log(drawData, d=>d.x)
         // console.log(d3.min(drawData, d=>d.x), d3.max(drawData, d=>d.x))
         // console.log(d3.min(drawData, d=>d.y), d3.max(drawData, d=>d.y))
         let xMin = d3.min(drawData, d => d.x)

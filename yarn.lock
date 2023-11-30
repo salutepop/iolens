@@ -8909,6 +8909,11 @@ static-eval@2.0.2:
   dependencies:
     escodegen "^1.8.1"
 
+statistics.js@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/statistics.js/-/statistics.js-1.0.0.tgz#44508ad814030043a197cf1943de60e91846eca7"
+  integrity sha512-02+/LzVgoXUQ1PKqq3Z6TQeAX72ykAispsSp7JhimWgv5q7SLhi24rzXthDpteLloihmmLiui22Ygu4VEWOK5g==
+
 statuses@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-2.0.1.tgz#55cb000ccf1d48728bd23c685a063998cf1a1b63"
