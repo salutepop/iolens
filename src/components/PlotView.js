@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import Scatterplot from './Scatterplot';
 import Lineplot from './Lineplot';
+import HeatMaps from './HeatMaps';
+
 import * as d3 from "d3";
 import { brush } from "d3";
 
@@ -14,6 +16,10 @@ const PlotView = (props) => {
     const scatterPlotHeight = 150;
     const linePlotHeight = 60;
     const radius = 0.5;
+    
+    //heatmap data
+    const heatmap_count = props.heatmap_count;
+
 
     //jw
     let memFreeScale = d3.scaleLinear()
@@ -174,6 +180,25 @@ const PlotView = (props) => {
                     </div>
 
                 )}
+            </div>
+
+            {/* heatmap */}
+            <div>
+             
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"LBA"}
+                        </h2>
+                        <HeatMaps
+                            width={plotWidth}
+                            height={scatterPlotHeight}
+                            data={heatmap_count}
+                            margin={plotMargin}
+                            radius={radius}
+                            setBrushedIndex={props.setBrushedIndex} />
+                    </div>
+
+                
             </div>
         </div>
     )
