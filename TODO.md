@@ -63,3 +63,7 @@
 ### UI 꾸미기 / Color 배색
 ### Spider/Star chart (후순위) (https://d3-graph-gallery.com/spider.html)
  - Summary data에 전체 / 브러싱
+
+ ### csv -> json
+ - https://tableconvert.com/ko/csv-to-json
+ 
