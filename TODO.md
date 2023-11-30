@@ -55,8 +55,8 @@
  - Memory
  - 같이 디버깅하기
 ### Heatmap + Line chart => Scatter (필수) (https://d3-graph-gallery.com/graph/heatmap_basic.html)
- - Y축 Align 수정
- - 모듈형태로 바꿔서 latency, qd 그리기
+ - Y축 Align 수정 v
+ - 모듈형태로 바꿔서 latency, qd 그리기 v
  - legend
  - histogram -> line plot으로
  - 기존 brushedData 형식 유지해서 brush 구현 (데이터 머지)

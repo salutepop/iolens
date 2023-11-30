@@ -60,11 +60,13 @@ const HeatMaps = (props) => {
             .attr('transform', `translate(${margin}, ${margin})`)
             .call(d3.axisLeft(yScale2))
             
-
+        const max = d3.max(data, d => d.value)
         const myColor = d3.scaleLinear()
             // .range(["lightgreen", "#69b3a2"])
-            .range(["white", "lightblue", "blue"])
-            .domain([0, d3.min(data, d => d.value) + 1, d3.max(data, d => d.value)])
+            // .range(["white", "lightblue" ,"blue", "red"])
+            // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
+            .range(["white", "lightblue" , "blue"])
+            .domain([0, d3.min(data, d => d.value) + 1,  d3.max(data, d => d.value)])
         // console.log("count", d3.min(data_value)+1)
         
         svg.append("g")
