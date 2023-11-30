@@ -105,22 +105,22 @@ const Scatterplot = (props) => {
         function brushed({ selection }) {
             // console.log(d3.select('.brush'))
             const circles = svg.selectAll('circle');
-            d3.selectAll('circle').style("fill", "grey")
-            d3.selectAll('circle').style("stroke", "none")
-            d3.selectAll('circle').attr("r", 0.5);
+            // d3.selectAll('circle').style("fill", "grey")
+            // d3.selectAll('circle').style("stroke", "none")
+            // d3.selectAll('circle').attr("r", 0.5);
 
             if (selection === null) {
                 
                 // svg.select('.brush .selection').style("fill-opacity", 0)
-                d3.selectAll('circle').style("fill", "grey")
-                d3.selectAll('circle').style("stroke", "none")
-                d3.selectAll('circle').attr("r", 0.5);
+                // d3.selectAll('circle').style("fill", "grey")
+                // d3.selectAll('circle').style("stroke", "none")
+                // d3.selectAll('circle').attr("r", 0.5);
                 console.log("brushed nothing")
                 props.setBrushedIndex(data);
                 
                 return;
             } else {
-                d3.selectAll("circle").style("fill", "grey")
+                // d3.selectAll("circle").style("fill", "grey")
                 let [[x0, y0], [x1, y1]] = selection;
                 const selectedData = circles.filter((d) => {
                     // console.log("d.x, d.y", d.x, d.y);
@@ -154,9 +154,9 @@ const Scatterplot = (props) => {
                 // console.log("notselected", notSelectedCircle)
                 selectedCircle.nodes().map((d, i) => {
 					
-                    d3.selectAll('circle.'+ d.classList[0]).style("fill", "red");
-                    d3.selectAll('circle.'+ d.classList[0]).style("stroke", "red");
-                    d3.selectAll('circle.'+ d.classList[0]).attr("r", 2);
+                    // d3.selectAll('circle.'+ d.classList[0]).style("fill", "red");
+                    // d3.selectAll('circle.'+ d.classList[0]).style("stroke", "red");
+                    // d3.selectAll('circle.'+ d.classList[0]).attr("r", 2);
                 });
                 // notSelectedCircle.nodes().map((d, i ) =>{
                 //     d3.selectAll('circle.'+ d.classList[0]).style("fill", "grey");
