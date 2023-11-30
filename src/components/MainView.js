@@ -21,7 +21,10 @@ const MainView = (props) => {
 
     //hyo
     const calc = props.calc;
-    const heatmap_count = props.heatmap_count;
+    const heatmap_lba = props.heatmap_lba;
+    const heatmap_latency = props.heatmap_latency;
+    const heatmap_queue = props.heatmap_queue;
+
     const defaultIndex = calc.map(d=>d.idx);
     const [brushedData, setBrushedData] = useState(calc);
     const [brushedIndex, setBrushedIndex] = useState(defaultIndex);
@@ -64,7 +67,9 @@ const MainView = (props) => {
                     resource={props.resource}
                     stateCheckbox={graphVisibility}
                     //hyo
-                    heatmap_count={heatmap_count}
+                    heatmap_lba={heatmap_lba}
+                    heatmap_latency={heatmap_latency}
+                    heatmap_queue={heatmap_queue}
                     setBrushedIndex={setBrushedIndex}
                     brushedData={brushedData}
                 //index

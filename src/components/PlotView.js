@@ -18,7 +18,9 @@ const PlotView = (props) => {
     const radius = 0.5;
     
     //heatmap data
-    const heatmap_count = props.heatmap_count;
+    const heatmap_lba = props.heatmap_lba;
+    const heatmap_latency = props.heatmap_latency;
+    const heatmap_queue = props.heatmap_queue;
 
 
     //jw
@@ -184,7 +186,6 @@ const PlotView = (props) => {
 
             {/* heatmap */}
             <div>
-             
                     <div style={{ display: "flex" }}>
                         <h2 className="header-scatterplot">
                             {"LBA"}
@@ -192,13 +193,39 @@ const PlotView = (props) => {
                         <HeatMaps
                             width={plotWidth}
                             height={scatterPlotHeight}
-                            data={heatmap_count}
+                            data={heatmap_lba}
                             margin={plotMargin}
-                            radius={radius}
+                            
                             setBrushedIndex={props.setBrushedIndex} />
                     </div>
-
-                
+            </div>
+            <div>
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"Queue Count"}
+                        </h2>
+                        <HeatMaps
+                            width={plotWidth}
+                            height={scatterPlotHeight}
+                            data={heatmap_queue}
+                            margin={plotMargin}
+                            
+                            setBrushedIndex={props.setBrushedIndex} />
+                    </div>
+            </div>
+            <div>
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"Latency"}
+                        </h2>
+                        <HeatMaps
+                            width={plotWidth}
+                            height={scatterPlotHeight}
+                            data={heatmap_latency}
+                            margin={plotMargin}
+                            
+                            setBrushedIndex={props.setBrushedIndex} />
+                    </div>
             </div>
         </div>
     )
