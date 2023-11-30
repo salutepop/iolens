@@ -60,7 +60,20 @@ const PlotView = (props) => {
 
     return (
         <div className="plot-container">
+            <div>
+                <div style={{ display: "flex" }}>
+                    <h2 className="header-scatterplot">
+                        {"Memory"}
+                    </h2>
+                    <Stackareaplot
+                        width={plotWidth}
+                        height={scatterPlotHeight}
+                        data={top.map((d) => ({ time: d.time, value1: d.mem_free, value2: d.mem_used, value3: d.mem_buff }))}
+                        margin={plotMargin}
 
+                        setBrushedIndex={props.setBrushedIndex} />
+                </div>
+            </div>
             <div>
                 {stateCheckbox.cpu_user && (
                     <div style={{ display: "flex" }}>
@@ -230,20 +243,7 @@ const PlotView = (props) => {
                     </div>
             </div>
 
-            <div>
-                <div style={{ display: "flex" }}>
-                    <h2 className="header-scatterplot">
-                        {"Memory"}
-                    </h2>
-                    <HeatMaps
-                        width={plotWidth}
-                        height={scatterPlotHeight}
-                        data={top.map((d) => ({ time: d.time, value1: d.mem_free, value2: d.mem_used, value3: d.mem_buff }))}
-                        margin={plotMargin}
 
-                        setBrushedIndex={props.setBrushedIndex} />
-                </div>
-            </div>
         </div>
     )
 }
