@@ -122,6 +122,7 @@ const Scatterplot = (props) => {
             } else {
                 // d3.selectAll("circle").style("fill", "grey")
                 let [[x0, y0], [x1, y1]] = selection;
+                
                 const selectedData = circles.filter((d) => {
                     // console.log("d.x, d.y", d.x, d.y);
                     let xCoord = xScale(d.x);
