@@ -20,16 +20,8 @@ const MainView = (props) => {
     });
 
     //hyo
-    const calc = props.calc;
-    const top = props.top;
-    const heatmap_lba = props.heatmap_lba;
-    const heatmap_latency = props.heatmap_latency;
-    const heatmap_queue = props.heatmap_queue;
-
     const [brushedSec, setBrushedSec] = useState([]);
     
-    
-
     useEffect(() => {
 
     }, [brushedSec]);
@@ -53,17 +45,11 @@ const MainView = (props) => {
             <hr color="black"/>
             <div className="plotview-container">
                 <PlotView
-                    calc={props.calc}
-                    throughput={props.throughput}
-                    resource={props.resource}
-                    top={props.top}
                     stateCheckbox={graphVisibility}
                     //hyo
-                    heatmap_lba={heatmap_lba}
-                    heatmap_latency={heatmap_latency}
-                    heatmap_queue={heatmap_queue}
                     setBrushedSec={setBrushedSec}
                     brushedSec={brushedSec}
+                    data = {props.data}
                 //index
                 />
 

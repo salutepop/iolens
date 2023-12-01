@@ -8,10 +8,6 @@ import * as d3 from "d3";
 import { brush } from "d3";
 
 const PlotView = (props) => {
-    const calc = props.calc;
-    const throughput = props.throughput;
-    const resource = props.resource;
-    const top = props.top;
     const stateCheckbox = props.stateCheckbox
     const plotMargin = 20;
     const plotWidth = 1200;
@@ -19,10 +15,11 @@ const PlotView = (props) => {
     const linePlotHeight = 60;
     const radius = 0.5;
     
-    //heatmap data
-    const heatmap_lba = props.heatmap_lba;
-    const heatmap_latency = props.heatmap_latency;
-    const heatmap_queue = props.heatmap_queue;
+    //data
+    const top = props.data.top;
+    const heatmap_lba = props.data.lba;
+    const heatmap_latency = props.data.latency;
+    const heatmap_queue = props.data.queue;
 
 
     //jw
