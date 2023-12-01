@@ -17,8 +17,7 @@ const Histogramplot = (props) => {
     let nbin = 100;
 
     useEffect(() => {
-        const latencyArray = props.brushedData.map(d => d.latency / 1000);
-        // console.log(props.brushedData)
+        const latencyArray = props.brushedSec.map(d => d.latency / 1000);
         const maxLatency = d3.max(latencyArray)
 
         // console.log(d3.min(latencyArray))
@@ -110,7 +109,7 @@ const Histogramplot = (props) => {
         //     .attr('height', svgHeight)
         //     .attr('fill', 'none')
         //     .attr('stroke', 'black');
-    }, [props.brushedData])
+    }, [props.brushedSec])
 
     return (
         <div>

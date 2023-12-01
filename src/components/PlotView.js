@@ -26,19 +26,13 @@ const PlotView = (props) => {
 
 
     //jw
-    let memFreeScale = d3.scaleLinear()
-        .domain([d3.min(resource, d => d.mem_free), d3.max(resource, d => d.mem_free)])
-        .range([0, 100]);
+    // let memFreeScale = d3.scaleLinear()
+    //     .domain([d3.min(resource, d => d.mem_free), d3.max(resource, d => d.mem_free)])
+    //     .range([0, 100]);
 
-    resource.forEach(d => {
-        d.mem_free = memFreeScale(d.mem_free);
-    });
-
-
-    //hyo
-
-    let brushedData = props.brushedData;
-    const [brushedx, setBrushedx] = useState([]);
+    // resource.forEach(d => {
+    //     d.mem_free = memFreeScale(d.mem_free);
+    // });
 
     /* 지원 */
     //scatter plot으로 통일
@@ -74,7 +68,7 @@ const PlotView = (props) => {
                         setBrushedIndex={props.setBrushedIndex} />
                 </div>
             </div>
-            <div>
+            {/* <div>
                 {stateCheckbox.cpu_user && (
                     <div style={{ display: "flex" }}>
                         <h2 className="header-linleplot">
@@ -144,9 +138,9 @@ const PlotView = (props) => {
                             brushedData={brushedData} />
                     </div>
                 )}
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
                 {stateCheckbox.queue && ( //graphvisivility가 참이면 랜더링, 거짓이면 렌더링 안됨.
                     <div style={{ display: "flex" }}>
                         <h2 className="header-scatterplot">
@@ -197,7 +191,7 @@ const PlotView = (props) => {
                     </div>
 
                 )}
-            </div>
+            </div> */}
 
             {/* heatmap */}
             <div>

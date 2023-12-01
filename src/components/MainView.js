@@ -26,39 +26,13 @@ const MainView = (props) => {
     const heatmap_latency = props.heatmap_latency;
     const heatmap_queue = props.heatmap_queue;
 
-    const defaultIndex = calc.map(d=>d.idx);
-    const [brushedData, setBrushedData] = useState(calc);
-    const [brushedIndex, setBrushedIndex] = useState(defaultIndex);
-
     const [brushedSec, setBrushedSec] = useState([]);
     
     
 
     useEffect(() => {
-        let indexArray = brushedIndex.map(d => d.idx);
-        // console.log("indexArray", indexArray);
 
-        const updatedBrushedData = calc
-            .filter(d => indexArray.includes(d.idx))
-        // console.log("upbrushedData", updatedBrushedData);
-        setBrushedData(updatedBrushedData);
-
-        // console.log("brushedsec", brushedSec)
-        // console.log("brushedIndex", brushedIndex)
-
-        //heatmap brushed Data
-        const secSet = new Set;
-        let secArray = brushedSec.map(d => d.sec)
-        secArray.forEach((d,i) => {
-            secSet.add(d)
-        })
-        // console.log('set', secSet)
-        secArray = Array.from(secSet);
-        
-        
-
-
-    }, [brushedIndex, brushedSec]);
+    }, [brushedSec]);
 
     const handleCheckboxChange = (graphName) => {
         setGraphVisibility((prevVisibility) => ({
@@ -69,9 +43,9 @@ const MainView = (props) => {
 
     return (
         <div className='main-container'>
-            <CorrelationView brushedData={brushedData}>
+            {/* <CorrelationView brushedSec={brushedSec}>
 
-            </CorrelationView>
+            </CorrelationView> */}
             <ControlView
                 stateCheckbox={graphVisibility}
                 handleCheckboxChange={handleCheckboxChange}
@@ -88,8 +62,6 @@ const MainView = (props) => {
                     heatmap_lba={heatmap_lba}
                     heatmap_latency={heatmap_latency}
                     heatmap_queue={heatmap_queue}
-                    setBrushedIndex={setBrushedIndex}
-                    brushedData={brushedData}
                     setBrushedSec={setBrushedSec}
                     brushedSec={brushedSec}
                 //index
@@ -97,9 +69,9 @@ const MainView = (props) => {
 
                 <div className="right-container">
                     <h1 className='header'>Summary</h1>
-                    <SummaryView
-                        brushedData={brushedData}
-                    />
+                    {/* <SummaryView
+                        brushedSec={brushedSec}
+                    /> */}
                 </div>
             </div>
         </div>
