@@ -62,6 +62,9 @@
 - [ ] (효림) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함)
 - [ ] (창민) histogram -> line plot으로
 - [ ] (효림) 기존 brushedData 형식 유지해서 brush 구현 (데이터 머지)
+- [ ] BrushedTime만 공통적으로 사용하도록 수정. 지금 localtime / setTime 이런거 다 없애기
+- [ ] BrushedTime 중복값 제거하기
+- [ ] BrushedTime은 Dictionary가 아니라, 문자열 Array로 변경하기 (Dict는 가져다 쓸 때 불편함)
 ### Correlation chart (필수) (https://d3-graph-gallery.com/graph/density2d_shading.html)
 - [x] User가 X/Y 선택 할 수 있는 View
 - [x] 히스토그램 그리기
@@ -73,6 +76,18 @@
 - [ ] UI 고민
 ### Spider/Star chart (후순위) (https://d3-graph-gallery.com/spider.html)
 - [ ] Summary data에 전체 / 브러싱
+
+### Data import 정보
+```javascript
+  let data = {
+    lba: lba,
+    latency: latency,
+    queue: queue,
+    top : top,
+    func_top3 : func_top3,
+    f2fs_status : f2fs_status,
+  }
+```
 
  ### csv -> json
  - https://tableconvert.com/ko/csv-to-json

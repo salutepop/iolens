@@ -6,40 +6,36 @@ import * as d3 from "d3";
 import { brush } from "d3";
 
 const CorrelationView = (props) => {
-    const plotMargin = 20;
-    const plotWidth = 1200;
-    const scatterPlotHeight = 150;
-    const linePlotHeight = 60;
-    const radius = 0.5;
-    const svgSelectedX = useRef(null);
-    const svgSelectedY = useRef(null);
-    const viewMargin = 50;
+    const plotMargin = 40;
+    const plotSize = 300;
     const [r2, setR2] = useState(0);
     const [selectedX, setSelectedX] = useState({ label: "none", value: "none" });
     const [selectedY, setSelectedY] = useState({ label: "none", value: "none" });
-    const parameter = ["lba", "latency", "queue_cnt"];
+    const parameter = ["throughput", "free segments", "free space"];
 
     const customStyle = {
         menu: (base, state) => ({
             ...base,
-            transition: "all .2s ease",
             transform: state.selectProps.menuIsOpen ? "rotate(90deg)" : null
         })
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    })
+    // })
     return (
         <div>
             <div className="div-corrView">
                 <h2>Correlation Plot</h2>
                 <div className="div-corrPlot">
                     <Correlationplot
+                        plotSize={plotSize}
+                        plotMargin={plotMargin}
                         useStateR2={[r2, setR2]}
                         useStateX={[selectedX, setSelectedX]}
                         useStateY={[selectedY, setSelectedY]}
                         brushedTime={props.brushedTime}
+                        data={props.data}
                     />
                 </div>
                 <div className="div-dropdownX">
@@ -67,11 +63,6 @@ const CorrelationView = (props) => {
                     R^2 = {r2}
                 </label>
             </div>
-
-
-
-
-
         </div>
     )
 }

@@ -9,36 +9,90 @@ import Statistics from "statistics.js";
 
 const Correlationplot = (props) => {
     const svgCorr = useRef(null);
-    const plotSize = 300;
-    const plotMargin = 40;
+    const plotSize = props.plotSize;
+    const plotMargin = props.plotMargin;
     const svgHeight = (plotSize + plotMargin * 2);
     const svgWidth = (plotSize + plotMargin * 2);
     const radius = 1;
-
+    const data = props.data
 
     useEffect(() => {
-
+        // BrushedTime 수정하면 같이 바꿀 것!
+        let brushedTime = []
+        props.brushedTime.forEach(d=>{
+            // console.log(d)
+            brushedTime.push(d.time)
+        })
+        
         d3.select(svgCorr.current)
-        .append('rect')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', svgWidth)
-        .attr('height', svgHeight)
-        .attr('fill', 'none')
-        .attr('stroke', 'gray')
+            .append('rect')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', svgWidth)
+            .attr('height', svgHeight)
+            .attr('fill', 'none')
+            .attr('stroke', 'gray')
 
         let sel_X = props.useStateX[0].value;
         let sel_Y = props.useStateY[0].value;
-        // console.log(typeof sel_X,typeof sel_Y)
+
         // 데이터 바뀌면, 여기 수정 필요
         let drawData = []
+
         if ((sel_X === 'none') || (sel_Y === 'none'))
             return
 
-        drawData = props.brushedTime.map(d => {
-            return { x: parseFloat(d[sel_X]), y: parseFloat(d[sel_Y]) }
-        })
+        let data_x = {}
+        let data_y = {}
 
+        // data X
+        switch (sel_X) {
+            case "free space":
+                data['f2fs_status'].forEach((d) => {
+                    data_x[d.time] = d.util
+                });
+                break;
+            case "throughput":
+                data["throughput"].forEach((d) => {
+                    data_x[d.time] = d.throughput
+                });
+                break;
+            default:
+                return;
+        }
+
+        // data Y
+        switch (sel_Y) {
+            case "free space":
+                data['f2fs_status'].forEach((d) => {
+                    data_y[d.time] = d.util
+                });
+                break;
+            case "throughput":
+                data["throughput"].forEach((d) => {
+                    data_y[d.time] = d.throughput
+                });
+                break;
+            default:
+                return;
+        }
+
+        if (brushedTime.length == 0) {
+            Object.keys(data_x).forEach((time) => {
+                if (data_y[time] != null) {
+                    drawData.push({ x: data_x[time], y: data_y[time] })
+                }
+            })
+        }
+        else {
+            brushedTime.map(time => {
+                if ((data_x[time] != null)
+                    && (data_y[time] != null)) {
+                    drawData.push({ x: data_x[time], y: data_y[time] })
+                }
+            })
+        }
+    
         if (drawData.length === 0)
             return
 
@@ -49,8 +103,8 @@ const Correlationplot = (props) => {
         let cef = stats.correlationCoefficient('x', 'y').correlationCoefficient;
         let r2 = (cef * cef).toFixed(2);
         // call setStateR2()
-        props.useStateR2[1](r2) 
-        
+        props.useStateR2[1](r2)
+
 
         // console.log(drawData, d=>d.x)
         // console.log(d3.min(drawData, d=>d.x), d3.max(drawData, d=>d.x))

@@ -30,7 +30,6 @@ const HeatMaps = (props) => {
 
     useEffect(() => {
 
-
         let minX = d3.min(timeArray)
         let maxX = d3.max(timeArray)
 
@@ -131,7 +130,7 @@ const HeatMaps = (props) => {
                     // console.log("value", d.value)
                     // console.log("xCoord", xCoord)
                     // console.log("yCoord", yCoord)
-                    return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1 && d.value > 0;
+                    return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1 && d.count > 0;
                 }).data()
                     .map(({ time }) => ({
                         time,
