@@ -31,7 +31,8 @@ const MainView = (props) => {
     const [brushedIndex, setBrushedIndex] = useState(defaultIndex);
 
     const [brushedSec, setBrushedSec] = useState([]);
-
+    
+    
 
     useEffect(() => {
         let indexArray = brushedIndex.map(d => d.idx);
@@ -42,8 +43,21 @@ const MainView = (props) => {
         // console.log("upbrushedData", updatedBrushedData);
         setBrushedData(updatedBrushedData);
 
-        console.log("brushedsec", brushedSec)
+        // console.log("brushedsec", brushedSec)
         // console.log("brushedIndex", brushedIndex)
+
+        //heatmap brushed Data
+        const secSet = new Set;
+        let secArray = brushedSec.map(d => d.sec)
+        secArray.forEach((d,i) => {
+            secSet.add(d)
+        })
+        // console.log('set', secSet)
+        secArray = Array.from(secSet);
+        
+        
+
+
     }, [brushedIndex, brushedSec]);
 
     const handleCheckboxChange = (graphName) => {
@@ -77,6 +91,7 @@ const MainView = (props) => {
                     setBrushedIndex={setBrushedIndex}
                     brushedData={brushedData}
                     setBrushedSec={setBrushedSec}
+                    brushedSec={brushedSec}
                 //index
                 />
 

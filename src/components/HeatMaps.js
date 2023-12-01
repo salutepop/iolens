@@ -18,9 +18,22 @@ const HeatMaps = (props) => {
     //hyo
     // const [Index, setIndex] = useState([]);
     const [localData, setLocalData] = useState([]);
+    let brushedSec = props.brushedSec;
+    // console.log("brusehedsec", brushedSec)
+    let secArray = localData.map(d => d.sec)
+    const secSet = new Set;
+    secArray.forEach((d, i) => {
+        secSet.add(d)
+    })
+    // console.log('set', secSet)
+    secArray = Array.from(secSet);
 
     useEffect(() => {
-        // console.log("data", data)
+
+
+        let minX = d3.min(secArray)
+        let maxX = d3.max(secArray)
+
         const svg = d3.select(splotSvg.current);
 
         const yVars = new Set;
@@ -110,11 +123,11 @@ const HeatMaps = (props) => {
         function brushed({ selection }) {
 
             const rects = svg.selectAll('rect');
-            
+
             if (selection === null) {
 
                 console.log("brushed nothing")
-
+                // props.setBrushedSec(null);
                 return;
             } else {
 
@@ -127,16 +140,16 @@ const HeatMaps = (props) => {
                     // console.log("value", d.value)
                     // console.log("xCoord", xCoord)
                     // console.log("yCoord", yCoord)
-                    return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1 && d.value > 0 ;
+                    return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1 && d.value > 0;
                 }).data()
                     .map(({ sec }) => ({
                         sec,
 
                     }));
-                    setLocalData(selectedData);
-                    console.log("Selected Sec:", localData);
+                setLocalData(selectedData);
+                console.log("local Data:", localData);
                 const selectedRect = rects.filter((d) => {
-                    
+
                     let xCoord = xScale(d.x);
                     let yCoord = yScale(d.y);
 
@@ -152,12 +165,95 @@ const HeatMaps = (props) => {
                     // d3.selectAll('circle.'+ d.classList[0]).attr("r", 2);
                 });
                 props.setBrushedSec(selectedData);
-
+            
+            
             }
             // console.log("brushed data ", Index);
         };
 
+        // svg.select('rect.background').remove();
+        // svg.selectAll('rect.background')
+        //     .join(
+        //         enter => enter.append('rect')
+        //             .attr("class", 'background')
+        //             .attr("x", xScale(minX))
+        //             .attr("y", 0)
+        //             .attr("widht", xScale(maxX) - xScale(minX))
+        //             .attr("height", height)
+        //             .style("fill", "rgba(255, 0, 0, 0.5)")
+        //         ,
+        //         update => update
+        //             .attr("class", 'background')
+        //             .attr("x", xScale(minX))
+        //             .attr("y", 0)
+        //             .attr("widht", xScale(maxX) - xScale(minX))
+        //             .attr("height", height)
+        //             .style("fill", "rgba(255, 0, 0, 0.5)")
+        //         ,
+        //         exit => exit.remove()
+        //     )
+
+
+
     }, []);
+
+    useEffect(()=>{
+        const svg = d3.select(splotSvg.current);
+        const yVars = new Set;
+
+        console.log('secarra', brushedSec)
+        data.forEach((d, i) => {
+
+            d.x = parseFloat(d.sec)
+            d.y = parseFloat(d.value_y);
+            d.value = parseFloat(d.count)
+            // console.log("d.value", d.value)
+
+        })
+        let minX = d3.min(secArray)
+        let maxX = d3.max(secArray)
+        let xScale = d3.scaleLinear()
+            .domain([d3.min(data, d => d.x), d3.max(data, d => d.x)])
+            .range([0, width]);
+
+        // console.log("local", localData)
+
+        
+        svg.selectAll('rect.background')
+        .data(brushedSec)
+        .join(
+            enter => enter
+                .append('rect')
+                .attr("class", "background")
+                .attr('transform', `translate(${margin}, ${margin})`)
+                .attr("x", xScale(minX))
+                .attr("y", 0)
+                .attr("height", height)
+                .attr("width",
+                    xScale(maxX) - xScale(minX)
+                )
+                .style("fill", "rgba(255, 0, 0, 0.5)"),
+            update => update
+                .attr("x", d => {
+                    // console.log(xScale(minX))
+                    if (xScale(minX) < 0) {
+                        return 0
+                    }
+                    else if (xScale(minX) > width) {
+                        return width;
+                    }
+                    else return xScale(minX)
+                })
+                .attr("width",
+                    d => {
+                        let r_width = xScale(maxX) - xScale(minX);
+                        if (r_width >= width) { return 0 }
+                        else { return r_width };
+                    }),
+            exit => exit
+        )
+
+    }, [brushedSec]);
 
     return (
         <div className='innerplot-container'>
