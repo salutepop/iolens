@@ -21,7 +21,7 @@ const MainView = (props) => {
 
     //hyo
     const [brushedTime, setBrushedTime] = useState([]);
-    
+
     useEffect(() => {
 
     }, [brushedTime]);
@@ -35,21 +35,19 @@ const MainView = (props) => {
 
     return (
         <div className='main-container'>
-            {/* <CorrelationView brushedTime={brushedTime}>
 
-            </CorrelationView> */}
             <ControlView
                 stateCheckbox={graphVisibility}
                 handleCheckboxChange={handleCheckboxChange}
             />
-            <hr color="black"/>
+            <hr color="black" />
             <div className="plotview-container">
                 <PlotView
                     stateCheckbox={graphVisibility}
                     //hyo
                     setBrushedTime={setBrushedTime}
                     brushedTime={brushedTime}
-                    data = {props.data}
+                    data={props.data}
                 //index
                 />
 
@@ -57,7 +55,12 @@ const MainView = (props) => {
                     <h1 className='header'>Summary</h1>
                     {/* <SummaryView
                         brushedTime={brushedTime}
+                        data={props.data}
                     /> */}
+                    {/* <CorrelationView
+                        brushedTime={brushedTime}
+                        data={props.data}>
+                    </CorrelationView> */}
                 </div>
             </div>
         </div>

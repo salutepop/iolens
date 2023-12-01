@@ -16,6 +16,7 @@ const PlotView = (props) => {
     const radius = 0.5;
     
     //data
+    //data는 이미 props.data 에 담겨있음!!!!!
     const top = props.data.top;
     const heatmap_lba = props.data.lba;
     const heatmap_latency = props.data.latency;
