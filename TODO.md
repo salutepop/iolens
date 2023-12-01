@@ -52,23 +52,28 @@
 
 
 ### Stack Area chart (필수) (https://d3-graph-gallery.com/stackedarea.html)
- - Memory
- - 같이 디버깅하기
+- [x] Memory
+- [x] 같이 디버깅하기
+- [ ] (지원) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함)
+- [ ] (지원) F2FS Status 항목 중 Segment 정보 출력
 ### Heatmap + Line chart => Scatter (필수) (https://d3-graph-gallery.com/graph/heatmap_basic.html)
- - Y축 Align 수정 v
- - 모듈형태로 바꿔서 latency, qd 그리기 v
- - legend
- - histogram -> line plot으로
- - 기존 brushedData 형식 유지해서 brush 구현 (데이터 머지)
+
+- [x] Y축 Align 수정
+- [x] 모듈형태로 바꿔서 latency, qd 그리기
+- [ ] (효림) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함)
+- [ ] (창민) histogram -> line plot으로
+- [ ] (효림) 기존 brushedData 형식 유지해서 brush 구현 (데이터 머지)
 ### Correlation chart (필수) (https://d3-graph-gallery.com/graph/density2d_shading.html)
- - User가 X/Y 선택 할 수 있는 View
- - 히스토그램 그리기
+- [x] User가 X/Y 선택 할 수 있는 View
+- [x] 히스토그램 그리기
 ### Func Top 10 data
- - Hovering
+- [ ] (창민) 데이터 파싱
+- [ ] Hovering
 ### F2FS Status 표현
 ### UI 꾸미기 / Color 배색
+- [ ] UI 고민
 ### Spider/Star chart (후순위) (https://d3-graph-gallery.com/spider.html)
- - Summary data에 전체 / 브러싱
+- [ ] Summary data에 전체 / 브러싱
 
  ### csv -> json
  - https://tableconvert.com/ko/csv-to-json
