@@ -57,7 +57,6 @@
 - [ ] (지원) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함)
 - [ ] (지원) F2FS Status 항목 중 Segment 정보 출력
 ### Heatmap + Line chart => Scatter (필수) (https://d3-graph-gallery.com/graph/heatmap_basic.html)
-
 - [x] Y축 Align 수정
 - [x] 모듈형태로 바꿔서 latency, qd 그리기
 - [ ] (효림) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함)

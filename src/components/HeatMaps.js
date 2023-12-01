@@ -47,10 +47,11 @@ const HeatMaps = (props) => {
             // console.log("d.value", d.value)
 
         })
+
         data.forEach((d, i) => {
             yVars.add(d.value_y)
         })
-        const yVarsArray = Array.from(yVars);
+        let yVarsArray = Array.from(yVars);
         const yLength = yVarsArray.length;
 
         let xScale = d3.scaleLinear()
@@ -147,7 +148,7 @@ const HeatMaps = (props) => {
 
                     }));
                 setLocalData(selectedData);
-                console.log("local Data:", localData);
+                // console.log("local Data:", localData);
                 const selectedRect = rects.filter((d) => {
 
                     let xCoord = xScale(d.x);
@@ -194,6 +195,48 @@ const HeatMaps = (props) => {
         //     )
 
 
+        // Histogram Begin
+
+        // console.log(yVarsArray)
+        // yVarsArray = yVarsArray.sort(compare)
+        // console.log(yVarsArray)
+        let hist = Object.fromEntries(yVarsArray.map(d => [d, 0]))
+        
+        data.forEach((d)=>{
+            hist[d.value_y] += d.value
+        })
+        // console.log(hist)
+        // hist = Object.keys(hist).sort(compare);
+        // console.log(hist)
+        let histWidth = 100;
+        let histScale = d3.scaleLinear()
+            .domain([0, d3.max(Object.values(hist))])
+            .range([histWidth, 0]);
+
+        let points = [[histWidth, height]]
+        Object.keys(hist).forEach(key => {
+            // console.log(key)
+                points.push([histScale(hist[key]), yScale(key)])
+            // return [key, hist[key]]
+        })
+        // points.push([0,100])
+        var compare = function(a, b) {
+            return parseFloat(a[1]) - parseFloat(b[1]);
+          }
+        
+        console.log(points.sort(compare))
+
+        // console.log(yScale.domain())
+        // console.log(points)
+        // console.log(points)
+        d3.select(splotSvg.current)
+            .append('g')
+            .attr('transform', `translate(${margin}, ${margin})`)
+            .append('path')
+            .style('stroke', 'black')
+            .style('fill', 'none')
+            .attr('d', d3.line().curve(d3.curveNatural)(points))
+        // Histogram End
 
     }, []);
 
@@ -201,7 +244,7 @@ const HeatMaps = (props) => {
         const svg = d3.select(splotSvg.current);
         const yVars = new Set;
 
-        console.log('secarra', brushedSec)
+        // console.log('secarra', brushedSec)
         data.forEach((d, i) => {
 
             d.x = parseFloat(d.sec)
