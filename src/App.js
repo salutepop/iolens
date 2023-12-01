@@ -8,6 +8,7 @@ import f2fs_status from "./data/f2fs_status.json"
 import lba from "./data/heatmap_lba.json";
 import latency from "./data/heatmap_latency.json";
 import queue from "./data/heatmap_queue.json";
+import throughput from "./data/throughput.json"
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
   parseData(queue)
   parseData(top)
   parseData(f2fs_status)
+  parseData(throughput)
 
   const data = {
     lba: lba,
@@ -33,6 +35,7 @@ function App() {
     top: top,
     func_top3: func_top3,
     f2fs_status: f2fs_status,
+    throughput: throughput,
   }
 
 
