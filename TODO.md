@@ -65,6 +65,7 @@
 - [ ] BrushedTime만 공통적으로 사용하도록 수정. 지금 localtime / setTime 이런거 다 없애기
 - [ ] BrushedTime 중복값 제거하기
 - [ ] BrushedTime은 Dictionary가 아니라, 문자열 Array로 변경하기 (Dict는 가져다 쓸 때 불편함)
+- [ ] Data 수정하면서 Brushed Rect 안지워지는 문제 생김
 ### Correlation chart (필수) (https://d3-graph-gallery.com/graph/density2d_shading.html)
 - [x] User가 X/Y 선택 할 수 있는 View
 - [x] 히스토그램 그리기
