@@ -18,21 +18,21 @@ const HeatMaps = (props) => {
     //hyo
     // const [Index, setIndex] = useState([]);
     const [localData, setLocalData] = useState([]);
-    let brushedSec = props.brushedSec;
-    // console.log("brusehedsec", brushedSec)
-    let secArray = localData.map(d => d.sec)
-    const secSet = new Set;
-    secArray.forEach((d, i) => {
-        secSet.add(d)
+    let brushedTime = props.brushedTime;
+    // console.log("brusehedtime", brushedTime)
+    let timeArray = localData.map(d => d.time)
+    const timeSet = new Set;
+    timeArray.forEach((d, i) => {
+        timeSet.add(d)
     })
-    // console.log('set', secSet)
-    secArray = Array.from(secSet);
+    // console.log('set', timeSet)
+    timeArray = Array.from(timeSet);
 
     useEffect(() => {
 
 
-        let minX = d3.min(secArray)
-        let maxX = d3.max(secArray)
+        let minX = d3.min(timeArray)
+        let maxX = d3.max(timeArray)
 
         const svg = d3.select(splotSvg.current);
 
@@ -41,7 +41,7 @@ const HeatMaps = (props) => {
 
         data.forEach((d, i) => {
 
-            d.x = parseFloat(d.sec)
+            d.x = parseFloat(d.time)
             d.y = parseFloat(d.value_y);
             d.value = parseFloat(d.count)
             // console.log("d.value", d.value)
@@ -128,7 +128,7 @@ const HeatMaps = (props) => {
             if (selection === null) {
 
                 console.log("brushed nothing")
-                // props.setBrushedSec(null);
+                // props.setBrushedTime(null);
                 return;
             } else {
 
@@ -143,8 +143,8 @@ const HeatMaps = (props) => {
                     // console.log("yCoord", yCoord)
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1 && d.value > 0;
                 }).data()
-                    .map(({ sec }) => ({
-                        sec,
+                    .map(({ time }) => ({
+                        time,
 
                     }));
                 setLocalData(selectedData);
@@ -165,7 +165,7 @@ const HeatMaps = (props) => {
                     // d3.selectAll('circle.'+ d.classList[0]).style("stroke", "red");
                     // d3.selectAll('circle.'+ d.classList[0]).attr("r", 2);
                 });
-                props.setBrushedSec(selectedData);
+                props.setBrushedTime(selectedData);
             
             
             }
@@ -224,7 +224,7 @@ const HeatMaps = (props) => {
             return parseFloat(a[1]) - parseFloat(b[1]);
           }
         
-        console.log(points.sort(compare))
+        points.sort(compare)
 
         // console.log(yScale.domain())
         // console.log(points)
@@ -244,17 +244,17 @@ const HeatMaps = (props) => {
         const svg = d3.select(splotSvg.current);
         const yVars = new Set;
 
-        // console.log('secarra', brushedSec)
+        // console.log('timearra', brushedTime)
         data.forEach((d, i) => {
 
-            d.x = parseFloat(d.sec)
+            d.x = parseFloat(d.time)
             d.y = parseFloat(d.value_y);
             d.value = parseFloat(d.count)
             // console.log("d.value", d.value)
 
         })
-        let minX = d3.min(secArray)
-        let maxX = d3.max(secArray)
+        let minX = d3.min(timeArray)
+        let maxX = d3.max(timeArray)
         let xScale = d3.scaleLinear()
             .domain([d3.min(data, d => d.x), d3.max(data, d => d.x)])
             .range([0, width]);
@@ -263,7 +263,7 @@ const HeatMaps = (props) => {
 
         
         svg.selectAll('rect.background')
-        .data(brushedSec)
+        .data(brushedTime)
         .join(
             enter => enter
                 .append('rect')
@@ -296,7 +296,7 @@ const HeatMaps = (props) => {
             exit => exit
         )
 
-    }, [brushedSec]);
+    }, [brushedTime]);
 
     return (
         <div className='innerplot-container'>

@@ -36,7 +36,7 @@ const Correlationplot = (props) => {
         if ((sel_X === 'none') || (sel_Y === 'none'))
             return
 
-        drawData = props.brushedSec.map(d => {
+        drawData = props.brushedTime.map(d => {
             return { x: parseFloat(d[sel_X]), y: parseFloat(d[sel_Y]) }
         })
 
@@ -196,7 +196,7 @@ const Correlationplot = (props) => {
         //     .attr('stroke', 'black');
 
 
-    }, [props.brushedSec, props.useStateY, props.useStateX])
+    }, [props.brushedTime, props.useStateY, props.useStateX])
 
     return (
         <div>

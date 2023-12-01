@@ -201,8 +201,8 @@ const PlotView = (props) => {
                             height={scatterPlotHeight}
                             data={heatmap_lba}
                             margin={plotMargin}
-                            brushedSec={props.brushedSec}
-                            setBrushedSec={props.setBrushedSec} />
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime} />
                     </div>
             </div>
             <div>
@@ -215,8 +215,8 @@ const PlotView = (props) => {
                             height={scatterPlotHeight}
                             data={heatmap_queue}
                             margin={plotMargin}
-                            brushedSec={props.brushedSec}
-                            setBrushedSec={props.setBrushedSec} />
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime} />
                     </div>
             </div>
             <div>
@@ -229,8 +229,8 @@ const PlotView = (props) => {
                             height={scatterPlotHeight}
                             data={heatmap_latency}
                             margin={plotMargin}
-                            brushedSec={props.brushedSec}
-                            setBrushedSec={props.setBrushedSec} />
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime} />
                     </div>
             </div>
 

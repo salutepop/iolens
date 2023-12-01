@@ -39,7 +39,7 @@ const CorrelationView = (props) => {
                         useStateR2={[r2, setR2]}
                         useStateX={[selectedX, setSelectedX]}
                         useStateY={[selectedY, setSelectedY]}
-                        brushedSec={props.brushedSec}
+                        brushedTime={props.brushedTime}
                     />
                 </div>
                 <div className="div-dropdownX">

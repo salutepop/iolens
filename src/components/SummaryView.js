@@ -9,25 +9,25 @@ const SummaryView = (props) => {
     const lineHeight = 30;
     const svgHeight = lineHeight * 4 + 2 *svgMargin;
     const svgWidth = textWidth + svgMargin * 2;
-    const brushedSec = props.brushedSec;
+    const brushedTime = props.brushedTime;
 
     useEffect(() => {
         const textlines = [];
 
         // KB/s -> MB/s
-        let throughput = d3.sum(brushedSec.map(d => d.size))
-            / (d3.max(brushedSec.map(d => d.comp_time))
-                - d3.min(brushedSec.map(d => d.comp_time)))
+        let throughput = d3.sum(brushedTime.map(d => d.size))
+            / (d3.max(brushedTime.map(d => d.comp_time))
+                - d3.min(brushedTime.map(d => d.comp_time)))
             / 1024
 
-        let avgQueue = d3.mean(brushedSec.map(d => d.queue_cnt))
+        let avgQueue = d3.mean(brushedTime.map(d => d.queue_cnt))
 
         // us -> ms
-        let latency_95 = d3.quantile(brushedSec.map(d => d.latency), 0.95)
+        let latency_95 = d3.quantile(brushedTime.map(d => d.latency), 0.95)
             / 1000
-        let latency_99 = d3.quantile(brushedSec.map(d => d.latency), 0.99)
+        let latency_99 = d3.quantile(brushedTime.map(d => d.latency), 0.99)
             / 1000
-        let latency_9999 = d3.quantile(brushedSec.map(d => d.latency), 0.9999)
+        let latency_9999 = d3.quantile(brushedTime.map(d => d.latency), 0.9999)
             / 1000
 
 
@@ -71,7 +71,7 @@ const SummaryView = (props) => {
         //     .style('fill', 'none')
         //     .style('stroke', 'black');
 
-    }, [brushedSec]);
+    }, [brushedTime]);
 
     return (
         <div>
@@ -79,7 +79,7 @@ const SummaryView = (props) => {
 
                 </svg>
 
-                <Histogramplot brushedSec={brushedSec} />
+                <Histogramplot brushedTime={brushedTime} />
 
         </div>
     )

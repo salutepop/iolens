@@ -20,11 +20,11 @@ const MainView = (props) => {
     });
 
     //hyo
-    const [brushedSec, setBrushedSec] = useState([]);
+    const [brushedTime, setBrushedTime] = useState([]);
     
     useEffect(() => {
 
-    }, [brushedSec]);
+    }, [brushedTime]);
 
     const handleCheckboxChange = (graphName) => {
         setGraphVisibility((prevVisibility) => ({
@@ -35,7 +35,7 @@ const MainView = (props) => {
 
     return (
         <div className='main-container'>
-            {/* <CorrelationView brushedSec={brushedSec}>
+            {/* <CorrelationView brushedTime={brushedTime}>
 
             </CorrelationView> */}
             <ControlView
@@ -47,8 +47,8 @@ const MainView = (props) => {
                 <PlotView
                     stateCheckbox={graphVisibility}
                     //hyo
-                    setBrushedSec={setBrushedSec}
-                    brushedSec={brushedSec}
+                    setBrushedTime={setBrushedTime}
+                    brushedTime={brushedTime}
                     data = {props.data}
                 //index
                 />
@@ -56,7 +56,7 @@ const MainView = (props) => {
                 <div className="right-container">
                     <h1 className='header'>Summary</h1>
                     {/* <SummaryView
-                        brushedSec={brushedSec}
+                        brushedTime={brushedTime}
                     /> */}
                 </div>
             </div>
