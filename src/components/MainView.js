@@ -57,10 +57,10 @@ const MainView = (props) => {
                         brushedTime={brushedTime}
                         data={props.data}
                     /> */}
-                    {/* <CorrelationView
+                    <CorrelationView
                         brushedTime={brushedTime}
                         data={props.data}>
-                    </CorrelationView> */}
+                    </CorrelationView>
                 </div>
             </div>
         </div>

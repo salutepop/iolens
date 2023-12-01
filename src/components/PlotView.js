@@ -18,9 +18,9 @@ const PlotView = (props) => {
     //data
     //data는 이미 props.data 에 담겨있음!!!!!
     const top = props.data.top;
-    const heatmap_lba = props.data.lba;
-    const heatmap_latency = props.data.latency;
-    const heatmap_queue = props.data.queue;
+    const lba = props.data.lba;
+    const latency = props.data.latency;
+    const queue = props.data.queue;
 
 
     //jw
@@ -200,7 +200,7 @@ const PlotView = (props) => {
                         <HeatMaps
                             width={plotWidth}
                             height={scatterPlotHeight}
-                            data={heatmap_lba}
+                            data={lba}
                             margin={plotMargin}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime} />
@@ -214,7 +214,7 @@ const PlotView = (props) => {
                         <HeatMaps
                             width={plotWidth}
                             height={scatterPlotHeight}
-                            data={heatmap_queue}
+                            data={queue}
                             margin={plotMargin}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime} />
@@ -228,7 +228,7 @@ const PlotView = (props) => {
                         <HeatMaps
                             width={plotWidth}
                             height={scatterPlotHeight}
-                            data={heatmap_latency}
+                            data={latency}
                             margin={plotMargin}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime} />

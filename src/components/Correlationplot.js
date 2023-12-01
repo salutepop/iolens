@@ -9,11 +9,10 @@ import Statistics from "statistics.js";
 
 const Correlationplot = (props) => {
     const svgCorr = useRef(null);
-    const svgMargin = 0;
     const plotSize = 300;
     const plotMargin = 40;
-    const svgHeight = (plotSize + plotMargin * 2) + svgMargin;
-    const svgWidth = (plotSize + plotMargin * 2) + svgMargin;
+    const svgHeight = (plotSize + plotMargin * 2);
+    const svgWidth = (plotSize + plotMargin * 2);
     const radius = 1;
 
 
@@ -68,8 +67,7 @@ const Correlationplot = (props) => {
             .domain([yMin - (yMax - yMin) * 0.3, yMax])
             .range([plotSize, 0]);
 
-        let svgPlot = d3.select(svgCorr.current)
-            .attr('transform', `translate(${svgMargin}, ${svgMargin})`)
+        let svgPlot = d3.select(svgCorr.current);
 
         // compute the density data
         const densityData = d3
@@ -168,33 +166,6 @@ const Correlationplot = (props) => {
                     .call(d3.axisLeft(yScale)),
                 exit => exit.remove(),
             );
-
-
-        // d3.select(svgCorr.current)
-        //     .append('text')
-        //     .attr('x', (plotSize + plotMargin * 2) / 2 + svgMargin)
-        //     .attr('y', svgHeight)
-        //     .style('text-anchor', 'middle')
-        //     .style('vertical-align', 'baseline')
-        //     .text('Selected X')
-
-        // d3.select(svgCorr.current)
-        //     .append('text')
-        //     .style('transform', 'rotate(270deg)')
-        //     .attr('x', -((plotSize + plotMargin * 2) / 2 + svgMargin))
-        //     .attr('y', svgMargin)
-        //     .style('text-anchor', 'middle')
-        //     // .style('vertical-align', 'baseline')
-        //     .text('Selected Y')
-        // d3.select(svgCorr.current)
-        //     .append('rect')
-        //     .attr('x', 0)
-        //     .attr('y', 0)
-        //     .attr('width', svgWidth)
-        //     .attr('height', svgHeight)
-        //     .attr('fill', 'none')
-        //     .attr('stroke', 'black');
-
 
     }, [props.brushedTime, props.useStateY, props.useStateX])
 
