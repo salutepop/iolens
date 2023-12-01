@@ -37,25 +37,15 @@ const HeatMaps = (props) => {
         const svg = d3.select(splotSvg.current);
 
         const yVars = new Set;
-
-
+        // console.log(data)
         data.forEach((d, i) => {
-
-            d.x = parseFloat(d.time)
-            d.y = parseFloat(d.value_y);
-            d.value = parseFloat(d.count)
-            // console.log("d.value", d.value)
-
-        })
-
-        data.forEach((d, i) => {
-            yVars.add(d.value_y)
+            yVars.add(String(d.value_y))
         })
         let yVarsArray = Array.from(yVars);
         const yLength = yVarsArray.length;
 
         let xScale = d3.scaleLinear()
-            .domain([d3.min(data, d => d.x), d3.max(data, d => d.x)])
+            .domain([d3.min(data, d => d.time), d3.max(data, d => d.time)])
             .range([0, width]);
 
         let yScale = d3.scaleBand()
@@ -67,7 +57,7 @@ const HeatMaps = (props) => {
             .attr('transform', `translate(${margin}, ${height + margin})`)
             .call(d3.axisBottom(xScale))
 
-        let bandwidth = d3.max(data, d => d.x) - d3.min(data, d => d.x);
+        let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
 
         svg.append("g")
             .attr('transform', `translate(${margin}, ${margin})`)
@@ -79,7 +69,7 @@ const HeatMaps = (props) => {
             // .range(["white", "lightblue" ,"blue", "red"])
             // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
             .range(["lightgreen", "lightblue", "blue"])
-            .domain([0, d3.min(data, d => d.value) + 1, d3.max(data, d => d.value)])
+            .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
         // console.log("count", d3.min(data_value)+1)
 
         svg.append("g")
@@ -89,14 +79,14 @@ const HeatMaps = (props) => {
             .data(data)
             .enter()
             .append('rect')
-            .attr("x", d => xScale(d.x))
-            .attr("y", d => yScale(String(d.y)))
+            .attr("x", d => xScale(d.time))
+            .attr("y", d => yScale(String(d.value_y)))
             .attr("width", width / bandwidth)
             .attr("height", height / yLength)
             .style("stroke-width", "0")
-            .attr("stroke", function (d) { return myColor(d.value) })
+            .attr("stroke", function (d) { return myColor(d.count) })
             // .attr("opacity", function (d) { if (d.value === 0) return 0 })
-            .style("fill", function (d) { return myColor(d.value) })
+            .style("fill", function (d) { return myColor(d.count) })
             .style("pointer-events", "none"); //rect위에서 brush
 
 
@@ -136,8 +126,8 @@ const HeatMaps = (props) => {
 
                 const selectedData = rects.filter((d) => {
                     // console.log("d.x, d.y", d.x, d.y);
-                    let xCoord = xScale(d.x);
-                    let yCoord = yScale(String(d.y));
+                    let xCoord = xScale(d.time);
+                    let yCoord = yScale(String(d.value_y));
                     // console.log("value", d.value)
                     // console.log("xCoord", xCoord)
                     // console.log("yCoord", yCoord)
@@ -151,8 +141,8 @@ const HeatMaps = (props) => {
                 // console.log("local Data:", localData);
                 const selectedRect = rects.filter((d) => {
 
-                    let xCoord = xScale(d.x);
-                    let yCoord = yScale(d.y);
+                    let xCoord = xScale(d.time);
+                    let yCoord = yScale(String(d.value_y));
 
                     // console.log("xCoord", d3.max(xCoord));
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
@@ -203,7 +193,7 @@ const HeatMaps = (props) => {
         let hist = Object.fromEntries(yVarsArray.map(d => [d, 0]))
         
         data.forEach((d)=>{
-            hist[d.value_y] += d.value
+            hist[d.value_y] += d.count
         })
         // console.log(hist)
         // hist = Object.keys(hist).sort(compare);
@@ -221,7 +211,7 @@ const HeatMaps = (props) => {
         })
         // points.push([0,100])
         var compare = function(a, b) {
-            return parseFloat(a[1]) - parseFloat(b[1]);
+            return a[1] - b[1]
           }
         
         points.sort(compare)
@@ -245,18 +235,10 @@ const HeatMaps = (props) => {
         const yVars = new Set;
 
         // console.log('timearra', brushedTime)
-        data.forEach((d, i) => {
-
-            d.x = parseFloat(d.time)
-            d.y = parseFloat(d.value_y);
-            d.value = parseFloat(d.count)
-            // console.log("d.value", d.value)
-
-        })
         let minX = d3.min(timeArray)
         let maxX = d3.max(timeArray)
         let xScale = d3.scaleLinear()
-            .domain([d3.min(data, d => d.x), d3.max(data, d => d.x)])
+            .domain([d3.min(data, d => d.time), d3.max(data, d => d.time)])
             .range([0, width]);
 
         // console.log("local", localData)

@@ -8,16 +8,36 @@ import f2fs_status from "./data/f2fs_status.json"
 import lba from "./data/heatmap_lba.json";
 import latency from "./data/heatmap_latency.json";
 import queue from "./data/heatmap_queue.json";
-  
+
 function App() {
-  let data = {
+
+  function parseData(data) {
+    data.forEach(element=>{
+      Object.keys(element).forEach((key)=>{
+        element[key] = parseFloat(element[key])
+      })
+    })
+  }
+
+  // 일괄적으로 parseFloat, func_top3는 string으로 사용
+  parseData(lba)
+  parseData(latency)
+  parseData(queue)
+  parseData(top)
+  parseData(f2fs_status)
+
+  const data = {
     lba: lba,
     latency: latency,
     queue: queue,
-    top : top,
-    func_top3 : func_top3,
-    f2fs_status : f2fs_status,
+    top: top,
+    func_top3: func_top3,
+    f2fs_status: f2fs_status,
   }
+
+
+  // console.log(data)
+
   // console.log(fio_calc);
   return (
     <div className="App">

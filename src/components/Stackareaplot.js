@@ -20,16 +20,10 @@ const Stackareaplot = (props) => {
             for(let item in d){
                 if (item === 'total')
                     continue
-                d[item] = parseFloat(d[item]);
                 total += d[item];
             }
             d['total'] = total
-            // // d.forEach(parseFloat(i => i))
-            // d.time = parseFloat(d.time);
-            // d.value1 = parseFloat(d.value1);
-            // d.value2 = parseFloat(d.value2);
-            // d.value3 = parseFloat(d.value3);
-            // d.total = d.value1 + d.value2 + d.value3;
+
         });
         // console.log(data)
         const stackedData = d3.stack()
