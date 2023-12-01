@@ -10287,6 +10287,11 @@ statistics.js@^1.0.0:
   resolved "https://registry.yarnpkg.com/statistics.js/-/statistics.js-1.0.0.tgz#44508ad814030043a197cf1943de60e91846eca7"
   integrity sha512-02+/LzVgoXUQ1PKqq3Z6TQeAX72ykAispsSp7JhimWgv5q7SLhi24rzXthDpteLloihmmLiui22Ygu4VEWOK5g==
 
+statistics@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/statistics/-/statistics-3.3.0.tgz#ec7b4750ff03ab24a64dd9b357a78316bead78aa"
+  integrity sha512-9+dmo0XcSK1AU6/uNuSUV/9/KnGUT+7ZKeL+J4IWcjcczflFTWwYQaInBBSo2zyEFVkFd59bGVxzZ8SSBWC66g==
+
 statuses@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-2.0.1.tgz#55cb000ccf1d48728bd23c685a063998cf1a1b63"

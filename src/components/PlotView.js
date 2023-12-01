@@ -211,7 +211,7 @@ const PlotView = (props) => {
                             data={heatmap_lba}
                             margin={plotMargin}
                             
-                            setBrushedIndex={props.setBrushedIndex} />
+                            setBrushedSec={props.setBrushedSec} />
                     </div>
             </div>
             <div>
@@ -225,7 +225,7 @@ const PlotView = (props) => {
                             data={heatmap_queue}
                             margin={plotMargin}
                             
-                            setBrushedIndex={props.setBrushedIndex} />
+                            setBrushedSec={props.setBrushedSec} />
                     </div>
             </div>
             <div>
@@ -239,7 +239,7 @@ const PlotView = (props) => {
                             data={heatmap_latency}
                             margin={plotMargin}
                             
-                            setBrushedIndex={props.setBrushedIndex} />
+                            setBrushedSec={props.setBrushedSec} />
                     </div>
             </div>
 

@@ -31,7 +31,7 @@ const Stackareaplot = (props) => {
             // d.value3 = parseFloat(d.value3);
             // d.total = d.value1 + d.value2 + d.value3;
         });
-        console.log(data)
+        // console.log(data)
         const stackedData = d3.stack()
             .keys(["value1", "value2", "value3"])(data);
         // x축
@@ -43,7 +43,7 @@ const Stackareaplot = (props) => {
             .attr('transform', `translate(${margin}, ${height + margin})`)
             .call(d3.axisBottom(x));
 
-                console.log(d3.max(data, d=>d.total))
+                // console.log(d3.max(data, d=>d.total))
         // y축
         const y = d3.scaleLinear()
             .domain([0, d3.max(data, d=>d.total)])

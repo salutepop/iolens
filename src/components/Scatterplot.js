@@ -80,7 +80,7 @@ const Scatterplot = (props) => {
             .extent([[0, 0], [width, height]])
             // .on('start', clearBrushed)
             .on("end", brushed);
-
+            
         // svg.select(".brush").remove();
         // svg.select('.brush').remove();
 
@@ -105,6 +105,7 @@ const Scatterplot = (props) => {
         function brushed({ selection }) {
             // console.log(d3.select('.brush'))
             const circles = svg.selectAll('circle');
+            
             // d3.selectAll('circle').style("fill", "grey")
             // d3.selectAll('circle').style("stroke", "none")
             // d3.selectAll('circle').attr("r", 0.5);
