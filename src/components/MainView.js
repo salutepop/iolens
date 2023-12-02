@@ -52,11 +52,11 @@ const MainView = (props) => {
                 />
 
                 <div className="right-container">
-                    <h1 className='header'>Summary</h1>
-                    {/* <SummaryView
+                    <h2 className='header'>Summary</h2>
+                    <SummaryView
                         brushedTime={brushedTime}
                         data={props.data}
-                    /> */}
+                    />
                     <CorrelationView
                         brushedTime={brushedTime}
                         data={props.data}>

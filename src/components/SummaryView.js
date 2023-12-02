@@ -5,39 +5,118 @@ import Histogramplot from "./Histogramplot";
 const SummaryView = (props) => {
     const summarySvg = useRef(null);
     const svgMargin = 30;
-    const textWidth = 250;
+    const textWidth = 300;
     const lineHeight = 30;
-    const svgHeight = lineHeight * 4 + 2 *svgMargin;
+    const svgHeight = lineHeight * 6 + svgMargin;
     const svgWidth = textWidth + svgMargin * 2;
     const brushedTime = props.brushedTime;
-
+    const data = props.data;
     useEffect(() => {
         const textlines = [];
+        let selectedTime = [];
+        if (brushedTime.length == 0) {
+            data.top.forEach(d => {
+                selectedTime.push(d.time)
+            })
+        } else {
+            selectedTime = brushedTime;
+        }
+        // Throughput (MB/s)
+        let throughput = 0
+        let throughput_sum = 0;
+        selectedTime.map(time => {
+            data.throughput.forEach(element => {
+                if (element.time == time)
+                    throughput_sum += element.throughput;
+            })
+        })
+        throughput = throughput_sum / selectedTime.length
 
-        // KB/s -> MB/s
-        let throughput = d3.sum(brushedTime.map(d => d.size))
-            / (d3.max(brushedTime.map(d => d.comp_time))
-                - d3.min(brushedTime.map(d => d.comp_time)))
-            / 1024
+        // Avg. Queue depth (counts)
+        let avgQueue = 0
+        let queueDepth_dict = {};    //dict, QD 0 ~ QD 31 counts
+        selectedTime.map(time => {
+            data.queue.forEach(element => {
+                if (element.time == time) {
+                    if (element.value_y in queueDepth_dict)
+                        queueDepth_dict[element.value_y] += element.count
+                    else
+                        queueDepth_dict[element.value_y] = element.count
+                }
+            })
+        })
 
-        let avgQueue = d3.mean(brushedTime.map(d => d.queue_cnt))
+        let queue_total = 0;     // sum of (queue depth * queue counts)
+        let queue_counts = 0;    // sum of queue counts
+        Object.keys(queueDepth_dict).forEach((key) => {
+            queue_total += key * queueDepth_dict[key];
+            queue_counts += queueDepth_dict[key];
+        })
+        avgQueue = queue_total / queue_counts;
 
-        // us -> ms
-        let latency_95 = d3.quantile(brushedTime.map(d => d.latency), 0.95)
-            / 1000
-        let latency_99 = d3.quantile(brushedTime.map(d => d.latency), 0.99)
-            / 1000
-        let latency_9999 = d3.quantile(brushedTime.map(d => d.latency), 0.9999)
-            / 1000
-            
+        // Max. latency
+        let maxLatency_us = 0
+        selectedTime.map(time => {
+            data.latency.forEach(element => {
+                if ((element.time == time) && (element.count > 0)) {
+                    if (maxLatency_us < element.value_y) {
+                        maxLatency_us = element.value_y;
+                    }
+                }
+            })
+        })
+
+        // Avg. CPU Utilization
+        let avgCpuUtil = 0
+        selectedTime.map(time => {
+            data.top.forEach(element => {
+                if ((element.time == time)) {
+                    let idle = 0;
+                    let cores = 0;
+                    Object.keys(element).forEach((key) => {
+                        if (key.includes('_idle')) {
+                            idle += element[key];
+                            cores++;
+                        }
+                    })
+                    avgCpuUtil += 100 - (idle / cores)
+                }
+            })
+        })
+        avgCpuUtil = avgCpuUtil / selectedTime.length
+
+        // Avg. Memory Utilization
+        let avgMemUtil = 0
+        selectedTime.map(time => {
+            data.top.forEach(element => {
+                if ((element.time == time)) {
+                    avgMemUtil += (element.mem_total - element.mem_free) / element.mem_total * 100;
+                }
+            })
+        })
+        avgMemUtil = avgMemUtil / selectedTime.length
+
+        // Avg Space
+        let avgFsUtil = 0
+        selectedTime.map(time => {
+            data.f2fs_status.forEach(element => {
+                if ((element.time == time)) {
+                    avgFsUtil += element.util;
+                }
+            })
+        })
+        avgFsUtil = avgFsUtil / selectedTime.length
+
         // 6 가지
         // throughput / avg Queue depth / max latency
         // max cpu util / max mem util / avg space
-        textlines.push(`Throughput: ${Math.round(throughput * 100) / 100} MB/s`)
-        textlines.push(`Avg. Queue: ${Math.round(avgQueue * 100) / 100}`)
-        textlines.push(`Lat-95.00%: ${Math.round(latency_95 * 100) / 100} ms`)
-        textlines.push(`Lat-99.00%: ${Math.round(latency_99 * 100) / 100} ms`)
-        textlines.push(`Lat-99.99%: ${Math.round(latency_9999 * 100) / 100} ms`)
+        textlines.push(`${'Avg. Throughput'.padEnd(16, '\u00a0')}: ${Math.round(throughput * 100) / 100} MB/s`)
+        textlines.push(`${'Max. Latency'.padEnd(16, '\u00a0')}: ${Math.round(maxLatency_us / 1000) / 100} ms`)
+        textlines.push(`${'Avg. Q-Counts'.padEnd(16, '\u00a0')}: ${Math.round(avgQueue * 100) / 100}`)
+        textlines.push(`${'Avg. CPU util.'.padEnd(16, '\u00a0')}: ${Math.round(avgCpuUtil * 100) / 100} %`)
+        textlines.push(`${'Avg. Mem util.'.padEnd(16, '\u00a0')}: ${Math.round(avgMemUtil * 100) / 100} %`)
+        textlines.push(`${'Avg. FS util.'.padEnd(16, '\u00a0')}: ${Math.round(avgFsUtil * 100) / 100} %`)
+        // textlines.push(`Lat-99.99%: ${Math.round(latency_9999 * 100) / 100} ms`)
 
         d3.select(summarySvg.current)
             .selectAll('text')
@@ -50,7 +129,7 @@ const SummaryView = (props) => {
                     .attr('y', (textline, i) => {
                         return lineHeight * i + svgMargin;
                     })
-                    .style('font-family','monospace')
+                    .style('font-family', 'monospace')
                     .attr('fill', 'black')
                     .attr('text-anchor', 'start')
                     .attr('textbaseline', 'bottom')
@@ -77,11 +156,11 @@ const SummaryView = (props) => {
 
     return (
         <div>
-                <svg ref={summarySvg} width={svgWidth} height={svgHeight}>
+            <svg ref={summarySvg} width={svgWidth} height={svgHeight}>
 
-                </svg>
+            </svg>
 
-                <Histogramplot brushedTime={brushedTime} />
+            {/* <Histogramplot brushedTime={brushedTime} /> */}
 
         </div>
     )
