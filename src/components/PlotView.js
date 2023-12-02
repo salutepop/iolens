@@ -9,11 +9,10 @@ import { brush } from "d3";
 
 const PlotView = (props) => {
     const stateCheckbox = props.stateCheckbox
-    const plotMargin = 20;
+    const plotMarginWidth = 40;
+    const plotMarginHeight = 20;
     const plotWidth = 800;
-    const scatterPlotHeight = 150;
-    const linePlotHeight = 60;
-    const radius = 0.5;
+    const PlotHeight = 150;
     
     //data
     //data는 이미 props.data 에 담겨있음!!!!!
@@ -60,9 +59,10 @@ const PlotView = (props) => {
                     </h2>
                     <Stackareaplot
                         width={plotWidth}
-                        height={scatterPlotHeight}
+                        height={PlotHeight}
                         data={top.map((d) => ({ time: d.time, value1: d.mem_free, value2: d.mem_used, value3: d.mem_buff }))}
-                        margin={plotMargin}
+                        marginWidth={plotMarginWidth}
+                        marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
 />
                 </div>
@@ -75,9 +75,10 @@ const PlotView = (props) => {
                     </h2>
                     <Stackareaplot
                         width={plotWidth}
-                        height={scatterPlotHeight}
+                        height={PlotHeight}
                         data={f2fs_status.map((d) => ({ time: d.time, value1: d.seg_valid, value2: d.seg_dirty, value3: d.seg_prefree, value4: d.seg_free }))}
-                        margin={plotMargin}
+                        marginWidth={plotMarginWidth}
+                        marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
  />
                 </div>
@@ -92,10 +93,11 @@ const PlotView = (props) => {
                         </h2>
                         <HeatMaps
                             width={plotWidth}
-                            height={scatterPlotHeight}
+                            height={PlotHeight}
                             data={lba}
                             allData={props.data}
-                            margin={plotMargin}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime} />
                     </div>
@@ -107,10 +109,11 @@ const PlotView = (props) => {
                         </h2>
                         <HeatMaps
                             width={plotWidth}
-                            height={scatterPlotHeight}
+                            height={PlotHeight}
                             data={queue}
                             allData={props.data}
-                            margin={plotMargin}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime} />
                     </div>
@@ -122,10 +125,11 @@ const PlotView = (props) => {
                         </h2>
                         <HeatMaps
                             width={plotWidth}
-                            height={scatterPlotHeight}
+                            height={PlotHeight}
                             data={latency}
                             allData={props.data}
-                            margin={plotMargin}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime} />
                     </div>
@@ -212,7 +216,7 @@ const PlotView = (props) => {
                         </h2>
                         <Scatterplot
                             width={plotWidth}
-                            height={scatterPlotHeight}
+                            height={PlotHeight}
                             data={calc.map((d) => ({ issue_time: d.issue_time, value: d.queue_cnt, idx: d.idx }))}
                             margin={plotMargin}
                             radius={radius}
@@ -230,7 +234,7 @@ const PlotView = (props) => {
                         </h2>
                         <Scatterplot
                             width={plotWidth}
-                            height={scatterPlotHeight}
+                            height={PlotHeight}
                             data={calc.map((d) => ({ issue_time: d.issue_time, value: d.latency, idx: d.idx }))}
                             margin={plotMargin}
                             radius={radius}
@@ -247,7 +251,7 @@ const PlotView = (props) => {
                         </h2>
                         <Scatterplot
                             width={plotWidth}
-                            height={scatterPlotHeight}
+                            height={PlotHeight}
                             data={calc.map((d) => ({ issue_time: d.issue_time, value: d.lba, idx: d.idx }))}
                             margin={plotMargin}
                             radius={radius}

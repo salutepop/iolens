@@ -9,10 +9,11 @@ const HeatMaps = (props) => {
     const width = props.width;
     const height = props.height;
     const data = props.data;
-    const margin = props.margin;
+    const marginWidth = props.marginWidth;
+    const marginHeight = props.marginHeight;
 
-    const svgWidth = margin * 2 + width;
-    const svgHeight = margin  * 2 + height;
+    const svgWidth = marginWidth * 2 + width;
+    const svgHeight = marginHeight  * 2 + height;
 
 
     //hyo
@@ -40,13 +41,13 @@ const HeatMaps = (props) => {
 
 
         svg.append("g")
-            .attr('transform', `translate(${margin}, ${height + margin})`)
+            .attr('transform', `translate(${marginWidth}, ${height + marginHeight})`)
             .call(d3.axisBottom(xScale))
 
         let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
 
         svg.append("g")
-            .attr('transform', `translate(${margin}, ${margin})`)
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .call(d3.axisLeft(yScale))
 
 
@@ -60,7 +61,7 @@ const HeatMaps = (props) => {
 
         svg.append("g")
             // .attr("transform", `translate(${margin}, ${margin})`)
-            .attr("transform", `translate(${margin}, ${margin})`)
+            .attr("transform", `translate(${marginWidth}, ${marginHeight})`)
             .selectAll('rect')
             .data(data)
             .enter()
@@ -94,7 +95,7 @@ const HeatMaps = (props) => {
 
         svg.append('g')
             .attr('class', 'brush')
-            .attr('transform', `translate(${margin}, ${margin})`);
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`);
 
         svg.select('.brush').call(brush);
 
@@ -195,7 +196,7 @@ const HeatMaps = (props) => {
         // console.log(points)
         d3.select(splotSvg.current)
             .append('g')
-            .attr('transform', `translate(${margin}, ${margin})`)
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .append('path')
             .style('stroke', 'black')
             .style('fill', 'none')
@@ -228,7 +229,7 @@ const HeatMaps = (props) => {
         //     .call(xAxis);
         d3.select(splotSvg.current)
             .append('g')
-            .attr('transform', `translate(${width + margin}, ${margin})`)
+            .attr('transform', `translate(${width + marginWidth}, ${marginHeight})`)
             .call(yAxis);
 
         // const line = d3.line()
@@ -252,7 +253,7 @@ const HeatMaps = (props) => {
             .data(throughputData)
             .enter()
             .append("path")
-            .attr('transform', `translate(${margin}, ${margin})`)
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .attr('class', 'throughput')
             .attr("d", throughputLine(throughputData))
             .attr("fill", "none")
@@ -273,7 +274,7 @@ const HeatMaps = (props) => {
                 enter => enter
                     .append('rect')
                     .attr("class", "background")
-                    .attr('transform', `translate(${props.margin}, ${props.margin})`)
+                    .attr('transform', `translate(${props.marginWidth}, ${props.marginHeight})`)
                     .attr("x", time => xScale(time))
                     .attr("y", 0)
                     .attr("height", props.height)

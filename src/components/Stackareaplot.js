@@ -7,10 +7,11 @@ const Stackareaplot = (props) => {
     const width = props.width;
     const height = props.height;
     const data = props.data;
-    const margin = props.margin;
+    const marginWidth = props.marginWidth;
+    const marginHeight = props.marginHeight;
 
-    const svgWidth = margin * 2 + width;
-    const svgHeight = margin * 2 + height;
+    const svgWidth = marginWidth * 2 + width;
+    const svgHeight = marginHeight * 2 + height;
     let brushedTime = props.brushedTime;
 
     useEffect(() => {
@@ -44,7 +45,7 @@ const Stackareaplot = (props) => {
             .range([0, width]);
 
         svg.append('g')
-            .attr('transform', `translate(${margin}, ${height + margin})`)
+            .attr('transform', `translate(${marginWidth}, ${height + marginHeight})`)
             .call(d3.axisBottom(x));
 
                 // console.log(d3.max(data, d=>d.total))
@@ -55,7 +56,7 @@ const Stackareaplot = (props) => {
             .range([height, 0]);
 
         svg.append('g')
-            .attr('transform', `translate(${margin}, ${margin})`)
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .call(d3.axisLeft(y));
 
         // area 설정
@@ -73,7 +74,7 @@ const Stackareaplot = (props) => {
             .data(stackedData)
             .enter()
             .append("path")
-            .attr('transform', `translate(${margin}, ${margin})`)
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .attr("class", "area")
             .attr("d", area)
             .style("fill", function (d) { return color(d.key); })
@@ -94,7 +95,7 @@ const Stackareaplot = (props) => {
             enter => enter
                 .append('rect')
                 .attr("class", "background")
-                .attr('transform', `translate(${props.margin}, ${props.margin})`)
+                .attr('transform', `translate(${props.marginWidth}, ${props.marginHeight})`)
                 .attr("x", time => xScale(time))
                 .attr("y", 0)
                 .attr("height", props.height)
