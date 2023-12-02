@@ -12,12 +12,12 @@ const HeatMaps = (props) => {
     const margin = props.margin;
 
     const svgWidth = margin * 2 + width;
-    const svgHeight = margin * 2 + height;
+    const svgHeight = margin  * 2 + height;
 
 
     //hyo
     let brushedTime = props.brushedTime;
-    
+
     useEffect(() => {
 
         const svg = d3.select(splotSvg.current);
@@ -98,7 +98,7 @@ const HeatMaps = (props) => {
 
         svg.select('.brush').call(brush);
 
-        function resetBrushed(){
+        function resetBrushed() {
             svg.select('.brush .selection').style("fill-opacity", 0.2)
 
         }
@@ -122,11 +122,11 @@ const HeatMaps = (props) => {
                     let yCoord = yScale(String(d.value_y));
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1 && d.count > 0;
                 }).data()
-                    .map(item =>{
+                    .map(item => {
                         selectedTime.add(item.time)
                     });
 
-                for (let i = d3.min(selectedTime); i <= d3.max(selectedTime); i++){
+                for (let i = d3.min(selectedTime); i <= d3.max(selectedTime); i++) {
                     selectedTime.add(i)
                 }
 
@@ -165,8 +165,8 @@ const HeatMaps = (props) => {
         // yVarsArray = yVarsArray.sort(compare)
         // console.log(yVarsArray)
         let hist = Object.fromEntries(yVarsArray.map(d => [d, 0]))
-        
-        data.forEach((d)=>{
+
+        data.forEach((d) => {
             hist[d.value_y] += d.count
         })
         // console.log(hist)
@@ -180,14 +180,14 @@ const HeatMaps = (props) => {
         let points = [[histWidth, height]]
         Object.keys(hist).forEach(key => {
             // console.log(key)
-                points.push([histScale(hist[key]), yScale(key)])
+            points.push([histScale(hist[key]), yScale(key)])
             // return [key, hist[key]]
         })
         // points.push([0,100])
-        var compare = function(a, b) {
+        var compare = function (a, b) {
             return a[1] - b[1]
-          }
-        
+        }
+
         points.sort(compare)
 
         // console.log(yScale.domain())
@@ -201,10 +201,65 @@ const HeatMaps = (props) => {
             .style('fill', 'none')
             .attr('d', d3.line().curve(d3.curveNatural)(points))
         // Histogram End
-
+        drawThroughput()
     }, []);
+    function drawThroughput() {
+        let throughputData = props.allData.throughput;
+        // console.log(throughputData)
 
-    useEffect(()=>{
+        let xScale = d3.scaleLinear()
+            .domain(
+                [d3.min(throughputData, d => d.time),
+                d3.max(throughputData, d => d.time)])
+            .range([0, width]);
+
+        let yScale = d3.scaleLinear()
+            .domain(
+                [d3.min(throughputData, d => d.throughput),
+                d3.max(throughputData, d => d.throughput)])
+            .range([height, 0]);
+
+        const yAxis = d3.axisRight(yScale);
+
+        yAxis.ticks(3);
+
+        // svg.append('g')
+        //     .attr('transform', `translate(${margin}, ${height + margin})`)
+        //     .call(xAxis);
+        d3.select(splotSvg.current)
+            .append('g')
+            .attr('transform', `translate(${width + margin}, ${margin})`)
+            .call(yAxis);
+
+        // const line = d3.line()
+        //     .x((d, i) => xScale(data_x[i]))
+        //     .y((d, i) => yScale(data_y[i]));
+        // throughputData.forEach((item)=>{
+        //     console.log(xScale(item.time), yScale(item.throughput))
+        // })
+        // let line = d3.line()
+        // .datum(throughputData)
+        // .x(d => xScale(d.time))
+        // .y(d => yScale(d.throughput))
+        // console.log(line)
+        const throughputLine = d3.line()
+            .x(d => xScale(d.time))
+            .y(d => yScale(d.throughput))
+
+        d3.select(splotSvg.current)
+            .selectAll('.throughput')
+            .raise()
+            .data(throughputData)
+            .enter()
+            .append("path")
+            .attr('transform', `translate(${margin}, ${margin})`)
+            .attr('class', 'throughput')
+            .attr("d", throughputLine(throughputData))
+            .attr("fill", "none")
+            .attr("stroke", "red")
+            .attr("stroke-width", '0.5')
+    }
+    useEffect(() => {
         const svg = d3.select(splotSvg.current);
 
         let xScale = d3.scaleLinear()
@@ -213,32 +268,32 @@ const HeatMaps = (props) => {
         let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
 
         svg.selectAll('rect.background')
-        .data(brushedTime)
-        .join(
-            enter => enter
-                .append('rect')
-                .attr("class", "background")
-                .attr('transform', `translate(${props.margin}, ${props.margin})`)
-                .attr("x", time => xScale(time))
-                .attr("y", 0)
-                .attr("height", props.height)
-                .attr("width", props.width / bandwidth)
-                .style('stroke', "none")
-                .style('opacity', '0.2')
-                .style("fill", "blue"),
-            update => update
-                .attr("x", time => {
-                    // console.log(xScale(minX))
-                    if (xScale(time) < 0) {
-                        return 0
-                    }
-                    else if (xScale(time) > props.width) {
-                        return props.width;
-                    }
-                    else return xScale(time)
-                }),
-            exit => exit.remove()
-        )
+            .data(brushedTime)
+            .join(
+                enter => enter
+                    .append('rect')
+                    .attr("class", "background")
+                    .attr('transform', `translate(${props.margin}, ${props.margin})`)
+                    .attr("x", time => xScale(time))
+                    .attr("y", 0)
+                    .attr("height", props.height)
+                    .attr("width", props.width / bandwidth)
+                    .style('stroke', "none")
+                    .style('opacity', '0.2')
+                    .style("fill", "blue"),
+                update => update
+                    .attr("x", time => {
+                        // console.log(xScale(minX))
+                        if (xScale(time) < 0) {
+                            return 0
+                        }
+                        else if (xScale(time) > props.width) {
+                            return props.width;
+                        }
+                        else return xScale(time)
+                    }),
+                exit => exit.remove()
+            )
 
     }, [brushedTime]);
 

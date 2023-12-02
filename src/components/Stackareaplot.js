@@ -38,8 +38,6 @@ const Stackareaplot = (props) => {
         const stackedData = d3.stack()
         .keys(keys)(data);
         //.keys(["value1", "value2", "value3"])(data);
-        console.log(stackedData)
-        console.log(data)
         // x축
         const x = d3.scaleLinear()
             .domain(d3.extent(data, (d) => d.time))
