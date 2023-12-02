@@ -21,6 +21,7 @@ const PlotView = (props) => {
     const lba = props.data.lba;
     const latency = props.data.latency;
     const queue = props.data.queue;
+    const f2fs_status = props.data.f2fs_status;
 
 
     //jw
@@ -66,6 +67,22 @@ const PlotView = (props) => {
                         setBrushedIndex={props.setBrushedIndex} />
                 </div>
             </div>
+
+            <div>
+                <div style={{ display: "flex" }}>
+                    <h2 className="header-scatterplot">
+                        {"F2FS Segment"}
+                    </h2>
+                    <Stackareaplot
+                        width={plotWidth}
+                        height={scatterPlotHeight}
+                        data={f2fs_status.map((d) => ({ time: d.time, value1: d.seg_valid, value2: d.seg_dirty, value3: d.seg_prefree, value4: d.seg_free }))}
+                        margin={plotMargin}
+
+                        setBrushedIndex={props.setBrushedIndex} />
+                </div>
+            </div>
+
             {/* <div>
                 {stateCheckbox.cpu_user && (
                     <div style={{ display: "flex" }}>

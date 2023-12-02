@@ -20,14 +20,25 @@ const Stackareaplot = (props) => {
             for(let item in d){
                 if (item === 'total')
                     continue
+                d[item] = parseFloat(d[item]);
                 total += d[item];
             }
             d['total'] = total
-
+            // // d.forEach(parseFloat(i => i))
+            // d.time = parseFloat(d.time);
+            // d.value1 = parseFloat(d.value1);
+            // d.value2 = parseFloat(d.value2);
+            // d.value3 = parseFloat(d.value3);
+            // d.total = d.value1 + d.value2 + d.value3;
         });
         // console.log(data)
+        
+        const keys = ["value1", "value2", "value3", 'value4']
         const stackedData = d3.stack()
-            .keys(["value1", "value2", "value3"])(data);
+        .keys(keys)(data);
+        //.keys(["value1", "value2", "value3"])(data);
+        console.log(stackedData)
+        console.log(data)
         // x축
         const x = d3.scaleLinear()
             .domain(d3.extent(data, (d) => d.time))
@@ -54,6 +65,11 @@ const Stackareaplot = (props) => {
             .y0(d => y(d[0]))
             .y1(d => y(d[1]));
 
+        // color palette
+        const color = d3.scaleOrdinal()
+            .domain(keys)
+            .range(['#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf'])
+        
         svg.selectAll()
             .data(stackedData)
             .enter()
@@ -61,11 +77,7 @@ const Stackareaplot = (props) => {
             .attr('transform', `translate(${margin}, ${margin})`)
             .attr("class", "area")
             .attr("d", area)
-            .style("fill", (d) => {
-                if (d.key === "value1") return "steelblue";
-                else if (d.key === "value2") return "orange";
-                else return "green";
-            })
+            .style("fill", function (d) { return color(d.key); })
 
 
     }, []);
