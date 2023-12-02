@@ -11,7 +11,11 @@ const CorrelationView = (props) => {
     const [r2, setR2] = useState(0);
     const [selectedX, setSelectedX] = useState({ label: "none", value: "none" });
     const [selectedY, setSelectedY] = useState({ label: "none", value: "none" });
-    const parameter = ["throughput", "free segments", "free space"];
+    const parameter = ["throughput", 
+            "sys memory free", "sys memory used", "sys memory buffer",
+            "fs space util.", "fs memory util.",
+            "free segments", "valid segments", "dirty segments",
+        ];
 
     const customStyle = {
         menu: (base, state) => ({

@@ -19,11 +19,11 @@ const Correlationplot = (props) => {
     useEffect(() => {
         // BrushedTime 수정하면 같이 바꿀 것!
         let brushedTime = []
-        props.brushedTime.forEach(d=>{
+        props.brushedTime.forEach(d => {
             // console.log(d)
             brushedTime.push(d.time)
         })
-        
+
         d3.select(svgCorr.current)
             .append('rect')
             .attr('x', 0)
@@ -47,14 +47,49 @@ const Correlationplot = (props) => {
 
         // data X
         switch (sel_X) {
-            case "free space":
+            case "throughput":
+                data["throughput"].forEach((d) => {
+                    data_x[d.time] = d.throughput
+                });
+                break;
+            case "sys memory free":
+                data['top'].forEach((d) => {
+                    data_x[d.time] = d.mem_free
+                });
+                break;
+            case "sys memory used":
+                data['top'].forEach((d) => {
+                    data_x[d.time] = d.mem_used
+                });
+                break;
+            case "sys memory buffer":
+                data['top'].forEach((d) => {
+                    data_x[d.time] = d.mem_buff
+                });
+                break;
+            case "fs space util.":
                 data['f2fs_status'].forEach((d) => {
                     data_x[d.time] = d.util
                 });
                 break;
-            case "throughput":
-                data["throughput"].forEach((d) => {
-                    data_x[d.time] = d.throughput
+            case "fs memory util.":
+                data['f2fs_status'].forEach((d) => {
+                    data_x[d.time] = d.memory
+                });
+                break;
+            case "free segments":
+                data['f2fs_status'].forEach((d) => {
+                    data_x[d.time] = d.seg_free
+                });
+                break;
+            case "valid segments":
+                data['f2fs_status'].forEach((d) => {
+                    data_x[d.time] = d.seg_valid
+                });
+                break;
+            case "dirty segments":
+                data['f2fs_status'].forEach((d) => {
+                    data_x[d.time] = d.seg_dirty
                 });
                 break;
             default:
@@ -63,14 +98,49 @@ const Correlationplot = (props) => {
 
         // data Y
         switch (sel_Y) {
-            case "free space":
+            case "throughput":
+                data["throughput"].forEach((d) => {
+                    data_y[d.time] = d.throughput
+                });
+                break;
+            case "sys memory free":
+                data['top'].forEach((d) => {
+                    data_y[d.time] = d.mem_free
+                });
+                break;
+            case "sys memory used":
+                data['top'].forEach((d) => {
+                    data_y[d.time] = d.mem_used
+                });
+                break;
+            case "sys memory buffer":
+                data['top'].forEach((d) => {
+                    data_y[d.time] = d.mem_buff
+                });
+                break;
+            case "fs space util.":
                 data['f2fs_status'].forEach((d) => {
                     data_y[d.time] = d.util
                 });
                 break;
-            case "throughput":
-                data["throughput"].forEach((d) => {
-                    data_y[d.time] = d.throughput
+            case "fs memory util.":
+                data['f2fs_status'].forEach((d) => {
+                    data_y[d.time] = d.memory
+                });
+                break;
+            case "free segments":
+                data['f2fs_status'].forEach((d) => {
+                    data_y[d.time] = d.seg_free
+                });
+                break;
+            case "valid segments":
+                data['f2fs_status'].forEach((d) => {
+                    data_y[d.time] = d.seg_valid
+                });
+                break;
+            case "dirty segments":
+                data['f2fs_status'].forEach((d) => {
+                    data_y[d.time] = d.seg_dirty
                 });
                 break;
             default:
@@ -92,7 +162,7 @@ const Correlationplot = (props) => {
                 }
             })
         }
-    
+
         if (drawData.length === 0)
             return
 
