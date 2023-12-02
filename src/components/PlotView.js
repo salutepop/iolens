@@ -10,7 +10,7 @@ import { brush } from "d3";
 const PlotView = (props) => {
     const stateCheckbox = props.stateCheckbox
     const plotMargin = 20;
-    const plotWidth = 1200;
+    const plotWidth = 800;
     const scatterPlotHeight = 150;
     const linePlotHeight = 60;
     const radius = 0.5;

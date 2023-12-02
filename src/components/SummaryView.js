@@ -29,8 +29,10 @@ const SummaryView = (props) => {
             / 1000
         let latency_9999 = d3.quantile(brushedTime.map(d => d.latency), 0.9999)
             / 1000
-
-
+            
+        // 6 가지
+        // throughput / avg Queue depth / max latency
+        // max cpu util / max mem util / avg space
         textlines.push(`Throughput: ${Math.round(throughput * 100) / 100} MB/s`)
         textlines.push(`Avg. Queue: ${Math.round(avgQueue * 100) / 100}`)
         textlines.push(`Lat-95.00%: ${Math.round(latency_95 * 100) / 100} ms`)
