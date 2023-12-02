@@ -63,8 +63,8 @@ const PlotView = (props) => {
                         height={scatterPlotHeight}
                         data={top.map((d) => ({ time: d.time, value1: d.mem_free, value2: d.mem_used, value3: d.mem_buff }))}
                         margin={plotMargin}
-
-                        setBrushedIndex={props.setBrushedIndex} />
+                        brushedTime={props.brushedTime}
+/>
                 </div>
             </div>
 
@@ -78,10 +78,59 @@ const PlotView = (props) => {
                         height={scatterPlotHeight}
                         data={f2fs_status.map((d) => ({ time: d.time, value1: d.seg_valid, value2: d.seg_dirty, value3: d.seg_prefree, value4: d.seg_free }))}
                         margin={plotMargin}
-
-                        setBrushedIndex={props.setBrushedIndex} />
+                        brushedTime={props.brushedTime}
+ />
                 </div>
             </div>
+
+
+            {/* heatmap */}
+            <div>
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"LBA"}
+                        </h2>
+                        <HeatMaps
+                            width={plotWidth}
+                            height={scatterPlotHeight}
+                            data={lba}
+                            allData={props.data}
+                            margin={plotMargin}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime} />
+                    </div>
+            </div>
+            <div>
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"Queue Count"}
+                        </h2>
+                        <HeatMaps
+                            width={plotWidth}
+                            height={scatterPlotHeight}
+                            data={queue}
+                            allData={props.data}
+                            margin={plotMargin}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime} />
+                    </div>
+            </div>
+            <div>
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"Latency"}
+                        </h2>
+                        <HeatMaps
+                            width={plotWidth}
+                            height={scatterPlotHeight}
+                            data={latency}
+                            allData={props.data}
+                            margin={plotMargin}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime} />
+                    </div>
+            </div>
+
 
             {/* <div>
                 {stateCheckbox.cpu_user && (
@@ -207,52 +256,6 @@ const PlotView = (props) => {
 
                 )}
             </div> */}
-
-            {/* heatmap */}
-            <div>
-                    <div style={{ display: "flex" }}>
-                        <h2 className="header-scatterplot">
-                            {"LBA"}
-                        </h2>
-                        <HeatMaps
-                            width={plotWidth}
-                            height={scatterPlotHeight}
-                            data={lba}
-                            margin={plotMargin}
-                            brushedTime={props.brushedTime}
-                            setBrushedTime={props.setBrushedTime} />
-                    </div>
-            </div>
-            <div>
-                    <div style={{ display: "flex" }}>
-                        <h2 className="header-scatterplot">
-                            {"Queue Count"}
-                        </h2>
-                        <HeatMaps
-                            width={plotWidth}
-                            height={scatterPlotHeight}
-                            data={queue}
-                            margin={plotMargin}
-                            brushedTime={props.brushedTime}
-                            setBrushedTime={props.setBrushedTime} />
-                    </div>
-            </div>
-            <div>
-                    <div style={{ display: "flex" }}>
-                        <h2 className="header-scatterplot">
-                            {"Latency"}
-                        </h2>
-                        <HeatMaps
-                            width={plotWidth}
-                            height={scatterPlotHeight}
-                            data={latency}
-                            margin={plotMargin}
-                            brushedTime={props.brushedTime}
-                            setBrushedTime={props.setBrushedTime} />
-                    </div>
-            </div>
-
-
         </div>
     )
 }

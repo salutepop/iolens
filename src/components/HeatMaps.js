@@ -16,22 +16,9 @@ const HeatMaps = (props) => {
 
 
     //hyo
-    // const [Index, setIndex] = useState([]);
-    const [localData, setLocalData] = useState([]);
     let brushedTime = props.brushedTime;
-    // console.log("brusehedtime", brushedTime)
-    let timeArray = localData.map(d => d.time)
-    const timeSet = new Set;
-    timeArray.forEach((d, i) => {
-        timeSet.add(d)
-    })
-    // console.log('set', timeSet)
-    timeArray = Array.from(timeSet);
-
+    
     useEffect(() => {
-
-        let minX = d3.min(timeArray)
-        let maxX = d3.max(timeArray)
 
         const svg = d3.select(splotSvg.current);
 
@@ -84,7 +71,7 @@ const HeatMaps = (props) => {
             .attr("height", height / yLength)
             .style("stroke-width", "0")
             .attr("stroke", function (d) { return myColor(d.count) })
-            // .attr("opacity", function (d) { if (d.value === 0) return 0 })
+            .attr("opacity", function (d) { if (d.count === 0) return 0 })
             .style("fill", function (d) { return myColor(d.count) })
             .style("pointer-events", "none"); //rect위에서 brush
 
@@ -102,14 +89,19 @@ const HeatMaps = (props) => {
 
         const brush = d3.brush()
             .extent([[0, 0], [width, height]])
+            .on("start", resetBrushed)
             .on("end", brushed);
 
         svg.append('g')
-            .attr('class', 'brush1')
+            .attr('class', 'brush')
             .attr('transform', `translate(${margin}, ${margin})`);
 
-        svg.select('.brush1').call(brush);
+        svg.select('.brush').call(brush);
 
+        function resetBrushed(){
+            svg.select('.brush .selection').style("fill-opacity", 0.2)
+
+        }
         function brushed({ selection }) {
 
             const rects = svg.selectAll('rect');
@@ -123,41 +115,24 @@ const HeatMaps = (props) => {
 
                 let [[x0, y0], [x1, y1]] = selection;
 
-                const selectedData = rects.filter((d) => {
+                let selectedTime = new Set;
+                rects.filter((d) => {
                     // console.log("d.x, d.y", d.x, d.y);
                     let xCoord = xScale(d.time);
                     let yCoord = yScale(String(d.value_y));
-                    // console.log("value", d.value)
-                    // console.log("xCoord", xCoord)
-                    // console.log("yCoord", yCoord)
                     return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1 && d.count > 0;
                 }).data()
-                    .map(({ time }) => ({
-                        time,
+                    .map(item =>{
+                        selectedTime.add(item.time)
+                    });
 
-                    }));
-                setLocalData(selectedData);
-                // console.log("local Data:", localData);
-                const selectedRect = rects.filter((d) => {
+                for (let i = d3.min(selectedTime); i <= d3.max(selectedTime); i++){
+                    selectedTime.add(i)
+                }
 
-                    let xCoord = xScale(d.time);
-                    let yCoord = yScale(String(d.value_y));
-
-                    // console.log("xCoord", d3.max(xCoord));
-                    return x0 <= xCoord && xCoord <= x1 && y0 <= yCoord && yCoord <= y1;
-
-                });
-                // console.log("selectedRect", selectedData)
-                selectedRect.nodes().map((d, i) => {
-
-                    // d3.selectAll('circle.'+ d.classList[0]).style("fill", "red");
-                    // d3.selectAll('circle.'+ d.classList[0]).style("stroke", "red");
-                    // d3.selectAll('circle.'+ d.classList[0]).attr("r", 2);
-                });
-                props.setBrushedTime(selectedData);
-            
-            
+                props.setBrushedTime(Array.from(selectedTime));
             }
+            svg.select('.brush .selection').style("fill-opacity", 0)
             // console.log("brushed data ", Index);
         };
 
@@ -231,50 +206,38 @@ const HeatMaps = (props) => {
 
     useEffect(()=>{
         const svg = d3.select(splotSvg.current);
-        const yVars = new Set;
 
-        // console.log('timearra', brushedTime)
-        let minX = d3.min(timeArray)
-        let maxX = d3.max(timeArray)
         let xScale = d3.scaleLinear()
             .domain([d3.min(data, d => d.time), d3.max(data, d => d.time)])
-            .range([0, width]);
+            .range([0, props.width]);
+        let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
 
-        // console.log("local", localData)
-
-        
         svg.selectAll('rect.background')
         .data(brushedTime)
         .join(
             enter => enter
                 .append('rect')
                 .attr("class", "background")
-                .attr('transform', `translate(${margin}, ${margin})`)
-                .attr("x", xScale(minX))
+                .attr('transform', `translate(${props.margin}, ${props.margin})`)
+                .attr("x", time => xScale(time))
                 .attr("y", 0)
-                .attr("height", height)
-                .attr("width",
-                    xScale(maxX) - xScale(minX)
-                )
-                .style("fill", "rgba(255, 0, 0, 0.5)"),
+                .attr("height", props.height)
+                .attr("width", props.width / bandwidth)
+                .style('stroke', "none")
+                .style('opacity', '0.2')
+                .style("fill", "blue"),
             update => update
-                .attr("x", d => {
+                .attr("x", time => {
                     // console.log(xScale(minX))
-                    if (xScale(minX) < 0) {
+                    if (xScale(time) < 0) {
                         return 0
                     }
-                    else if (xScale(minX) > width) {
-                        return width;
+                    else if (xScale(time) > props.width) {
+                        return props.width;
                     }
-                    else return xScale(minX)
-                })
-                .attr("width",
-                    d => {
-                        let r_width = xScale(maxX) - xScale(minX);
-                        if (r_width >= width) { return 0 }
-                        else { return r_width };
-                    }),
-            exit => exit
+                    else return xScale(time)
+                }),
+            exit => exit.remove()
         )
 
     }, [brushedTime]);

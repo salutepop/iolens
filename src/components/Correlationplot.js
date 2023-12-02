@@ -15,14 +15,10 @@ const Correlationplot = (props) => {
     const svgWidth = (plotSize + plotMargin * 2);
     const radius = 1;
     const data = props.data
+    let brushedTime = props.brushedTime;
 
     useEffect(() => {
         // BrushedTime 수정하면 같이 바꿀 것!
-        let brushedTime = []
-        props.brushedTime.forEach(d => {
-            // console.log(d)
-            brushedTime.push(d.time)
-        })
 
         d3.select(svgCorr.current)
             .append('rect')
