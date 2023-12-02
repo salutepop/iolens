@@ -50,12 +50,14 @@
 
 
 
-
+### Throughput graph 추가
+- [ ] latency 혹은 cpu util.과 함께 throughput line graph 추가?
 ### Stack Area chart (필수) (https://d3-graph-gallery.com/stackedarea.html)
 - [x] Memory
 - [x] 같이 디버깅하기
 - [ ] (지원) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함)
 - [ ] (지원) F2FS Status 항목 중 Segment 정보 출력
+- [ ] F2FS Status 항목 중 GC / Check point event 추가 표현
 ### Heatmap + Line chart => Scatter (필수) (https://d3-graph-gallery.com/graph/heatmap_basic.html)
 - [x] Y축 Align 수정
 - [x] 모듈형태로 바꿔서 latency, qd 그리기
