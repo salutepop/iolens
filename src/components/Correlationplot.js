@@ -150,11 +150,12 @@ const Correlationplot = (props) => {
 
         // Add the contour: several "path"
         svgPlot
-            .selectAll("path")
+            .selectAll(".contourPath")
             .data(densityData)
             .join(
                 enter => enter
                     .append("path")
+                    .attr('class', 'contourPath')
                     .attr('transform', `translate(${plotMargin}, ${plotMargin})`)
                     .attr("d", d3.geoPath())
                     .attr("fill", d => color(d.value))
