@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
+import HeatMapLegend from "./HeatMapLegend";
 
 
 const HeatMaps = (props) => {
@@ -33,15 +34,15 @@ const HeatMaps = (props) => {
 
         //y축 
         let yAxisArray = yVarsArray.slice();
-        for(let i = yAxisArray.length-1; i>=0; i--){
-            if( i % 2 == 0){
+        for (let i = yAxisArray.length - 1; i >= 0; i--) {
+            if (i % 2 == 0) {
                 yAxisArray.splice(i, 1);
             }
         }
-        
-        let yScale_axis =d3.scaleBand()
+
+        let yScale_axis = d3.scaleBand()
             .domain(yAxisArray)
-                .range([height,0])
+            .range([height, 0])
 
         let xScale = d3.scaleLinear()
             .domain([d3.min(data, d => d.time), d3.max(data, d => d.time)])
@@ -58,27 +59,27 @@ const HeatMaps = (props) => {
 
         let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
 
-        const yAxis_left = d3.axisLeft(yScale_axis )
+        const yAxis_left = d3.axisLeft(yScale_axis)
             .tickFormat(d => {
 
-                
-                if (yAxisArray [0] < 100)
+
+                if (yAxisArray[0] < 100)
                     return d;
                 else
                     return d3.format(".2s")(Number(d));
             })
-            
+
 
         svg.append("g")
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .call(yAxis_left);
 
 
-        const myColor = d3.scaleLinear()
+        let myColor = d3.scaleLinear()
             // .range(["lightgreen", "#69b3a2"])
             // .range(["white", "lightblue" ,"blue", "red"])
             // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
-            .range(["lightgreen", "lightblue", "blue"])
+            .range(["white", "lightblue", "blue"])
             .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
         // console.log("count", d3.min(data_value)+1)
 
@@ -160,28 +161,6 @@ const HeatMaps = (props) => {
             // console.log("brushed data ", Index);
         };
 
-        // svg.select('rect.background').remove();
-        // svg.selectAll('rect.background')
-        //     .join(
-        //         enter => enter.append('rect')
-        //             .attr("class", 'background')
-        //             .attr("x", xScale(minX))
-        //             .attr("y", 0)
-        //             .attr("widht", xScale(maxX) - xScale(minX))
-        //             .attr("height", height)
-        //             .style("fill", "rgba(255, 0, 0, 0.5)")
-        //         ,
-        //         update => update
-        //             .attr("class", 'background')
-        //             .attr("x", xScale(minX))
-        //             .attr("y", 0)
-        //             .attr("widht", xScale(maxX) - xScale(minX))
-        //             .attr("height", height)
-        //             .style("fill", "rgba(255, 0, 0, 0.5)")
-        //         ,
-        //         exit => exit.remove()
-        //     )
-
 
         // Histogram Begin
 
@@ -226,6 +205,47 @@ const HeatMaps = (props) => {
             .attr('d', d3.line().curve(d3.curveNatural)(points))
         // Histogram End
         drawThroughput()
+
+        //Legend view
+
+        // const legendWidth = 20;
+        // const legendHeight = 15;
+
+        // const numLegendItems = 5;
+        // const colorRange = myColor.range();
+        // const domainRange = myColor.domain();
+        // console.log("colorRange", colorRange)
+        // console.log("domainRange", domainRange)
+        // const increment = (domainRange[2] - domainRange[0]) / numLegendItems;
+        // const legendData = Array.from({ length: numLegendItems }, (_, i) => domainRange[0] + increment * i);
+        // console.log("legend Data", legendData)
+
+        // const legend = svg.append("g")
+        //   .attr("transform", `translate(${svgWidth - legendWidth - 20}, ${marginHeight})`); 
+
+        // legend.selectAll("rect")
+        //   .data(legendData)
+        //   .enter()
+        //   .append("rect")
+        //   .attr("x", 0)
+        //   .attr("y", (d, i) => i * legendHeight)
+        //   .attr("width", legendWidth)
+        //   .attr("height",  legendHeight)
+        //   .style("fill", d => myColor(d));
+
+        // legend.selectAll("text")
+        //   .data(legendData)
+        //   .enter()
+        //   .append("text")
+        //   .attr("x", 25) 
+        //   .attr("y", (d, i) => i * legendHeight + legendHeight / 2)
+        //   .text(d => d3.format(".2s")(d))
+        //   .attr("alignment-baseline", "middle");
+
+
+
+
+
     }, []);
     function drawThroughput() {
         let throughputData = props.allData.throughput;
@@ -322,9 +342,18 @@ const HeatMaps = (props) => {
     }, [brushedTime]);
 
     return (
-        <div className='innerplot-container'>
+        <div className='innerplot-container' style={{display: "flex"}}>
             <svg ref={splotSvg} width={svgWidth} height={svgHeight}>
             </svg>
+            <div >
+                <HeatMapLegend
+                    height={height}
+
+                    // marginWidth={marginWidth}
+                    // marginHeight={marginHeight}
+                    data={data}
+                />
+            </div>
         </div>
     )
 };
