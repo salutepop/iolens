@@ -7,6 +7,7 @@ const Stackareaplot = (props) => {
     const width = props.width;
     const height = props.height;
     const data = props.data;
+    const checkPointData = props.checkPointData;
     const marginWidth = props.marginWidth;
     const marginHeight = props.marginHeight;
     const legendWidth = 100
@@ -14,7 +15,7 @@ const Stackareaplot = (props) => {
     const svgWidth = marginWidth * 2 + width + legendWidth;
     const svgHeight = marginHeight * 2 + height;
     let brushedTime = props.brushedTime;
-
+        
     useEffect(() => {
         const svg = d3.select(splotSvg.current);
 
@@ -58,7 +59,7 @@ const Stackareaplot = (props) => {
                 .tickFormat(d3.format(".2s"))
             )
         
-        // area 설정
+        // area
         const area = d3.area()
             .x(d => x(d.data.time))
             .y0(d => y(d[0]))
@@ -101,6 +102,35 @@ const Stackareaplot = (props) => {
             .attr("x", legendRectSize + legendSpacing)
             .attr("y", legendRectSize - legendSpacing)
             .text((d) => d);
+
+        //console.log(checkPointData)
+        if (checkPointData != null) {
+            let checkPointData_length = 0;
+            checkPointData_length = checkPointData.length
+            // delta gc time
+            let changingGCTimes = [];
+            for (let i = 1; i < checkPointData_length; i++) {
+                if (checkPointData[i].gc !== checkPointData[i - 1].gc) {
+                    changingGCTimes.push(checkPointData[i].time);
+                }
+            }
+            //console.log(changingGCTimes);
+
+            // 해당하는 위치에 빨간 선 추가
+            const redLines = svg.selectAll("line.red-line")
+                .data(changingGCTimes)
+                .enter()
+                .append("line")
+                .attr("class", "red-line")
+                .attr("x1", (d) => x(d) + marginWidth)
+                .attr("y1", 0)
+                .attr("x2", (d) => x(d) + marginWidth)
+                .attr("y2", height + marginHeight)
+                .style("stroke", "red")
+                .style("stroke-width", 1);
+            
+            redLines.raise();
+        }
 
     }, []);
 

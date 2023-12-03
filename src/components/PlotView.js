@@ -77,6 +77,7 @@ const PlotView = (props) => {
                         width={plotWidth}
                         height={PlotHeight}
                         data={f2fs_status.map((d) => ({ time: d.time, seg_valid: d.seg_valid, seg_dirty: d.seg_dirty, seg_prefree: d.seg_prefree, seg_free: d.seg_free }))}
+                        checkPointData={f2fs_status.map((d) => ({time: d.time, gc: d.gc_calls}))}
                         marginWidth={plotMarginWidth}
                         marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
