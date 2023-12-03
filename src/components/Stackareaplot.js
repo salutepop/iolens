@@ -9,13 +9,15 @@ const Stackareaplot = (props) => {
     const data = props.data;
     const marginWidth = props.marginWidth;
     const marginHeight = props.marginHeight;
+    const legendWidth = 100
 
-    const svgWidth = marginWidth * 2 + width;
+    const svgWidth = marginWidth * 2 + width + legendWidth;
     const svgHeight = marginHeight * 2 + height;
     let brushedTime = props.brushedTime;
 
     useEffect(() => {
         const svg = d3.select(splotSvg.current);
+
         data.forEach((d) => {
             // console.log(typeof d.time)
             let total = 0
@@ -26,19 +28,15 @@ const Stackareaplot = (props) => {
                 total += d[item];
             }
             d['total'] = total
-            // // d.forEach(parseFloat(i => i))
-            // d.time = parseFloat(d.time);
-            // d.value1 = parseFloat(d.value1);
-            // d.value2 = parseFloat(d.value2);
-            // d.value3 = parseFloat(d.value3);
-            // d.total = d.value1 + d.value2 + d.value3;
         });
         // console.log(data)
-        
-        const keys = ["value1", "value2", "value3", 'value4']
+
+        let keys = Object.keys(data[0]).slice(1, -1);
+        //console.log(keys)
+
         const stackedData = d3.stack()
         .keys(keys)(data);
-        //.keys(["value1", "value2", "value3"])(data);
+
         // x축
         const x = d3.scaleLinear()
             .domain(d3.extent(data, (d) => d.time))
@@ -79,9 +77,34 @@ const Stackareaplot = (props) => {
             .attr("class", "area")
             .attr("d", area)
             .style("fill", function (d) { return color(d.key); })
+        
+        // legend
+        const legendRectSize = 15;
+        const legendSpacing = 5;
 
+        const legend = svg.append("g")
+            .attr("transform", `translate(${width + marginWidth + 10}, ${marginHeight * 2})`);
+
+        const legendItems = legend.selectAll("legend")
+            .data(keys)
+            .enter()
+            .append("g")
+            .attr("class", "legend")
+            .attr("transform", (d, i) => `translate(0, ${i * (legendRectSize + legendSpacing)})`);
+
+        legendItems.append("rect")
+            .attr("width", legendRectSize)
+            .attr("height", legendRectSize)
+            .style("fill", color);
+
+        legendItems.append("text")
+            .attr("x", legendRectSize + legendSpacing)
+            .attr("y", legendRectSize - legendSpacing)
+            .text((d) => d);
 
     }, []);
+
+
     useEffect(()=>{
         const svg = d3.select(splotSvg.current);
 
@@ -121,7 +144,7 @@ const Stackareaplot = (props) => {
     }, [brushedTime]);
     
     return (
-        <svg ref={splotSvg} width={svgWidth} height={svgHeight}></svg>
+            <svg ref={splotSvg} width={svgWidth} height={svgHeight}></svg>
     );
 };
 
