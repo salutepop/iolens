@@ -13,7 +13,7 @@ const HeatMaps = (props) => {
     const marginHeight = props.marginHeight;
 
     const svgWidth = marginWidth * 2 + width;
-    const svgHeight = marginHeight  * 2 + height;
+    const svgHeight = marginHeight * 2 + height;
 
 
     //hyo
@@ -31,6 +31,18 @@ const HeatMaps = (props) => {
         let yVarsArray = Array.from(yVars);
         const yLength = yVarsArray.length;
 
+        //y축 
+        let yAxisArray = yVarsArray.slice();
+        for(let i = yAxisArray.length-1; i>=0; i--){
+            if( i % 2 == 0){
+                yAxisArray.splice(i, 1);
+            }
+        }
+        
+        let yScale_axis =d3.scaleBand()
+            .domain(yAxisArray)
+                .range([height,0])
+
         let xScale = d3.scaleLinear()
             .domain([d3.min(data, d => d.time), d3.max(data, d => d.time)])
             .range([0, width]);
@@ -46,9 +58,20 @@ const HeatMaps = (props) => {
 
         let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
 
+        const yAxis_left = d3.axisLeft(yScale_axis )
+            .tickFormat(d => {
+
+                
+                if (yAxisArray [0] < 100)
+                    return d;
+                else
+                    return d3.format(".2s")(Number(d));
+            })
+            
+
         svg.append("g")
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
-            .call(d3.axisLeft(yScale))
+            .call(yAxis_left);
 
 
         const myColor = d3.scaleLinear()
