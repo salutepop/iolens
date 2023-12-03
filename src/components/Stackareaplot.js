@@ -70,6 +70,21 @@ const Stackareaplot = (props) => {
             .domain(keys)
             .range(['#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf'])
         
+
+        // Top3 Hovering Begin
+
+        // Hard coding, 절대 좌표를 사용하다보니 svg내의 상대적인 위치 활용 어려움
+        let leftShift = 130;
+        let tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip-top")
+            .text("test text")
+            .style('position', 'absolute')
+            .style("white-space", "pre-line")
+            .style("border-radius", "4px")
+            .style("background", "rgba(0, 0, 0, 0.8)")
+            .style("padding", "10px")
+            .style("color", "white");
+            
         svg.selectAll()
             .data(stackedData)
             .enter()
@@ -78,7 +93,31 @@ const Stackareaplot = (props) => {
             .attr("class", "area")
             .attr("d", area)
             .style("fill", function (d) { return color(d.key); })
+            .on('mouseover', (d)=>{
+                tooltip.style("visibility", "visible");
+            })
+            .on("mouseout", () => {
+                tooltip.style("visibility", "collapse")
+            })
+            .on("mousemove", (d)=>{
+                let mouseTime = Math.round(x.invert(d.x - leftShift))
+                let top3 = ''
+                props.allData.func_top3.forEach((element)=>{
+                    if(element.time == mouseTime){
+                        top3 = 
+                        `< Top 3 functions > (${mouseTime} sec)
+                        \u00a0 1) ${element.top1}
+                        \u00a0 2) ${element.top2}
+                        \u00a0 3) ${element.top3}`
+                    }
 
+                })
+                tooltip
+                .text(top3)
+                .style("left", (d.x + 30) + "px")
+                .style("top", (d.y + 30) + "px")
+            })
+        // Top3 Hovering End
 
     }, []);
     useEffect(()=>{

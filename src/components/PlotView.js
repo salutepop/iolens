@@ -61,6 +61,7 @@ const PlotView = (props) => {
                         width={plotWidth}
                         height={PlotHeight}
                         data={top.map((d) => ({ time: d.time, value1: d.mem_free, value2: d.mem_used, value3: d.mem_buff }))}
+                        allData={props.data}
                         marginWidth={plotMarginWidth}
                         marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
@@ -77,6 +78,7 @@ const PlotView = (props) => {
                         width={plotWidth}
                         height={PlotHeight}
                         data={f2fs_status.map((d) => ({ time: d.time, value1: d.seg_valid, value2: d.seg_dirty, value3: d.seg_prefree, value4: d.seg_free }))}
+                        allData={props.data}
                         marginWidth={plotMarginWidth}
                         marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
