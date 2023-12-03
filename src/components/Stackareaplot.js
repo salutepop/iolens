@@ -48,17 +48,18 @@ const Stackareaplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${height + marginHeight})`)
             .call(d3.axisBottom(x));
 
-                // console.log(d3.max(data, d=>d.total))
         // y축
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d=>d.total)])
-            // .domain([0, 64000])
+            .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
             .range([height, 0]);
 
         svg.append('g')
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
-            .call(d3.axisLeft(y));
-
+            .call(d3.axisLeft(y)
+                .ticks(10)
+                .tickFormat(d3.format(".2s"))
+            )
+        
         // area 설정
         const area = d3.area()
             .x(d => x(d.data.time))
