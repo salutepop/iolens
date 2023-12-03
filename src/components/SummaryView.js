@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 
 import Histogramplot from "./Histogramplot";
+import Radarplot from "./Radarplot";
 const SummaryView = (props) => {
     const summarySvg = useRef(null);
     const svgMargin = 30;
@@ -11,6 +12,9 @@ const SummaryView = (props) => {
     const svgWidth = textWidth + svgMargin * 2;
     const brushedTime = props.brushedTime;
     const data = props.data;
+    const totalRadarData = [];
+    const [radarData, setRadarData] = useState([]);
+
     useEffect(() => {
         const textlines = [];
         let selectedTime = [];
@@ -113,10 +117,37 @@ const SummaryView = (props) => {
         textlines.push(`${'Avg. Throughput'.padEnd(16, '\u00a0')}: ${Math.round(throughput * 100) / 100} MB/s`)
         textlines.push(`${'Max. Latency'.padEnd(16, '\u00a0')}: ${Math.round(maxLatency_us / 1000) / 100} ms`)
         textlines.push(`${'Avg. Q-Counts'.padEnd(16, '\u00a0')}: ${Math.round(avgQueue * 100) / 100}`)
-        textlines.push(`${'Avg. CPU util.'.padEnd(16, '\u00a0')}: ${Math.round(avgCpuUtil * 100) / 100} %`)
-        textlines.push(`${'Avg. Mem util.'.padEnd(16, '\u00a0')}: ${Math.round(avgMemUtil * 100) / 100} %`)
+        textlines.push(`${'Avg. CPU Uil.'.padEnd(16, '\u00a0')}: ${Math.round(avgCpuUtil * 100) / 100} %`)
+        textlines.push(`${'Avg. Mem Util.'.padEnd(16, '\u00a0')}: ${Math.round(avgMemUtil * 100) / 100} %`)
         textlines.push(`${'Avg. FS util.'.padEnd(16, '\u00a0')}: ${Math.round(avgFsUtil * 100) / 100} %`)
         // textlines.push(`Lat-99.99%: ${Math.round(latency_9999 * 100) / 100} ms`)
+
+        let brushedRadar = []
+        brushedRadar.push({axis: "Throughput", value: 0.5});
+        brushedRadar.push({axis: "Latency", value: 0.5});
+        brushedRadar.push({axis: "Q-Counts", value: 0.5});
+        brushedRadar.push({axis: "CPU Util.", value: avgCpuUtil/100});
+        brushedRadar.push({axis: "Mem Util.", value: avgMemUtil/100});
+        brushedRadar.push({axis: "FS Util.", value: avgFsUtil/100});
+        if ((brushedTime.length == 0) && (totalRadarData.length == 0)){
+            totalRadarData.push({axis: "Throughput", value: 0.5});
+            totalRadarData.push({axis: "Latency", value: 0.5});
+            totalRadarData.push({axis: "Q-Counts", value: 0.5});
+            totalRadarData.push({axis: "CPU Util.", value: avgCpuUtil/100});
+            totalRadarData.push({axis: "Mem Util.", value: avgMemUtil/100});
+            totalRadarData.push({axis: "FS Util.", value: avgFsUtil/100});
+        }
+        setRadarData([brushedRadar])
+
+        // let _radarData = []
+        // if(totalRadarData.length > 1){
+            // _radarData = totalRadarData
+        // }
+        // if(brushedRadar.length > 1){
+        //     _radarData.push(totalRadarData);
+
+        // }
+        // console.log(_radarData)
 
         d3.select(summarySvg.current)
             .selectAll('text')
@@ -140,8 +171,6 @@ const SummaryView = (props) => {
             )
 
 
-        const summaryX = 0;
-        const summaryY = 0;
 
         // d3.select(summarySvg.current)
         //     .append('rect')
@@ -152,6 +181,8 @@ const SummaryView = (props) => {
         //     .style('fill', 'none')
         //     .style('stroke', 'black');
 
+        
+        
     }, [brushedTime]);
 
     return (
@@ -161,6 +192,7 @@ const SummaryView = (props) => {
             </svg>
 
             {/* <Histogramplot brushedTime={brushedTime} /> */}
+            <Radarplot radarData={radarData}/>
 
         </div>
     )
