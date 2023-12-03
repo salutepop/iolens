@@ -15,12 +15,13 @@ const HeatMaps = (props) => {
 
     const svgWidth = marginWidth * 2 + width;
     const svgHeight = marginHeight * 2 + height;
-
+    const type = props.type
 
     //hyo
     let brushedTime = props.brushedTime;
 
     useEffect(() => {
+
 
         const svg = d3.select(splotSvg.current);
 
@@ -31,7 +32,7 @@ const HeatMaps = (props) => {
         })
         let yVarsArray = Array.from(yVars);
         const yLength = yVarsArray.length;
-
+        // console.log("yVarsArray", yVarsArray)
         //y축 
         let yAxisArray = yVarsArray.slice();
         for (let i = yAxisArray.length - 1; i >= 0; i--) {
@@ -59,15 +60,34 @@ const HeatMaps = (props) => {
 
         let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
 
-        const yAxis_left = d3.axisLeft(yScale_axis)
-            .tickFormat(d => {
+        // console.log("yAxis", yAxisArray[0])
+
+        let yAxis_left = [];
+
+        if (type === "Queue") {
+            yAxis_left = d3.axisLeft(yScale_axis)
+        } else if (type === "CPU") {
+            yAxis_left = d3.axisLeft(yScale)
+        } else {
+            yAxis_left = d3.axisLeft(yScale_axis)
+                .tickFormat(d => {
+                    return d3.format(".2s")(Number(d))
+                })
+        }
 
 
-                if (yAxisArray[0] < 100)
-                    return d;
-                else
-                    return d3.format(".2s")(Number(d));
-            })
+        // const yAxis_left = d3.axisLeft(yScale_axis)
+        //     .tickFormat(d => {
+
+        //         if (yAxisArray[0] < 100)
+        //             return d;
+        //         else if(yAxisArray[0] === 'c1'){
+
+        //             return d;
+        //         }
+        //         else
+        //             return d3.format(".2s")(Number(d));
+        //     })
 
 
         svg.append("g")
@@ -83,6 +103,12 @@ const HeatMaps = (props) => {
             .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
         // console.log("count", d3.min(data_value)+1)
 
+        let myColorCPU = d3.scaleLinear()
+            .range(["yellow", "orange", "red"])
+            .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
+
+        // console.log("d.type", )
+
         svg.append("g")
             // .attr("transform", `translate(${margin}, ${margin})`)
             .attr("transform", `translate(${marginWidth}, ${marginHeight})`)
@@ -95,9 +121,25 @@ const HeatMaps = (props) => {
             .attr("width", width / bandwidth)
             .attr("height", height / yLength)
             .style("stroke-width", "0")
-            .attr("stroke", function (d) { return myColor(d.count) })
+            .attr("stroke", function (d) {
+
+                if (type === "CPU") {
+                    return myColorCPU(d.count)
+                } else {
+                    return myColor(d.count)
+                }
+
+            })
             .attr("opacity", function (d) { if (d.count === 0) return 0 })
-            .style("fill", function (d) { return myColor(d.count) })
+            .style("fill", function (d) {
+
+                if (type === "CPU") {
+                    return myColorCPU(d.count)
+                } else {
+                    return myColor(d.count)
+                }
+
+            })
             .style("pointer-events", "none"); //rect위에서 brush
 
 
@@ -342,13 +384,13 @@ const HeatMaps = (props) => {
     }, [brushedTime]);
 
     return (
-        <div className='innerplot-container' style={{display: "flex"}}>
+        <div className='innerplot-container' style={{ display: "flex" }}>
             <svg ref={splotSvg} width={svgWidth} height={svgHeight}>
             </svg>
             <div >
                 <HeatMapLegend
                     height={height}
-
+                    type={type}
                     // marginWidth={marginWidth}
                     // marginHeight={marginHeight}
                     data={data}

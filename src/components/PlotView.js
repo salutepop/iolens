@@ -22,6 +22,30 @@ const PlotView = (props) => {
     const queue = props.data.queue;
     const f2fs_status = props.data.f2fs_status;
 
+    const cpuData = props.data.top;
+    // console.log("data", cpuData)
+
+    const LBA = "LBA"
+    const CPU = "CPU"
+    const Latency = "Latency"
+    const Queue = "Queue"
+
+    const parsedData = [];
+
+    cpuData.forEach((d)=>{
+        let time = d.time;
+
+        for(let i = 0; i <=7; i++){
+            let cpuKey = `c${i}_idle`;
+            let count = 100 - d[cpuKey];
+            parsedData.push({
+                time: String(time),
+                value_y: `c${i}`,
+                count: String(count)
+            })
+        }
+    })
+    console.log("parsedData", parsedData)
 
     //jw
     // let memFreeScale = d3.scaleLinear()
@@ -102,7 +126,8 @@ const PlotView = (props) => {
                             marginWidth={plotMarginWidth}
                             marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
-                            setBrushedTime={props.setBrushedTime} />
+                            setBrushedTime={props.setBrushedTime} 
+                            type={LBA}/>
                     </div>
             </div>
             <div>
@@ -118,7 +143,8 @@ const PlotView = (props) => {
                             marginWidth={plotMarginWidth}
                             marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
-                            setBrushedTime={props.setBrushedTime} />
+                            setBrushedTime={props.setBrushedTime} 
+                            type={Queue}/>
                     </div>
             </div>
             <div>
@@ -134,7 +160,25 @@ const PlotView = (props) => {
                             marginWidth={plotMarginWidth}
                             marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
-                            setBrushedTime={props.setBrushedTime} />
+                            setBrushedTime={props.setBrushedTime} 
+                            type={Latency}/>
+                    </div>
+            </div>
+            <div>
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"CPU"}
+                        </h2>
+                        <HeatMaps
+                            width={plotWidth}
+                            height={PlotHeight}
+                            data={parsedData}
+                            allData={props.data}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime}
+                            type={CPU} />
                     </div>
             </div>
 

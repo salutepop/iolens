@@ -15,8 +15,11 @@ const Lineplot = (props) => {
     const svgHeight = margin * 2 + height;
     const timeData = props.timeData;
     let brushedData = props.brushedData;
+    
 
     useEffect(() => {
+
+        
         timeData.map(d=>parseFloat(d))
         const svg = d3.select(splotSvg.current);
         const brushedX = brushedData.map(d => parseFloat(d.issue_time))
