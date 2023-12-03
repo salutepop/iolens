@@ -7,15 +7,18 @@ const Stackareaplot = (props) => {
     const width = props.width;
     const height = props.height;
     const data = props.data;
+    const checkPointData = props.checkPointData;
     const marginWidth = props.marginWidth;
     const marginHeight = props.marginHeight;
+    const legendWidth = 100
 
-    const svgWidth = marginWidth * 2 + width;
+    const svgWidth = marginWidth * 2 + width + legendWidth;
     const svgHeight = marginHeight * 2 + height;
     let brushedTime = props.brushedTime;
-
+        
     useEffect(() => {
         const svg = d3.select(splotSvg.current);
+
         data.forEach((d) => {
             // console.log(typeof d.time)
             let total = 0
@@ -26,19 +29,15 @@ const Stackareaplot = (props) => {
                 total += d[item];
             }
             d['total'] = total
-            // // d.forEach(parseFloat(i => i))
-            // d.time = parseFloat(d.time);
-            // d.value1 = parseFloat(d.value1);
-            // d.value2 = parseFloat(d.value2);
-            // d.value3 = parseFloat(d.value3);
-            // d.total = d.value1 + d.value2 + d.value3;
         });
         // console.log(data)
-        
-        const keys = ["value1", "value2", "value3", 'value4']
+
+        let keys = Object.keys(data[0]).slice(1, -1);
+        //console.log(keys)
+
         const stackedData = d3.stack()
         .keys(keys)(data);
-        //.keys(["value1", "value2", "value3"])(data);
+
         // x축
         const x = d3.scaleLinear()
             .domain(d3.extent(data, (d) => d.time))
@@ -48,18 +47,19 @@ const Stackareaplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${height + marginHeight})`)
             .call(d3.axisBottom(x));
 
-                // console.log(d3.max(data, d=>d.total))
         // y축
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d=>d.total)])
-            // .domain([0, 64000])
+            .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
             .range([height, 0]);
 
         svg.append('g')
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
-            .call(d3.axisLeft(y));
-
-        // area 설정
+            .call(d3.axisLeft(y)
+                .ticks(10)
+                .tickFormat(d3.format(".2s"))
+            )
+        
+        // area
         const area = d3.area()
             .x(d => x(d.data.time))
             .y0(d => y(d[0]))
@@ -70,6 +70,21 @@ const Stackareaplot = (props) => {
             .domain(keys)
             .range(['#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf'])
         
+
+        // Top3 Hovering Begin
+
+        // Hard coding, 절대 좌표를 사용하다보니 svg내의 상대적인 위치 활용 어려움
+        let leftShift = 130;
+        let tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip-top")
+            .text("test text")
+            .style('position', 'absolute')
+            .style("white-space", "pre-line")
+            .style("border-radius", "4px")
+            .style("background", "rgba(0, 0, 0, 0.8)")
+            .style("padding", "10px")
+            .style("color", "white");
+            
         svg.selectAll()
             .data(stackedData)
             .enter()
@@ -78,9 +93,88 @@ const Stackareaplot = (props) => {
             .attr("class", "area")
             .attr("d", area)
             .style("fill", function (d) { return color(d.key); })
+            .on('mouseover', (d)=>{
+                tooltip.style("visibility", "visible");
+            })
+            .on("mouseout", () => {
+                tooltip.style("visibility", "collapse")
+            })
+            .on("mousemove", (d)=>{
+                let mouseTime = Math.round(x.invert(d.x - leftShift))
+                let top3 = ''
+                props.allData.func_top3.forEach((element)=>{
+                    if(element.time == mouseTime){
+                        top3 = 
+                        `< Top 3 functions > (${mouseTime} sec)
+                        \u00a0 1) ${element.top1}
+                        \u00a0 2) ${element.top2}
+                        \u00a0 3) ${element.top3}`
+                    }
 
+                })
+                tooltip
+                .text(top3)
+                .style("left", (d.x + 30) + "px")
+                .style("top", (d.y + 30) + "px")
+            })
+        // Top3 Hovering End
+        
+        // legend
+        const legendRectSize = 15;
+        const legendSpacing = 5;
+
+        const legend = svg.append("g")
+            .attr("transform", `translate(${width + marginWidth + 10}, ${marginHeight * 2})`);
+
+        const legendItems = legend.selectAll("legend")
+            .data(keys)
+            .enter()
+            .append("g")
+            .attr("class", "legend")
+            .attr("transform", (d, i) => `translate(0, ${i * (legendRectSize + legendSpacing)})`);
+
+        legendItems.append("rect")
+            .attr("width", legendRectSize)
+            .attr("height", legendRectSize)
+            .style("fill", color);
+
+        legendItems.append("text")
+            .attr("x", legendRectSize + legendSpacing)
+            .attr("y", legendRectSize - legendSpacing)
+            .text((d) => d);
+
+        //console.log(checkPointData)
+        if (checkPointData != null) {
+            let checkPointData_length = 0;
+            checkPointData_length = checkPointData.length
+            // delta gc time
+            let changingGCTimes = [];
+            for (let i = 1; i < checkPointData_length; i++) {
+                if (checkPointData[i].gc !== checkPointData[i - 1].gc) {
+                    changingGCTimes.push(checkPointData[i].time);
+                }
+            }
+            //console.log(changingGCTimes);
+
+            // 해당하는 위치에 빨간 선 추가
+            const redLines = svg.selectAll("line.red-line")
+                .data(changingGCTimes)
+                .enter()
+                .append("line")
+                .attr("class", "red-line")
+                .attr("x1", (d) => x(d) + marginWidth)
+                .attr("y1", 0)
+                .attr("x2", (d) => x(d) + marginWidth)
+                .attr("y2", height + marginHeight)
+                .style("stroke", "red")
+                .style("stroke-width", 1);
+            
+            redLines.raise();
+        }
 
     }, []);
+
+
     useEffect(()=>{
         const svg = d3.select(splotSvg.current);
 
@@ -120,7 +214,7 @@ const Stackareaplot = (props) => {
     }, [brushedTime]);
     
     return (
-        <svg ref={splotSvg} width={svgWidth} height={svgHeight}></svg>
+            <svg ref={splotSvg} width={svgWidth} height={svgHeight}></svg>
     );
 };
 

@@ -60,7 +60,8 @@ const PlotView = (props) => {
                     <Stackareaplot
                         width={plotWidth}
                         height={PlotHeight}
-                        data={top.map((d) => ({ time: d.time, value1: d.mem_free, value2: d.mem_used, value3: d.mem_buff }))}
+                        allData={props.data}
+                        data={top.map((d) => ({ time: d.time, mem_free: d.mem_free, mem_used: d.mem_used, mem_buff: d.mem_buff }))}
                         marginWidth={plotMarginWidth}
                         marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
@@ -76,7 +77,9 @@ const PlotView = (props) => {
                     <Stackareaplot
                         width={plotWidth}
                         height={PlotHeight}
-                        data={f2fs_status.map((d) => ({ time: d.time, value1: d.seg_valid, value2: d.seg_dirty, value3: d.seg_prefree, value4: d.seg_free }))}
+                        allData={props.data}
+                        data={f2fs_status.map((d) => ({ time: d.time, seg_valid: d.seg_valid, seg_dirty: d.seg_dirty, seg_prefree: d.seg_prefree, seg_free: d.seg_free }))}
+                        checkPointData={f2fs_status.map((d) => ({time: d.time, gc: d.gc_calls}))}
                         marginWidth={plotMarginWidth}
                         marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
