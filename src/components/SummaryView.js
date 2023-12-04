@@ -130,7 +130,6 @@ const SummaryView = (props) => {
         brushedRadar.push({ axis: "CPU Util.", value: avgCpuUtil / 100 });
         brushedRadar.push({ axis: "Mem Util.", value: avgMemUtil / 100 });
         brushedRadar.push({ axis: "FS Util.", value: avgFsUtil / 100 });
-        console.log(totalData)
         if ((brushedTime.length == 0) && (totalRadarData.length == 0)) {
             // totalRadarData.push({ axis: "Throughput", value: 0.5 });
             // totalRadarData.push({ axis: "Latency", value: 0.5 });

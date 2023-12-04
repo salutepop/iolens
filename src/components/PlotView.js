@@ -45,7 +45,7 @@ const PlotView = (props) => {
             })
         }
     })
-    console.log("parsedData", parsedData)
+    // console.log("parsedData", parsedData)
 
     //jw
     // let memFreeScale = d3.scaleLinear()

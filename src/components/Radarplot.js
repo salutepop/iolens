@@ -13,7 +13,7 @@ const Radarplot = (props) => {
 
     useEffect(() => {
         let data = props.radarData
-        console.log(data)
+        // console.log(data)
         var cfg = {
             w: plotSize,				//Width of the circle
             h: plotSize,				//Height of the circle
