@@ -22,31 +22,47 @@ const PlotView = (props) => {
     const queue = props.data.queue;
     const f2fs_status = props.data.f2fs_status;
 
+    //CPU data parsing
     const cpuData = props.data.top;
-    // console.log("data", cpuData)
-
     const LBA = "LBA"
     const CPU = "CPU"
     const Latency = "Latency"
     const Queue = "Queue"
-
     const parsedData = [];
-
+    let ptime = cpuData[0].time - 1;
+    let pcount = cpuData[0].count;
+    let tmpData = [];
+    let tmpArray = [];
     cpuData.forEach((d) => {
-        let time = d.time;
 
+        let time = d.time;  
+        if (time !== ptime + 1) {
+            // console.log("time", d.time)
+            // console.log("ptime", ptime)
+            for (let i = 0; i <= 7; i++) {
+                
+                parsedData.push({
+                    time: String(Number(tmpArray[i].time) + 1),
+                    value_y: tmpArray[i].value_y,
+                    count: tmpArray[i].count
+                })
+            }
+        }
         for (let i = 0; i <= 7; i++) {
             let cpuKey = `c${i}_idle`;
             let count = 100 - d[cpuKey];
-            parsedData.push({
+            tmpData = {
                 time: String(time),
                 value_y: `c${i}`,
                 count: String(count)
-            })
+            }
+            tmpArray[i] = tmpData;
+            // console.log("tmpA", tmpArray[i].time)
+            parsedData.push(tmpData)
         }
+        ptime = time;
     })
-    // console.log("parsedData", parsedData)
-
+    console.log("parsedData", parsedData)
     //jw
     // let memFreeScale = d3.scaleLinear()
     //     .domain([d3.min(resource, d => d.mem_free), d3.max(resource, d => d.mem_free)])

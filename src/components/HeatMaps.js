@@ -125,7 +125,7 @@ const HeatMaps = (props) => {
             .attr("stroke", function (d) {
 
                 if (type === "CPU") {
-                    return myColorCPU(d.count)
+                    return myColor(d.count)
                 } else {
                     return myColor(d.count)
                 }
@@ -135,7 +135,7 @@ const HeatMaps = (props) => {
             .style("fill", function (d) {
 
                 if (type === "CPU") {
-                    return myColorCPU(d.count)
+                    return myColor(d.count)
                 } else {
                     return myColor(d.count)
                 }
@@ -247,7 +247,8 @@ const HeatMaps = (props) => {
             .style('fill', 'none')
             .attr('d', d3.line().curve(d3.curveNatural)(points))
         // Histogram End
-        drawThroughput()
+        
+        // drawThroughput()
 
         //Legend view
 
