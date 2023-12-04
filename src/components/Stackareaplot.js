@@ -57,7 +57,7 @@ const Stackareaplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .call(d3.axisLeft(y)
                 .ticks(10)
-                .tickFormat(d3.format(".2s"))
+                .tickFormat(d => d3.format(".2s")(d).replace(".0", ""))
             )
         
         // area
