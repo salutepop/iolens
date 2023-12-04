@@ -95,6 +95,8 @@ const Stackareaplot = (props) => {
             .attr("class", "area")
             .attr("d", area)
             .style("fill", function (d) { return color(d.key); })
+            .lower()
+
             .on('mouseover', (d) => {
                 tooltip.style("visibility", "visible");
             })
@@ -210,11 +212,12 @@ const Stackareaplot = (props) => {
                 .append("line")
                 .attr("class", "red-line")
                 .attr("x1", (d) => x(d) + marginWidth)
-                .attr("y1", 0)
+                .attr("y1", marginHeight)
                 .attr("x2", (d) => x(d) + marginWidth)
                 .attr("y2", height + marginHeight)
-                .style("stroke", "red")
-                .style("stroke-width", 1)
+                .style("stroke", "black")
+                .style("stroke-dasharray", "2,2")
+                .style("stroke-width", 3)
                 .raise();
 
         }
