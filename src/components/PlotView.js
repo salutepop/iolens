@@ -86,7 +86,7 @@ const PlotView = (props) => {
                         width={plotWidth}
                         height={PlotHeight}
                         allData={props.data}
-                        data={top.map((d) => ({ time: d.time, mem_free: d.mem_free, mem_used: d.mem_used, mem_buff: d.mem_buff }))}
+                        data={top.map((d) => ({ time: d.time, Free: d.mem_free, Used: d.mem_used, Buff: d.mem_buff }))}
                         marginWidth={plotMarginWidth}
                         marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
@@ -104,7 +104,7 @@ const PlotView = (props) => {
                         width={plotWidth}
                         height={PlotHeight}
                         allData={props.data}
-                        data={f2fs_status.map((d) => ({ time: d.time, seg_valid: d.seg_valid, seg_dirty: d.seg_dirty, seg_prefree: d.seg_prefree, seg_free: d.seg_free }))}
+                        data={f2fs_status.map((d) => ({ time: d.time, Valid: d.seg_valid, Dirty: d.seg_dirty, Prefree: d.seg_prefree, Free: d.seg_free }))}
                         checkPointData={f2fs_status.map((d) => ({ time: d.time, gc: d.gc_calls }))}
                         marginWidth={plotMarginWidth}
                         marginHeight={plotMarginHeight}
