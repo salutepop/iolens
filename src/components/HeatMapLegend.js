@@ -52,6 +52,7 @@ const HeatMapLegend = (props) => {
     // console.log("domainRange", domainRange)
     const increment = (domainRange[2] - domainRange[0]) / numLegendItems;
     const legendData = Array.from({ length: numLegendItems }, (_, i) => domainRange[0] + increment * i);
+    const reverseLegendData = legendData.reverse();
     // console.log("legend Data", legendData)
     const legendHeight = height / numLegendItems;
 
@@ -65,7 +66,7 @@ const HeatMapLegend = (props) => {
       .enter()
       .append("rect")
       .attr("x", 0)
-      .attr("y", (d, i) => i * legendHeight)
+      .attr("y", (d, i) =>  i * legendHeight)
       .attr("width", legendWidth)
       .attr("height", legendHeight)
       .style("stroke", "black")
