@@ -62,7 +62,7 @@ const PlotView = (props) => {
         }
         ptime = time;
     })
-    console.log("parsedData", parsedData)
+    // console.log("parsedData", parsedData)
     //jw
     // let memFreeScale = d3.scaleLinear()
     //     .domain([d3.min(resource, d => d.mem_free), d3.max(resource, d => d.mem_free)])
