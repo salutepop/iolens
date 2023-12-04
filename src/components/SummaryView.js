@@ -209,7 +209,9 @@ const SummaryView = (props) => {
             </svg>
 
             {/* <Histogramplot brushedTime={brushedTime} /> */}
-            <Radarplot radarData={radarData} />
+            <Radarplot radarData={radarData}
+                        gColor={props.gColor}
+                        />
 
         </div>
     )

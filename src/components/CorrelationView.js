@@ -6,6 +6,8 @@ import * as d3 from "d3";
 import { brush } from "d3";
 
 const CorrelationView = (props) => {
+    const gColor = props.gColor;
+    
     const plotMargin = 40;
     const plotSize = 300;
     const [r2, setR2] = useState(0);
@@ -40,6 +42,7 @@ const CorrelationView = (props) => {
                         useStateY={[selectedY, setSelectedY]}
                         brushedTime={props.brushedTime}
                         data={props.data}
+                        gColor={props.gColor}
                     />
                 </div>
                 <div className="div-dropdownX">

@@ -4,6 +4,7 @@ import * as d3 from "d3";
 
 
 const Radarplot = (props) => {
+    const gColor = props.gColor;
     const svgRadar = useRef(null);
     const svgMargin = 30;
     const plotSize = 300;
@@ -26,7 +27,7 @@ const Radarplot = (props) => {
             dotRadius: 4, 			//The size of the colored circles of each blog
             opacityCircles: 0.1, 	//The opacity of the circles of each blob
             strokeWidth: 2, 		//The width of the stroke around each blob
-            color: d3.scaleOrdinal(d3.schemeCategory10)	//Color function
+            color: d3.scaleOrdinal(gColor)	//Color function
         };
 
         var maxValue = 1

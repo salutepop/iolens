@@ -4,6 +4,7 @@ import * as d3 from "d3";
 const Stackareaplot = (props) => {
     const splotSvg = useRef(null);
 
+    const gColor = props.gColor;
     const width = props.width;
     const height = props.height;
     const data = props.data;
@@ -68,7 +69,7 @@ const Stackareaplot = (props) => {
         // color palette
         const color = d3.scaleOrdinal()
             .domain(keys)
-            .range(['#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf'])
+            .range(gColor)
         
 
         // Top3 Hovering Begin

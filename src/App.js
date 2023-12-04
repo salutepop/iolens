@@ -11,10 +11,17 @@ import queue from "./data/heatmap_queue.json";
 import throughput from "./data/throughput.json"
 
 function App() {
+  const gColor =
+    [
+      'rgb(43, 42, 76)',
+      'rgb(179, 19, 18)',
+      'rgb(234, 144, 108)',
+      'rgb(238, 226, 222)',
+    ]
 
   function parseData(data) {
-    data.forEach(element=>{
-      Object.keys(element).forEach((key,i)=>{
+    data.forEach(element => {
+      Object.keys(element).forEach((key, i) => {
         element[key] = parseFloat(element[key])
       })
     })
@@ -45,7 +52,8 @@ function App() {
   return (
     <div className="App">
       <MainView
-        data = {data}
+        data={data}
+        gColor = {gColor}
       />
     </div>
 

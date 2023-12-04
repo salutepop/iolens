@@ -7,6 +7,7 @@ const HeatMaps = (props) => {
 
     const splotSvg = useRef(null);
 
+    const gColor = props.gColor;
     const width = props.width;
     const height = props.height;
     const data = props.data;
@@ -99,12 +100,12 @@ const HeatMaps = (props) => {
             // .range(["lightgreen", "#69b3a2"])
             // .range(["white", "lightblue" ,"blue", "red"])
             // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
-            .range(["white", "lightblue", "blue"])
+            .range(gColor.reverse())
             .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
         // console.log("count", d3.min(data_value)+1)
 
         let myColorCPU = d3.scaleLinear()
-            .range(["yellow", "orange", "red"])
+            .range(gColor.reverse())
             .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
 
         // console.log("d.type", )

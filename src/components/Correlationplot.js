@@ -8,6 +8,7 @@ import Statistics from "statistics.js";
 // https://d3-graph-gallery.com/graph/density2d_contour.html
 
 const Correlationplot = (props) => {
+    const gColor = props.gColor;
     const svgCorr = useRef(null);
     const plotSize = props.plotSize;
     const plotMargin = props.plotMargin;
@@ -207,10 +208,11 @@ const Correlationplot = (props) => {
         let thresholds = densityData.map(r => r.value);
         let extents = d3.extent(thresholds);
         extents.push(d3.median(thresholds));
+        console.log(gColor)
         const color = d3
             .scaleLinear()
             .domain(extents.sort())
-            .range(["#4f74b7", "white", "red"]);
+            .range(gColor);
         // .interpolate(d => {return interpolateRgb("#4f74b7", "red")})
         // .interpolate(d3.interpolateHcl)
 
@@ -247,7 +249,7 @@ const Correlationplot = (props) => {
                     .attr("r", radius)
                     .attr("cx", d => xScale(d.x))
                     .attr("cy", d => yScale(d.y))
-                    .style("fill", "blue"),
+                    .style("fill", gColor[0]),
                 update => update
                     .attr("cx", d => xScale(d.x))
                     .attr("cy", d => yScale(d.y)),

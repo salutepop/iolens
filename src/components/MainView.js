@@ -39,6 +39,7 @@ const MainView = (props) => {
             <ControlView
                 stateCheckbox={graphVisibility}
                 handleCheckboxChange={handleCheckboxChange}
+                gColor={props.gColor}
             />
             <hr color="black" />
             <div className="plotview-container">
@@ -48,6 +49,7 @@ const MainView = (props) => {
                     setBrushedTime={setBrushedTime}
                     brushedTime={brushedTime}
                     data={props.data}
+                    gColor={props.gColor}
                 //index
                 />
 
@@ -56,10 +58,12 @@ const MainView = (props) => {
                     <SummaryView
                         brushedTime={brushedTime}
                         data={props.data}
+                        gColor={props.gColor}
                     />
                     <CorrelationView
                         brushedTime={brushedTime}
-                        data={props.data}>
+                        data={props.data}
+                        gColor={props.gColor}>
                     </CorrelationView>
                 </div>
             </div>
