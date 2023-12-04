@@ -3,6 +3,7 @@ import Scatterplot from './Scatterplot';
 import Lineplot from './Lineplot';
 import Stackareaplot from "./Stackareaplot";
 import HeatMaps from './HeatMaps';
+import Performanceplot from './Performanceplot'
 
 import * as d3 from "d3";
 import { brush } from "d3";
@@ -92,6 +93,21 @@ const PlotView = (props) => {
 
     return (
         <div className="plot-container">
+                <div>
+                <div style={{ display: "flex" }}>
+                    <h2 className="header-scatterplot">
+                        {"Performance"}
+                    </h2>
+                    <Performanceplot
+                        gColor={props.gColor}
+                        width={plotWidth}
+                        height={PlotHeight}
+                        allData={props.data}
+                        marginWidth={plotMarginWidth}
+                        marginHeight={plotMarginHeight}
+                    />
+                </div>
+            </div>
             <div>
                 <div style={{ display: "flex" }}>
                     <h2 className="header-scatterplot">

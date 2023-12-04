@@ -127,7 +127,7 @@ const Stackareaplot = (props) => {
         const legendSpacing = 5;
 
         const legend = svg.append("g")
-            .attr("transform", `translate(${width + marginWidth + 10}, ${marginHeight * 2})`);
+            .attr("transform", `translate(${width + marginWidth *2}, ${marginHeight * 2})`);
 
         const legendItems = legend.selectAll("legend")
             .data(keys)

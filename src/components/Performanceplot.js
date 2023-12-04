@@ -7,7 +7,7 @@ const Performanceplot = (props) => {
     const gColor = props.gColor;
     const width = props.width;
     const height = props.height;
-    const data = props.data;
+    const data = props.allData.performance;
     const checkPointData = props.checkPointData;
     const marginWidth = props.marginWidth;
     const marginHeight = props.marginHeight;
@@ -15,30 +15,18 @@ const Performanceplot = (props) => {
 
     const svgWidth = marginWidth * 2 + width + legendWidth;
     const svgHeight = marginHeight * 2 + height;
-    let brushedTime = props.brushedTime;
-        
+
     useEffect(() => {
         const svg = d3.select(splotSvg.current);
 
-        data.forEach((d) => {
-            // console.log(typeof d.time)
-            let total = 0
-            for(let item in d){
-                if (item === 'total')
-                    continue
-                d[item] = parseFloat(d[item]);
-                total += d[item];
-            }
-            d['total'] = total
-        });
         // console.log(data)
 
-        let keys = Object.keys(data[0]).slice(1, -1);
-        //console.log(keys)
+        let legendKeys = ['throughput', 'lat 99%', 'lat 99.99%'];
+        let keys = ['lt99', 'lt99_99'];
 
         const stackedData = d3.stack()
-        .keys(keys)(data);
-
+            .keys(keys)(data);
+        // console.log(stackedData)
         // x축
         const x = d3.scaleLinear()
             .domain(d3.extent(data, (d) => d.time))
@@ -49,27 +37,29 @@ const Performanceplot = (props) => {
             .call(d3.axisBottom(x));
 
         // y축
-        const y = d3.scaleLinear()
-            .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
+
+
+        const yLatency = d3.scaleLinear()
+            .domain([0,  d3.max(data, d => d.lt100)])
             .range([height, 0]);
 
         svg.append('g')
-            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
-            .call(d3.axisLeft(y)
+            .attr('transform', `translate(${marginWidth + width}, ${marginHeight})`)
+            .call(d3.axisRight(yLatency)
                 .ticks(10)
                 .tickFormat(d3.format(".2s"))
             )
-        
         // area
         const area = d3.area()
             .x(d => x(d.data.time))
-            .y0(d => y(d[0]))
+            .y0(d => yLatency(d[0]))
+            .y1(d => yLatency(d[1] - d[0]));
 
         // color palette
         const color = d3.scaleOrdinal()
             .domain(keys)
             .range(gColor)
-        
+
 
         // Top3 Hovering Begin
 
@@ -85,7 +75,7 @@ const Performanceplot = (props) => {
             .style("color", "white")
             .style("visibility", "collapse")
             ;
-            
+
         svg.selectAll()
             .data(stackedData)
             .enter()
@@ -93,20 +83,20 @@ const Performanceplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .attr("class", "area")
             .attr("d", area)
-            .style("fill", function (d) { return color(d.key); })
-            .on('mouseover', (d)=>{
+            .style("fill", function (d, i) { return gColor[i + 1]; })
+            .on('mouseover', (d) => {
                 tooltip.style("visibility", "visible");
             })
             .on("mouseout", () => {
                 tooltip.style("visibility", "collapse")
             })
-            .on("mousemove", (d)=>{
+            .on("mousemove", (d) => {
                 let mouseTime = Math.round(x.invert(d.x - leftShift))
                 let top3 = ''
-                props.allData.func_top3.forEach((element)=>{
-                    if(element.time == mouseTime){
-                        top3 = 
-                        `< Top 3 functions > (${mouseTime} sec)
+                props.allData.func_top3.forEach((element) => {
+                    if (element.time == mouseTime) {
+                        top3 =
+                            `< Top 3 functions > (${mouseTime} sec)
                         \u00a0 1) ${element.top1}
                         \u00a0 2) ${element.top2}
                         \u00a0 3) ${element.top3}`
@@ -114,21 +104,21 @@ const Performanceplot = (props) => {
 
                 })
                 tooltip
-                .text(top3)
-                .style("left", (d.x + 30) + "px")
-                .style("top", (d.y + 30) + "px")
+                    .text(top3)
+                    .style("left", (d.x + 30) + "px")
+                    .style("top", (d.y + 30) + "px")
             })
         // Top3 Hovering End
-        
+
         // legend
         const legendRectSize = 15;
         const legendSpacing = 5;
 
         const legend = svg.append("g")
-            .attr("transform", `translate(${width + marginWidth + 10}, ${marginHeight * 2})`);
+            .attr("transform", `translate(${width + marginWidth *2}, ${marginHeight * 2})`);
 
         const legendItems = legend.selectAll("legend")
-            .data(keys)
+            .data(legendKeys)
             .enter()
             .append("g")
             .attr("class", "legend")
@@ -136,12 +126,19 @@ const Performanceplot = (props) => {
 
         legendItems.append("rect")
             .attr("width", legendRectSize)
-            .attr("height", legendRectSize)
-            .style("fill", color);
+            .attr("height", d => {
+                if (d === "throughput") {
+                    return 3;
+                } else {
+                    return legendRectSize;
+                }
+            })
+            .style("fill", (d, i) => gColor[i]);
 
         legendItems.append("text")
             .attr("x", legendRectSize + legendSpacing)
             .attr("y", legendRectSize - legendSpacing)
+            .attr('font-size', '13px')
             .text((d) => d);
 
         //console.log(checkPointData)
@@ -169,53 +166,128 @@ const Performanceplot = (props) => {
                 .attr("y2", height + marginHeight)
                 .style("stroke", "red")
                 .style("stroke-width", 1);
-            
+
             redLines.raise();
         }
-
+        drawThroughput()
+        // drawLatency()
     }, []);
 
 
-    useEffect(()=>{
-        const svg = d3.select(splotSvg.current);
+    function drawThroughput() {
+        // console.log(throughputData)
 
         let xScale = d3.scaleLinear()
-            .domain([d3.min(data, d => d.time), d3.max(data, d => d.time)])
-            .range([0, props.width]);
-        let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
+            .domain(
+                [d3.min(data, d => d.time),
+                d3.max(data, d => d.time)])
+            .range([0, width]);
 
-        svg.selectAll('rect.background')
-        .data(brushedTime)
-        .join(
-            enter => enter
-                .append('rect')
-                .attr("class", "background")
-                .attr('transform', `translate(${props.marginWidth}, ${props.marginHeight})`)
-                .attr("x", time => xScale(time))
-                .attr("y", 0)
-                .attr("height", props.height)
-                .attr("width", props.width / bandwidth)
-                .style('stroke', "none")
-                .style('opacity', '0.2')
-                .style("fill", "blue"),
-            update => update
-                .attr("x", time => {
-                    // console.log(xScale(minX))
-                    if (xScale(time) < 0) {
-                        return 0
-                    }
-                    else if (xScale(time) > props.width) {
-                        return props.width;
-                    }
-                    else return xScale(time)
-                }),
-            exit => exit.remove()
-        )
+        let yScale = d3.scaleLinear()
+            .domain(
+                [d3.min(data, d => d.throughput),
+                d3.max(data, d => d.throughput)])
+            .range([height, 0]);
 
-    }, [brushedTime]);
-    
+        const yAxis = d3.axisLeft(yScale);
+
+        yAxis.ticks(3);
+
+        // svg.append('g')
+        //     .attr('transform', `translate(${margin}, ${height + margin})`)
+        //     .call(xAxis);
+        d3.select(splotSvg.current)
+            .append('g')
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
+            .call(yAxis);
+
+        // const line = d3.line()
+        //     .x((d, i) => xScale(data_x[i]))
+        //     .y((d, i) => yScale(data_y[i]));
+        // throughputData.forEach((item)=>{
+        //     console.log(xScale(item.time), yScale(item.throughput))
+        // })
+        // let line = d3.line()
+        // .datum(throughputData)
+        // .x(d => xScale(d.time))
+        // .y(d => yScale(d.throughput))
+        // console.log(line)
+        const throughputLine = d3.line()
+            .x(d => xScale(d.time))
+            .y(d => yScale(d.throughput))
+
+        d3.select(splotSvg.current)
+            .selectAll('.throughput')
+            .raise()
+            .data(data)
+            .enter()
+            .append("path")
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
+            .attr('class', 'throughput')
+            .attr("d", throughputLine(data))
+            .attr("fill", "none")
+            .attr("stroke", gColor[0])
+            .attr("stroke-width", '0.5')
+    }
+
+    function drawLatency() {
+        // console.log(throughputData)
+        let xScale = d3.scaleLinear()
+        .domain(
+            [d3.min(data, d => d.time),
+            d3.max(data, d => d.time)])
+        .range([0, width]);
+                
+
+
+    let yScale = d3.scaleLinear()
+        .domain(
+            [d3.min(data, d => d.lt100),
+            d3.max(data, d => d.lt100)])
+        .range([height, 0]);
+
+    const yAxis = d3.axisRight(yScale);
+
+    yAxis.ticks(3);
+
+    // svg.append('g')
+    //     .attr('transform', `translate(${margin}, ${height + margin})`)
+    //     .call(xAxis);
+    d3.select(splotSvg.current)
+        .append('g')
+        .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
+        .call(yAxis);
+
+    // const line = d3.line()
+    //     .x((d, i) => xScale(data_x[i]))
+    //     .y((d, i) => yScale(data_y[i]));
+    // throughputData.forEach((item)=>{
+    //     console.log(xScale(item.time), yScale(item.throughput))
+    // })
+    // let line = d3.line()
+    // .datum(throughputData)
+    // .x(d => xScale(d.time))
+    // .y(d => yScale(d.throughput))
+    // console.log(line)
+    const lt100Line = d3.line()
+        .x(d => xScale(d.time))
+        .y(d => yScale(d.lt100))
+
+    d3.select(splotSvg.current)
+        .selectAll('.lt100')
+        .raise()
+        .data(data)
+        .enter()
+        .append("path")
+        .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
+        .attr('class', 'lt100')
+        .attr("d", lt100Line(data))
+        .attr("fill", "none")
+        .attr("stroke", gColor[1])
+        .attr("stroke-width", '0.5')
+    }
     return (
-            <svg ref={splotSvg} width={svgWidth} height={svgHeight}></svg>
+        <svg ref={splotSvg} width={svgWidth} height={svgHeight}></svg>
     );
 };
 
