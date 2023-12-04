@@ -12,8 +12,9 @@ const SummaryView = (props) => {
     const svgWidth = textWidth + svgMargin * 2;
     const brushedTime = props.brushedTime;
     const data = props.data;
-    const totalRadarData = [];
+    const [totalData, setTotalData] = useState([]); // save the real data of all
     const [radarData, setRadarData] = useState([]);
+    const [totalRadarData, setTotalRadarData] = useState([]);
 
     useEffect(() => {
         const textlines = [];
@@ -123,25 +124,42 @@ const SummaryView = (props) => {
         // textlines.push(`Lat-99.99%: ${Math.round(latency_9999 * 100) / 100} ms`)
 
         let brushedRadar = []
-        brushedRadar.push({axis: "Throughput", value: 0.5});
-        brushedRadar.push({axis: "Latency", value: 0.5});
-        brushedRadar.push({axis: "Q-Counts", value: 0.5});
-        brushedRadar.push({axis: "CPU Util.", value: avgCpuUtil/100});
-        brushedRadar.push({axis: "Mem Util.", value: avgMemUtil/100});
-        brushedRadar.push({axis: "FS Util.", value: avgFsUtil/100});
-        if ((brushedTime.length == 0) && (totalRadarData.length == 0)){
-            totalRadarData.push({axis: "Throughput", value: 0.5});
-            totalRadarData.push({axis: "Latency", value: 0.5});
-            totalRadarData.push({axis: "Q-Counts", value: 0.5});
-            totalRadarData.push({axis: "CPU Util.", value: avgCpuUtil/100});
-            totalRadarData.push({axis: "Mem Util.", value: avgMemUtil/100});
-            totalRadarData.push({axis: "FS Util.", value: avgFsUtil/100});
+        brushedRadar.push({ axis: "Throughput", value: throughput / totalData["Throughput"] });
+        brushedRadar.push({ axis: "Latency", value: maxLatency_us / totalData["Latency"] });
+        brushedRadar.push({ axis: "Q-Counts", value: avgQueue / 32 });
+        brushedRadar.push({ axis: "CPU Util.", value: avgCpuUtil / 100 });
+        brushedRadar.push({ axis: "Mem Util.", value: avgMemUtil / 100 });
+        brushedRadar.push({ axis: "FS Util.", value: avgFsUtil / 100 });
+        console.log(totalData)
+        if ((brushedTime.length == 0) && (totalRadarData.length == 0)) {
+            // totalRadarData.push({ axis: "Throughput", value: 0.5 });
+            // totalRadarData.push({ axis: "Latency", value: 0.5 });
+            // totalRadarData.push({ axis: "Q-Counts", value: 0.5 });
+            // totalRadarData.push({ axis: "CPU Util.", value: avgCpuUtil / 100 });
+            // totalRadarData.push({ axis: "Mem Util.", value: avgMemUtil / 100 });
+            // totalRadarData.push({ axis: "FS Util.", value: avgFsUtil / 100 });
+            setTotalData({
+                "Throughput": throughput,
+                "Latency": maxLatency_us,
+                "Q-Counts": avgQueue,
+                "CPU Util.": avgCpuUtil,
+                "Mem Util.": avgMemUtil,
+                "FS Util.": avgFsUtil
+            })
+            setTotalRadarData([
+                { axis: "Throughput", value: 1.0 },
+                { axis: "Latency", value: 1.0 },
+                { axis: "Q-Counts", value: avgQueue / 32 },
+                { axis: "CPU Util.", value: avgCpuUtil / 100 },
+                { axis: "Mem Util.", value: avgMemUtil / 100 },
+                { axis: "FS Util.", value: avgFsUtil / 100 }]
+            )
         }
-        setRadarData([brushedRadar])
+        setRadarData([totalRadarData, brushedRadar])
 
         // let _radarData = []
         // if(totalRadarData.length > 1){
-            // _radarData = totalRadarData
+        // _radarData = totalRadarData
         // }
         // if(brushedRadar.length > 1){
         //     _radarData.push(totalRadarData);
@@ -181,9 +199,9 @@ const SummaryView = (props) => {
         //     .style('fill', 'none')
         //     .style('stroke', 'black');
 
-        
-        
-    }, [brushedTime]);
+
+
+    }, [brushedTime, totalRadarData, totalData]);
 
     return (
         <div>
@@ -192,7 +210,7 @@ const SummaryView = (props) => {
             </svg>
 
             {/* <Histogramplot brushedTime={brushedTime} /> */}
-            <Radarplot radarData={radarData}/>
+            <Radarplot radarData={radarData} />
 
         </div>
     )

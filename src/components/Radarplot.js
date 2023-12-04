@@ -13,6 +13,7 @@ const Radarplot = (props) => {
 
     useEffect(() => {
         let data = props.radarData
+        console.log(data)
         var cfg = {
             w: plotSize,				//Width of the circle
             h: plotSize,				//Height of the circle
@@ -29,8 +30,8 @@ const Radarplot = (props) => {
         };
 
         var maxValue = 1
-        // var maxValue = Math.max(cfg.maxValue,
-        //     d3.max(data, d => { return d3.max(d.map(o => { return o.value; })) }));
+        var maxValue = Math.max(cfg.maxValue,
+            d3.max(data, d => { return d3.max(d.map(o => { return o.value; })) }));
         // if (data === undefined){
         //     maxValue = 1
         // }
@@ -48,7 +49,7 @@ const Radarplot = (props) => {
         let svg = d3.select(svgRadar.current);
         var radarLine = d3.lineRadial()
             .curve(d3.curveLinearClosed)
-            .radius(function (d) { console.log(d); return rScale(d.value); })
+            .radius(function (d) { return rScale(d.value); })
             .angle(function (d, i) { return i * angleSlice; });
         var blobWrapper = svg.select('.radarG');
         //.selectAll(".radarWrapper")
@@ -269,34 +270,8 @@ const Radarplot = (props) => {
             .attr("dy", "0.35em")
             .attr("x", function (d, i) { return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2); })
             .attr("y", function (d, i) { return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2); })
-            .text(function (d) { return d })
-            .call(wrap, cfg.wrapWidth);
+            .text(function (d) { return d });
 
-        function wrap(text, width) {
-            text.each(function () {
-                var text = d3.select(this),
-                    words = text.text().split(/\s+/).reverse(),
-                    word,
-                    line = [],
-                    lineNumber = 0,
-                    lineHeight = 1.4, // ems
-                    y = text.attr("y"),
-                    x = text.attr("x"),
-                    dy = parseFloat(text.attr("dy")),
-                    tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
-
-                while (word = words.pop()) {
-                    line.push(word);
-                    tspan.text(line.join(" "));
-                    if (tspan.node().getComputedTextLength() > width) {
-                        line.pop();
-                        tspan.text(line.join(" "));
-                        line = [word];
-                        tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-                    }
-                }
-            });
-        }//wrap	
     }, [])
 
     return (

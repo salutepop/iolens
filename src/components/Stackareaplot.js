@@ -77,7 +77,6 @@ const Stackareaplot = (props) => {
         let leftShift = 130;
         let tooltip = d3.select("body").append("div")
             .attr("class", "tooltip-top")
-            .text("test text")
             .style('position', 'absolute')
             .style("white-space", "pre-line")
             .style("border-radius", "4px")
