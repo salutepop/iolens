@@ -205,7 +205,7 @@ const Stackareaplot = (props) => {
             let selectedTime = new Set;
             
 
-            for (let i = x.invert(x0); i <= x.invert(x1); i++) {
+            for (let i = Math.round((x.invert(x0))); i <= Math.round(x.invert(x1)); i++) {
                 selectedTime.add(i)
             }
 
