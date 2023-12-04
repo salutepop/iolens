@@ -40,6 +40,8 @@
 - material UI(react) : https://mui.com/
 - Graph 배색(고대비 위주로 찾아보기) : https://colorhunt.co/
 
+(1) https://colorhunt.co/palette/2b2a4cb31312ea906ceee2de
+(2) https://colorhunt.co/palette/0d1282eeededf0de36d71313
 
 ### 전처리
 - (완료) f2fs_status
@@ -51,39 +53,49 @@
 
 
 ### Throughput graph 추가
-- [ ] (창민) latency 혹은 cpu util.과 함께 throughput line graph 추가?
+- [X] (창민) latency 혹은 cpu util.과 함께 throughput line graph 추가?
+- [ ] (창민) Latency (line or area) / Throughput (Line)
 ### Stack Area chart (필수) (https://d3-graph-gallery.com/stackedarea.html)
 - [x] Memory
 - [x] 같이 디버깅하기
-- [ ] (지원) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함) - width 150
-- [x] F2FS Status 항목 중 Segment 정보 출력
-- [ ] (지원) F2FS Status 항목 중 GC / Check point event 추가 표현
-- [ ] (지원) Y축 잘리는 문제 수정 (단위 및 tick 조절), 단위는 y title에 추가 하는 것도 방법일 듯
+- [X] (지원) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함) - width 150
+- [X] F2FS Status 항목 중 Segment 정보 출력
+- [X] (지원) F2FS Status 항목 중 GC / Check point event 추가 표현
+  - [ ] (지원) Background로 빠져있는 것 해결필요
+- [X] (지원) Y축 잘리는 문제 수정 (단위 및 tick 조절), 단위는 y title에 추가 하는 것도 방법일 듯
 ### Heatmap + Line chart => Scatter (필수) (https://d3-graph-gallery.com/graph/heatmap_basic.html)
 - [x] Y축 Align 수정
 - [x] 모듈형태로 바꿔서 latency, qd 그리기
-- [ ] (효림) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함) - width 150
+- [X] (효림) Legend 추가 (Legend는 모든 차트가 통일성을 갖춰야함) - width 150
+  - [ ] (효림) Legend 위아래 뒤집기기
 - [x] histogram -> line plot으로
 - [x] 기존 brushedData 형식 유지해서 brush 구현 (데이터 머지)
 - [x] BrushedTime만 공통적으로 사용하도록 수정. 지금 localtime / setTime 이런거 다 없애기
 - [x] BrushedTime 중복값 제거하기
 - [x] BrushedTime은 Dictionary가 아니라, 문자열 Array로 변경하기 (Dict는 가져다 쓸 때 불편함)
-- [ ] (효림) Y축 잘리는 문제 수정 (단위 및 tick 조절), 단위는 y title에 추가 하는 것도 방법일 듯
+- [X] (효림) Y축 잘리는 문제 수정 (단위 및 tick 조절), 단위는 y title에 추가 하는 것도 방법일 듯
 ### Correlation chart (필수) (https://d3-graph-gallery.com/graph/density2d_shading.html)
 - [x] User가 X/Y 선택 할 수 있는 View
 - [x] 히스토그램 그리기
 ### Func Top 10 data
 - [x] 데이터 파싱
-- [ ] (창민) Hovering - 메모리 차트에 mouseover event
+- [x] (창민) Hovering - 메모리 차트에 mouseover event
 ### F2FS Status 표현
 ### UI 꾸미기 / Color 배색
 - [ ] UI 고민
+  - [ ] 배치 (화요일) 
+  - [ ] (창민) Color 연동 작업 (app.js 부터 color로 내리기)
+  - [ ] (지원) Font 통일
 ### Heat map for CPU
-- [ ] (효림) cpu graph 필요.
+- [X] (효림) cpu graph 필요.
+  - [ ] (효림) 조금더 다듬어보기
 ### Spider/Star chart (후순위) (https://d3-graph-gallery.com/spider.html)
-- [ ] (창민) Summary data에 전체 / 브러싱
-- [ ] (창민) Spider chart
-
+- [X] (창민) Summary data에 전체 / 브러싱
+- [X] (창민) Spider chart
+  - [ ] (지원) Toggle 혹은, 축에 데이터 합치기, 혹은 병렬 배열
+  - [ ] (지원) Legend 추가 (Total / Brushed)
+### 나머지 차트에도 
+(효림) Brush 적용
 ### Data import 정보
 ```javascript
   let data = {

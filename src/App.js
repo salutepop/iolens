@@ -14,7 +14,7 @@ function App() {
 
   function parseData(data) {
     data.forEach(element=>{
-      Object.keys(element).forEach((key)=>{
+      Object.keys(element).forEach((key,i)=>{
         element[key] = parseFloat(element[key])
       })
     })
