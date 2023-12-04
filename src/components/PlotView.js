@@ -86,7 +86,7 @@ const PlotView = (props) => {
                         width={plotWidth}
                         height={PlotHeight}
                         allData={props.data}
-                        data={top.map((d) => ({ time: d.time, Free: d.mem_free, Used: d.mem_used, Buff: d.mem_buff }))}
+                        data={top.map((d) => ({ time: d.time, Used: d.mem_used, Buff: d.mem_buff, Free: d.mem_free }))}
                         marginWidth={plotMarginWidth}
                         marginHeight={plotMarginHeight}
                         brushedTime={props.brushedTime}
