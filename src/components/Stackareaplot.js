@@ -83,7 +83,9 @@ const Stackareaplot = (props) => {
             .style("border-radius", "4px")
             .style("background", "rgba(0, 0, 0, 0.8)")
             .style("padding", "10px")
-            .style("color", "white");
+            .style("color", "white")
+            .style("visibility", "collapse")
+            ;
             
         svg.selectAll()
             .data(stackedData)
