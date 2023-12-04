@@ -203,7 +203,7 @@ const HeatMaps = (props) => {
             } else {
 
                 let [[x0, y0], [x1, y1]] = selection;
-
+                // console.log("x0", x0 - x1);
                 let selectedTime = new Set;
                 rects.filter((d) => {
                     // console.log("d.x, d.y", d.x, d.y);

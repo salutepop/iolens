@@ -119,6 +119,7 @@ const Stackareaplot = (props) => {
                 .style("left", (d.x + 30) + "px")
                 .style("top", (d.y + 30) + "px")
             })
+            .style("pointer-events", "none")
         // Top3 Hovering End
         
         // legend
@@ -173,6 +174,48 @@ const Stackareaplot = (props) => {
             
             redLines.raise();
         }
+
+        const brush = d3.brush()
+        .extent([[0, 0], [width, height]])
+        .on("start", resetBrushed)
+        .on("end", brushed);
+
+    svg.append('g')
+        .attr('class', 'brush')
+        .attr('transform', `translate(${marginWidth}, ${marginHeight})`);
+
+    svg.select('.brush').call(brush);
+
+    function resetBrushed() {
+        svg.select('.brush .selection').style("fill-opacity", 0.2)
+
+    }
+    function brushed({ selection }) {
+
+
+        if (selection === null) {
+
+            console.log("brushed nothing")
+            // props.setBrushedTime(null);
+            return;
+        } else {
+
+            let [[x0, y0], [x1, y1]] = selection;
+
+            let selectedTime = new Set;
+            
+
+            for (let i = x.invert(x0); i <= x.invert(x1); i++) {
+                selectedTime.add(i)
+            }
+
+            props.setBrushedTime(Array.from(selectedTime));
+            // console.log("seletedTime", selectedTime)
+        }
+        svg.select('.brush .selection').style("fill-opacity", 0)
+        // console.log("brushed data ", Index);
+    };
+
 
     }, []);
 
