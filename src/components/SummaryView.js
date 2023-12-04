@@ -118,9 +118,9 @@ const SummaryView = (props) => {
         textlines.push(`${'Avg. Throughput'.padEnd(16, '\u00a0')}: ${Math.round(throughput * 100) / 100} MB/s`)
         textlines.push(`${'Max. Latency'.padEnd(16, '\u00a0')}: ${Math.round(maxLatency_us / 1000) / 100} ms`)
         textlines.push(`${'Avg. Q-Counts'.padEnd(16, '\u00a0')}: ${Math.round(avgQueue * 100) / 100}`)
-        textlines.push(`${'Avg. CPU Uil.'.padEnd(16, '\u00a0')}: ${Math.round(avgCpuUtil * 100) / 100} %`)
+        textlines.push(`${'Avg. CPU Util.'.padEnd(16, '\u00a0')}: ${Math.round(avgCpuUtil * 100) / 100} %`)
         textlines.push(`${'Avg. Mem Util.'.padEnd(16, '\u00a0')}: ${Math.round(avgMemUtil * 100) / 100} %`)
-        textlines.push(`${'Avg. FS util.'.padEnd(16, '\u00a0')}: ${Math.round(avgFsUtil * 100) / 100} %`)
+        textlines.push(`${'Avg. FS Util.'.padEnd(16, '\u00a0')}: ${Math.round(avgFsUtil * 100) / 100} %`)
         // textlines.push(`Lat-99.99%: ${Math.round(latency_9999 * 100) / 100} ms`)
 
         let brushedRadar = []
@@ -177,11 +177,11 @@ const SummaryView = (props) => {
                     .attr('y', (textline, i) => {
                         return lineHeight * i + svgMargin;
                     })
-                    .style('font-family', 'monospace')
+                    .style('font-family', 'Consolas, monospace')
                     .attr('fill', 'black')
                     .attr('text-anchor', 'start')
                     .attr('textbaseline', 'bottom')
-                    .attr('font-size', '22px'),
+                    .attr('font-size', '20px'),
                 update => update
                     .text(textline => textline),
                 exit => exit.remove(),
