@@ -23,7 +23,7 @@ const Stackareaplot = (props) => {
         data.forEach((d) => {
             // console.log(typeof d.time)
             let total = 0
-            for(let item in d){
+            for (let item in d) {
                 if (item === 'total')
                     continue
                 d[item] = parseFloat(d[item]);
@@ -37,7 +37,7 @@ const Stackareaplot = (props) => {
         //console.log(keys)
 
         const stackedData = d3.stack()
-        .keys(keys)(data);
+            .keys(keys)(data);
 
         // x축
         const x = d3.scaleLinear()
@@ -57,7 +57,7 @@ const Stackareaplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .call(d3.axisLeft(y)
                 .ticks(10)
-                .tickFormat(d3.format(".2s"))
+                .tickFormat(d => d3.format(".2s")(d).replace(".0", ""))
             )
         
         // area
@@ -95,19 +95,19 @@ const Stackareaplot = (props) => {
             .attr("class", "area")
             .attr("d", area)
             .style("fill", function (d) { return color(d.key); })
-            .on('mouseover', (d)=>{
+            .on('mouseover', (d) => {
                 tooltip.style("visibility", "visible");
             })
             .on("mouseout", () => {
                 tooltip.style("visibility", "collapse")
             })
-            .on("mousemove", (d)=>{
+            .on("mousemove", (d) => {
                 let mouseTime = Math.round(x.invert(d.x - leftShift))
                 let top3 = ''
-                props.allData.func_top3.forEach((element)=>{
-                    if(element.time == mouseTime){
-                        top3 = 
-                        `< Top 3 functions > (${mouseTime} sec)
+                props.allData.func_top3.forEach((element) => {
+                    if (element.time == mouseTime) {
+                        top3 =
+                            `< Top 3 functions > (${mouseTime} sec)
                         \u00a0 1) ${element.top1}
                         \u00a0 2) ${element.top2}
                         \u00a0 3) ${element.top3}`
@@ -115,9 +115,9 @@ const Stackareaplot = (props) => {
 
                 })
                 tooltip
-                .text(top3)
-                .style("left", (d.x + 30) + "px")
-                .style("top", (d.y + 30) + "px")
+                    .text(top3)
+                    .style("left", (d.x + 30) + "px")
+                    .style("top", (d.y + 30) + "px")
             })
             .style("pointer-events", "none")
         // Top3 Hovering End
@@ -144,36 +144,9 @@ const Stackareaplot = (props) => {
         legendItems.append("text")
             .attr("x", legendRectSize + legendSpacing)
             .attr("y", legendRectSize - legendSpacing)
+            .attr('font-size', '13px')
             .text((d) => d);
-
-        //console.log(checkPointData)
-        if (checkPointData != null) {
-            let checkPointData_length = 0;
-            checkPointData_length = checkPointData.length
-            // delta gc time
-            let changingGCTimes = [];
-            for (let i = 1; i < checkPointData_length; i++) {
-                if (checkPointData[i].gc !== checkPointData[i - 1].gc) {
-                    changingGCTimes.push(checkPointData[i].time);
-                }
-            }
-            //console.log(changingGCTimes);
-
-            // 해당하는 위치에 빨간 선 추가
-            const redLines = svg.selectAll("line.red-line")
-                .data(changingGCTimes)
-                .enter()
-                .append("line")
-                .attr("class", "red-line")
-                .attr("x1", (d) => x(d) + marginWidth)
-                .attr("y1", 0)
-                .attr("x2", (d) => x(d) + marginWidth)
-                .attr("y2", height + marginHeight)
-                .style("stroke", "red")
-                .style("stroke-width", 1);
-            
-            redLines.raise();
-        }
+        // legend end
 
         const brush = d3.brush()
         .extent([[0, 0], [width, height]])
@@ -214,9 +187,38 @@ const Stackareaplot = (props) => {
         }
         svg.select('.brush .selection').style("fill-opacity", 0)
         // console.log("brushed data ", Index);
-    };
+        };
+        
+        // gc time check point
+        //console.log(checkPointData)
+        if (checkPointData != null) {
+            let checkPointData_length = 0;
+            checkPointData_length = checkPointData.length
+            // delta gc time
+            let changingGCTimes = [];
+            for (let i = 1; i < checkPointData_length; i++) {
+                if (checkPointData[i].gc !== checkPointData[i - 1].gc) {
+                    changingGCTimes.push(checkPointData[i].time);
+                }
+            }
+            //console.log(changingGCTimes);
 
+            // 해당하는 위치에 빨간 선 추가
+            const redLines = svg.selectAll("line.red-line")
+                .data(changingGCTimes)
+                .enter()
+                .append("line")
+                .attr("class", "red-line")
+                .attr("x1", (d) => x(d) + marginWidth)
+                .attr("y1", 0)
+                .attr("x2", (d) => x(d) + marginWidth)
+                .attr("y2", height + marginHeight)
+                .style("stroke", "red")
+                .style("stroke-width", 1)
+                .raise();
 
+        }
+        
     }, []);
 
 
@@ -256,6 +258,7 @@ const Stackareaplot = (props) => {
             exit => exit.remove()
         )
 
+        
     }, [brushedTime]);
     
     return (

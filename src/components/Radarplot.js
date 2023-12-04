@@ -132,7 +132,47 @@ const Radarplot = (props) => {
                     .attr("cy", function (d, i) { return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2); })
                 ,
                 exit => exit.remove()
-            )
+        )
+        
+        // 범례 추가
+        svg.append("g")
+            .attr("class", "legend")
+            .attr("transform", `translate(${cfg.w}, ${30})`);
+
+        // Total 범례
+        svg.select(".legend")
+            .append("rect")
+            .attr("class", "legendTotal")
+            .attr("width", 15)
+            .attr("height", 15)
+            .style("fill", gColor[0])
+            .style("fill-opacity", cfg.opacityArea);
+
+        svg.select(".legend")
+            .append("text")
+            .attr("class", "legendText")
+            .attr("x", 20)
+            .attr("y", 10)
+            .style("font-size", "12px")
+            .text("Total");
+
+        // Brushed 범례
+        svg.select(".legend")
+            .append("rect")
+            .attr("class", "legendBrushed")
+            .attr("width", 15)
+            .attr("height", 15)
+            .attr("y", 20)
+            .style("fill", gColor[1])
+            .style("fill-opacity", cfg.opacityArea);
+
+        svg.select(".legend")
+            .append("text")
+            .attr("class", "legendText")
+            .attr("x", 20)
+            .attr("y", 30)
+            .style("font-size", "12px")
+            .text("Brushed");
 
         // var blobCircleWrapper = svg.select('.radarG')
         //     .data(data);
