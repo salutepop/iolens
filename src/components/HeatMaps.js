@@ -217,7 +217,7 @@ const HeatMaps = (props) => {
         // console.log(hist)
         // hist = Object.keys(hist).sort(compare);
         // console.log(hist)
-        let histWidth = 100;
+        let histWidth = marginWidth - 2
         let histScale = d3.scaleLinear()
             .domain([0, d3.max(Object.values(hist))])
             .range([histWidth, 0]);
@@ -240,9 +240,9 @@ const HeatMaps = (props) => {
         // console.log(points)
         d3.select(splotSvg.current)
             .append('g')
-            .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
+            .attr('transform', `translate(${0}, ${marginHeight})`)
             .append('path')
-            .style('stroke', 'black')
+            .style('stroke', 'gray')
             .style('fill', 'none')
             .attr('d', d3.line().curve(d3.curveNatural)(points))
         // Histogram End
