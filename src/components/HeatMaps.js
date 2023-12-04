@@ -76,6 +76,8 @@ const HeatMaps = (props) => {
                 })
         }
 
+        
+
 
         // const yAxis_left = d3.axisLeft(yScale_axis)
         //     .tickFormat(d => {
@@ -121,7 +123,8 @@ const HeatMaps = (props) => {
             .attr("y", d => yScale(String(d.value_y)))
             .attr("width", width / bandwidth)
             .attr("height", height / yLength)
-            .style("stroke-width", "0")
+            
+            .style("stroke-width", 0)
             .attr("stroke", function (d) {
 
                 if (type === "CPU") {
@@ -141,7 +144,25 @@ const HeatMaps = (props) => {
                 }
 
             })
-            .style("pointer-events", "none"); //rect위에서 brush
+            .style("pointer-events", "none") //rect위에서 brush
+            .lower()
+
+        //grid
+        // svg.selectAll("line.horizontalGrid")
+        // .data(yVarsArray) 
+        // .enter()
+        // .append("line")
+        // .attr("class", "horizontalGrid")
+        // .attr("x1", marginWidth) 
+        // .attr("x2", svgWidth - marginWidth) 
+        // .attr("y1", d => yScale(d) + marginHeight) 
+        // .attr("y2", d => yScale(d) + marginHeight) 
+        // .style("stroke", "black") 
+        // .style("stroke-width", 1) 
+        // .each(function() {
+            
+        //     this.parentNode.appendChild(this);
+        // });
 
 
         //rect
@@ -247,7 +268,7 @@ const HeatMaps = (props) => {
             .style('fill', 'none')
             .attr('d', d3.line().curve(d3.curveNatural)(points))
         // Histogram End
-        
+
         // drawThroughput()
 
         //Legend view

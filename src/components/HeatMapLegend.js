@@ -75,7 +75,7 @@ const HeatMapLegend = (props) => {
       .style("fill", function (d) {
 
         if (type === "CPU") {
-          return myColorCPU(d)
+          return myColor(d)
         } else {
           return myColor(d)
         }
