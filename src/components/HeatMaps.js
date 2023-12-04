@@ -390,6 +390,7 @@ const HeatMaps = (props) => {
             </svg>
             <div >
                 <HeatMapLegend
+                    gColor={props.gColor}
                     height={height}
                     type={type}
                     // marginWidth={marginWidth}

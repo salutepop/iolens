@@ -5,6 +5,8 @@ import * as d3 from "d3";
 
 const HeatMapLegend = (props) => {
 
+  const gColor = props.gColor;
+
   const splotSvg = useRef(null);
 
   const legendWidth = 20;
@@ -29,11 +31,11 @@ const HeatMapLegend = (props) => {
       // .range(["lightgreen", "#69b3a2"])
       // .range(["white", "lightblue" ,"blue", "red"])
       // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
-      .range(["white", "lightblue", "blue"])
+      .range(gColor.reverse())
       .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
 
     let myColorCPU = d3.scaleLinear()
-      .range(["yellow", "orange", "red"])
+      .range(gColor.reverse())
       .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
 
 
