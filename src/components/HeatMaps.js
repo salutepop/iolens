@@ -262,7 +262,7 @@ const HeatMaps = (props) => {
         // console.log(points)
         d3.select(splotSvg.current)
             .append('g')
-            .attr('transform', `translate(${0}, ${marginHeight})`)
+            .attr('transform', `translate(${width}, ${marginHeight})`)
             .append('path')
             .style('stroke', 'gray')
             .style('fill', 'none')
