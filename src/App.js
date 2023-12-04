@@ -9,6 +9,7 @@ import lba from "./data/heatmap_lba.json";
 import latency from "./data/heatmap_latency.json";
 import queue from "./data/heatmap_queue.json";
 import throughput from "./data/throughput.json"
+import performance from "./data/performance.json"
 
 function App() {
   const gColor =
@@ -48,6 +49,7 @@ function App() {
   parseData(top)
   parseData(f2fs_status)
   parseData(throughput)
+  parseData(performance)
 
   const data = {
     lba: lba,
@@ -57,6 +59,7 @@ function App() {
     func_top3: func_top3,
     f2fs_status: f2fs_status,
     throughput: throughput,
+    performance, performance,
   }
 
 
