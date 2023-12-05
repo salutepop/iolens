@@ -17,11 +17,12 @@ const HeatMaps = (props) => {
     const svgWidth = marginWidth * 2 + width;
     const svgHeight = marginHeight * 2 + height;
     const type = props.type
-
+    
     //hyo
     let brushedTime = props.brushedTime;
 
     useEffect(() => {
+             
 
 
         const svg = d3.select(splotSvg.current);
@@ -76,22 +77,8 @@ const HeatMaps = (props) => {
                 })
         }
 
+    
         
-
-
-        // const yAxis_left = d3.axisLeft(yScale_axis)
-        //     .tickFormat(d => {
-
-        //         if (yAxisArray[0] < 100)
-        //             return d;
-        //         else if(yAxisArray[0] === 'c1'){
-
-        //             return d;
-        //         }
-        //         else
-        //             return d3.format(".2s")(Number(d));
-        //     })
-
 
         svg.append("g")
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
@@ -100,15 +87,15 @@ const HeatMaps = (props) => {
 
         let myColor = d3.scaleLinear()
             // .range(["lightgreen", "#69b3a2"])
-            // .range(["white", "lightblue" ,"blue", "red"])
+            .range(["white", "#1f78b4" , "#e15759"])
             // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
-            .range(gColor.reverse())
-            .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
+            // .range(gColor.reverse())
+            .domain([0, d3.min(data, d => d.count) + 1,d3.max(data, d => d.count)])
         // console.log("count", d3.min(data_value)+1)
-
-        let myColorCPU = d3.scaleLinear()
-            .range(gColor.reverse())
-            .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
+        // 0 ~ 1 => white
+        // 1 ~ max - 1 => 
+        //max - 1 ~ max => black
+        console.log("mycolor", myColor.domain())
 
         // console.log("d.type", )
 
@@ -123,27 +110,10 @@ const HeatMaps = (props) => {
             .attr("y", d => yScale(String(d.value_y)))
             .attr("width", width / bandwidth)
             .attr("height", height / yLength)
-            
             .style("stroke-width", 0)
-            .attr("stroke", function (d) {
-
-                if (type === "CPU") {
-                    return myColor(d.count)
-                } else {
-                    return myColor(d.count)
-                }
-
-            })
-            .attr("opacity", function (d) { if (d.count === 0) return 0 })
-            .style("fill", function (d) {
-
-                if (type === "CPU") {
-                    return myColor(d.count)
-                } else {
-                    return myColor(d.count)
-                }
-
-            })
+            .attr("stroke", d => myColor(d.count))
+            .attr("opacity", function (d) { if (d.count === 0 && type !== "CPU") return 0 })
+            .style("fill", d => myColor(d.count) )
             .style("pointer-events", "none") //rect위에서 brush
             .lower()
 
@@ -163,18 +133,6 @@ const HeatMaps = (props) => {
             
         //     this.parentNode.appendChild(this);
         // });
-
-
-        //rect
-        // svg.append("rect")
-        // .attr("x", xScale(1034))
-        // .attr("y", yScale("2621378"))
-        // .attr("width", width / 100)
-        // .attr("height", height / 20)
-        // .attr("fill", "red")
-        // .style("stroke-width", "0")
-        // .attr("transform", `translate(${margin  }, ${margin })`)
-
 
         const brush = d3.brush()
             .extent([[0, 0], [width, height]])

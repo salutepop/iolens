@@ -54,7 +54,7 @@ const PlotView = (props) => {
             for (let i = 0; i <= 7; i++) {
 
                 parsedData.push({
-                    time: String(Number(tmpArray[i].time) + 1),
+                    time: (Number(tmpArray[i].time) + 1),
                     value_y: tmpArray[i].value_y,
                     count: tmpArray[i].count
                 })
@@ -64,9 +64,9 @@ const PlotView = (props) => {
             let cpuKey = `c${i}_idle`;
             let count = 100 - d[cpuKey];
             tmpData = {
-                time: String(time),
+                time: Number(time),
                 value_y: `c${i}`,
-                count: String(count)
+                count: Number(count)
             }
             tmpArray[i] = tmpData;
             // console.log("tmpA", tmpArray[i].time)

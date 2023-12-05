@@ -27,37 +27,50 @@ const HeatMapLegend = (props) => {
 
     const svg = d3.select(splotSvg.current)
 
-    let myColor = d3.scaleLinear()
-      // .range(["lightgreen", "#69b3a2"])
-      // .range(["white", "lightblue" ,"blue", "red"])
-      // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
-      .range(gColor.reverse())
-      .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
+    // let myColor = d3.scaleLinear()
+    //   // .range(["lightgreen", "#69b3a2"])
+    //   // .range(["white", "lightblue" ,"blue", "red"])
+    //   // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
+    //   .range(gColor.reverse())
+    //   .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
+    // console.log("gcloclor", gColor)
+    
+    console.log("data", type ,data)
+    // const gColor = ["#e15759", "#a6cee3","#1f78b4","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
 
-    let myColorCPU = d3.scaleLinear()
-      .range(gColor.reverse())
-      .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
-
+      let myColor = d3.scaleLinear()
+            // .range(["lightgreen", "#69b3a2"])
+            .range(["white", "#1f78b4" , "#e15759"])
+            // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
+            // .range(gColor.reverse())
+            .domain([0, d3.min(data, d => d.count) + 1 ,d3.max(data, d => d.count)])
 
     let colorRange = myColor.range();
     let domainRange = myColor.domain();
+    
+    // console.log("colorRange", colorRange)
+    // console.log("domainRange", domainRange)
 
-    if (type === "CPU") {
-      colorRange = myColorCPU.range();
-      domainRange = myColorCPU.domain();
-    }
+    
+      // colorRange = myColorCPU.range();
+      // domainRange = myColorCPU.domain();
+    
 
-    const numLegendItems = 5;
+    const numLegendItems = 4;
 
 
     // console.log("colorRange", colorRange)
     // console.log("domainRange", domainRange)
-    const increment = (domainRange[2] - domainRange[0]) / numLegendItems;
-    const legendData = Array.from({ length: numLegendItems }, (_, i) => domainRange[0] + increment * i);
+    const increment = Math.round((domainRange[2] - domainRange[0]) / numLegendItems);
+    // console.log("domain range", domainRange)
+    // console.log("increment", increment)
+    const legendData = Array.from({ length: numLegendItems + 1}, (_, i) => domainRange[0] + increment * i);
+    // legendData[legendData.length] = d3.max(data, d => d.count);
+    legendData[legendData.length - 1] = d3.max(data, d => d.count)
     const reverseLegendData = legendData.reverse();
-    // console.log("legend Data", legendData)
-    const legendHeight = height / numLegendItems;
-
+    console.log("legend Data", legendData)
+    // const legendHeight = height / numLegendItems;
+    const legendHeight = height/legendData.length;
 
     const legend = svg.append("g")
       .attr("transform", `translate(${marginWidth}, ${marginHeight})`);
@@ -72,15 +85,15 @@ const HeatMapLegend = (props) => {
       .attr("width", legendWidth)
       .attr("height", legendHeight)
       .style("stroke", "black")
-      .style("fill", function (d) {
+      .style("fill", function (d, i) {
 
-        if (type === "CPU") {
+          console.log(i)
           return myColor(d)
-        } else {
-          return myColor(d)
-        }
+        
       });
-
+      // console.log("max count", d3.max(legendData))
+      // console.log("legendData", legendData)
+      // console.log("legendData", legendData[legendData.length])
 
     legend.selectAll("text")
       .data(legendData)
@@ -88,7 +101,15 @@ const HeatMapLegend = (props) => {
       .append("text")
       .attr("x", 3)
       .attr("y", (d, i) => i * legendHeight + legendHeight / 2)
-      .text(d => d3.format(".2s")(d))
+      .text( function(d) {
+        if(d === 0){
+          return d
+        }else{
+
+          return d3.format(".2s")(d)
+        }
+      })
+        
       .style("font-size", "10px")
       .attr("alignment-baseline", "middle");
 
