@@ -21,7 +21,7 @@
 }
 
 .vertical-line {
-  margin: 5px;
+  margin: 20px;
   margin-top: 10px;
   background-color: gray;
   width: 2px;
@@ -105,7 +105,7 @@
 .div-corrPlot {
   position: absolute;
   top: 10%;
-  right: 2%
+  right: 0%
 }
 
 .label-r2 {

@@ -14,11 +14,27 @@ const MainView = (props) => {
     return (
         <div className='main-container'>
 
+<div>
+<img src='iolens.png' height='50px' />
+<div className="plotview-container">
+
+                <PlotView
+                    //hyo
+                    setBrushedTime={setBrushedTime}
+                    brushedTime={brushedTime}
+                    data={props.data}
+                    gColor={props.gColor}
+                //index
+                />
+            </div>
+</div>
+
+
+            <div className="vertical-line"/>
 
             <div className="right-container">
-                <img src='iolens.png' height='50px' />
 
-                {/* <h2 className='header'>Summary</h2> */}
+                <h2 className='header'>Summary</h2>
                 <SummaryView
                     brushedTime={brushedTime}
                     data={props.data}
@@ -31,18 +47,7 @@ const MainView = (props) => {
                 </CorrelationView>
             </div>
 
-            <div className="vertical-line"/>
 
-            <div className="plotview-container">
-                <PlotView
-                    //hyo
-                    setBrushedTime={setBrushedTime}
-                    brushedTime={brushedTime}
-                    data={props.data}
-                    gColor={props.gColor}
-                //index
-                />
-            </div>
         </div>
 
     )
