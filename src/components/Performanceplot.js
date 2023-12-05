@@ -12,6 +12,7 @@ const Performanceplot = (props) => {
     const marginWidth = props.marginWidth;
     const marginHeight = props.marginHeight;
     const legendWidth = 100
+    let brushedTime = props.brushedTime;
 
     const svgWidth = marginWidth * 2 + width + legendWidth;
     const svgHeight = marginHeight * 2 + height;
@@ -229,6 +230,43 @@ const Performanceplot = (props) => {
             .attr("stroke", gColor[0])
             .attr("stroke-width", '0.5')
     }
+    useEffect(() => {
+        const svg = d3.select(splotSvg.current);
+
+        let xScale = d3.scaleLinear()
+            .domain([d3.min(data, d => d.time), d3.max(data, d => d.time)])
+            .range([0, props.width]);
+        let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
+
+        svg.selectAll('rect.background')
+            .data(brushedTime)
+            .join(
+                enter => enter
+                    .append('rect')
+                    .attr("class", "background")
+                    .attr('transform', `translate(${props.marginWidth}, ${props.marginHeight})`)
+                    .attr("x", time => xScale(time))
+                    .attr("y", 0)
+                    .attr("height", props.height)
+                    .attr("width", props.width / bandwidth)
+                    .style('stroke', "none")
+                    .style('opacity', '0.2')
+                    .style("fill", "blue"),
+                update => update
+                    .attr("x", time => {
+                        // console.log(xScale(minX))
+                        if (xScale(time) < 0) {
+                            return 0
+                        }
+                        else if (xScale(time) > props.width) {
+                            return props.width;
+                        }
+                        else return xScale(time)
+                    }),
+                exit => exit.remove()
+            )
+
+    }, [brushedTime]);
 
     function drawLatency() {
         // console.log(throughputData)
