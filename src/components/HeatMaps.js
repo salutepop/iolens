@@ -146,7 +146,9 @@ const HeatMaps = (props) => {
         svg.select('.brush').call(brush);
 
         function resetBrushed() {
-            svg.select('.brush .selection').style("fill-opacity", 0.2)
+            svg.select('.brush .selection')
+            .style("fill-opacity", 0.2)
+            .style("stroke-width", 0)
 
         }
         function brushed({ selection }) {
