@@ -202,6 +202,9 @@ const PlotView = (props) => {
                         <h2 className="header-scatterplot">
                             {"CPU"}
                         </h2>
+                        <h2 className="subtitle-scatterplot">
+                            {"(Core #, %)"}
+                        </h2>
                         <Stackareaplot
                             gColor={props.gColor}
                             width={plotWidth}
