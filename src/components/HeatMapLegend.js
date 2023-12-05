@@ -85,9 +85,7 @@ const HeatMapLegend = (props) => {
       .attr("width", legendWidth)
       .attr("height", legendHeight)
       .style("stroke", "black")
-      .style("fill", function (d, i) {
-
-        
+      .style("fill", function (d,i) {
           return myColor(d)
         
       });
