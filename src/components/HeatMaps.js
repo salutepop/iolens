@@ -95,7 +95,7 @@ const HeatMaps = (props) => {
         // 0 ~ 1 => white
         // 1 ~ max - 1 => 
         //max - 1 ~ max => black
-        console.log("mycolor", myColor.domain())
+        // console.log("mycolor", myColor.domain())
 
         // console.log("d.type", )
 
@@ -155,7 +155,7 @@ const HeatMaps = (props) => {
 
             if (selection === null) {
 
-                console.log("brushed nothing")
+                // console.log("brushed nothing")
                 // props.setBrushedTime(null);
                 return;
             } else {

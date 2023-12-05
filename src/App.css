@@ -74,9 +74,32 @@
   /* 체크박스와 레이블 사이의 간격을 설정 */
 }
 
-.h2-corr{
+/* CSS */
+.btn-summary-toggle {
+  position: absolute;
+  font-size: 15px;
+  font-weight: bold;
+  background-image: linear-gradient(-180deg,  #a6cee3 0%, #1f78b4 100%);
+  border-radius: .5rem;
+  border: 0;
+  /* box-sizing: border-box; */
+  color: #FFFFFF;
+  justify-content: center;
+  padding: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.btn-summary-toggle:hover {
+  background-image: linear-gradient(-180deg, #1f78b4 0%, #1f78b4 100%);
+}
+
+
+.h2-corr {
   text-align: center;
 }
+
 .div-corrView {
   position: relative;
   width: 400px;
@@ -111,7 +134,7 @@
 .label-r2 {
   position: absolute;
   top: 0%;
-  right:0%;
+  right: 0%;
   padding: 10px;
   font-weight: bold;
   border: 2px solid gray;
@@ -144,7 +167,7 @@
   transform: rotate(180deg);
   /* position: relative; */
   justify-content: center;
-  margin:0;
+  margin: 0;
 }
 
 .header-linleplot {

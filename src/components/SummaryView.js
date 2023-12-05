@@ -15,8 +15,8 @@ const SummaryView = (props) => {
     const [totalData, setTotalData] = useState([]); // save the real data of all
     const [radarData, setRadarData] = useState([]);
     const [totalRadarData, setTotalRadarData] = useState([]);
-    //const [viewMode, setViewMode] = useState("summary");
-    
+    const [viewMode, setViewMode] = useState("summary");
+
     useEffect(() => {
         const textlines = [];
         let selectedTime = [];
@@ -201,41 +201,56 @@ const SummaryView = (props) => {
 
 
 
-    }, [brushedTime, totalRadarData, totalData]);
+    }, [brushedTime, totalRadarData, totalData, viewMode]);
+
+//     useEffect(() => {
+// console.log(viewMode)
+//     }, [viewMode]);
+    
+    // return (
+    //     <div>
+    //         <button className='btn-summary-toggle'>Plane Text</button>
+    //         <h2 className='header'>Summary</h2>
+   
+    //         <div style={{ display: "flex", justifyContent: "center" }}>
+    //             {/* SummaryView를 왼쪽에 배치 */}
+    //             {/* <div>
+    //             <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
+    //         </div> */}
+
+    //             {/* Radarplot을 오른쪽에 배치 */}
+    //             <div>
+    //                 <Radarplot radarData={radarData} gColor={props.gColor} />
+    //             </div>
+    //         </div>
+    //     </div>
+
+    // );
+
+    const toggleView = () => {
+        setViewMode((prevMode) => (prevMode === "summary" ? "radarplot" : "summary"));
+    };
 
     return (
-        <div style={{ display: "flex", justifyContent: "center"}}>
-            {/* SummaryView를 왼쪽에 배치 */}
-            {/* <div>
-                <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
-            </div> */}
-
-            {/* Radarplot을 오른쪽에 배치 */}
+        <div>
             <div>
-                <Radarplot radarData={radarData} gColor={props.gColor} />
+            <button onClick={toggleView} className='btn-summary-toggle'>
+                {viewMode === "summary" ? "Radarplot" : "Summary"}
+            </button>
+            <h2 className='header'>Summary</h2>
             </div>
+
+            {/* Toggle 버튼 */}
+   
+
+            {/* 조건에 따라 렌더링 */}
+            {viewMode === "summary" ? (
+                <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
+            ) : (
+                <Radarplot radarData={radarData} gColor={props.gColor} />
+            )}
         </div>
     );
-
-    // const toggleView = () => {
-    //     setViewMode((prevMode) => (prevMode === "summary" ? "radarplot" : "summary"));
-    // };
-
-    // return (
-    //     <div style={{ position: "relative", textAlign: "left" }}>
-    //         {/* Toggle 버튼 */}
-    //         <button onClick={toggleView} style={{ position: "absolute", top: "-20px", left: "40px" }}>
-    //             {viewMode === "summary" ? "Radarplot" : "Summary"}
-    //         </button>
-
-    //         {/* 조건에 따라 렌더링 */}
-    //         {viewMode === "summary" ? (
-    //             <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
-    //         ) : (
-    //             <Radarplot radarData={radarData} gColor={props.gColor} />
-    //         )}
-    //     </div>
-    // );
 
 };
 

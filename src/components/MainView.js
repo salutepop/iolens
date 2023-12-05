@@ -34,7 +34,6 @@ const MainView = (props) => {
 
             <div className="right-container">
 
-                <h2 className='header'>Summary</h2>
                 <SummaryView
                     brushedTime={brushedTime}
                     data={props.data}

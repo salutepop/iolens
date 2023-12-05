@@ -35,7 +35,7 @@ const HeatMapLegend = (props) => {
     //   .domain([0, d3.min(data, d => d.count) + 1, d3.max(data, d => d.count)])
     // console.log("gcloclor", gColor)
     
-    console.log("data", type ,data)
+    // console.log("data", type ,data)
     // const gColor = ["#e15759", "#a6cee3","#1f78b4","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
 
       let myColor = d3.scaleLinear()
@@ -68,7 +68,7 @@ const HeatMapLegend = (props) => {
     // legendData[legendData.length] = d3.max(data, d => d.count);
     legendData[legendData.length - 1] = d3.max(data, d => d.count)
     const reverseLegendData = legendData.reverse();
-    console.log("legend Data", legendData)
+    // console.log("legend Data", legendData)
     // const legendHeight = height / numLegendItems;
     const legendHeight = height/legendData.length;
 

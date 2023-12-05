@@ -125,7 +125,7 @@ const PlotView = (props) => {
                         <h2 className="subtitle-scatterplot">
                             {"(Y1: MB/s, Y2: ms)"}
                         </h2>
-                
+
                         <Performanceplot
                             gColor={props.gColor}
                             width={plotWidth}
@@ -135,33 +135,59 @@ const PlotView = (props) => {
                             marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
                         />
-                       
+
                     </div>
                 )}
             </div>
             <div>
-                {graphVisibility.cpu && (
+                <div>
+                    {graphVisibility.cpu && (
 
-                    <div style={{ display: "flex" }}>
-                        <h2 className="header-scatterplot">
-                            {"CPU"}
-                        </h2>
-                        <h2 className="subtitle-scatterplot">
-                            {"(Core #, %)"}
-                        </h2>
-                        <HeatMaps
-                            gColor={props.gColor}
-                            width={plotWidth}
-                            height={PlotHeight}
-                            data={parsedData}
-                            allData={props.data}
-                            marginWidth={plotMarginWidth}
-                            marginHeight={plotMarginHeight}
-                            brushedTime={props.brushedTime}
-                            setBrushedTime={props.setBrushedTime}
-                            type={CPU} />
-                    </div>
-                )}
+                        <div style={{ display: "flex" }}>
+                            <h2 className="header-scatterplot">
+                                {"CPU"}
+                            </h2>
+                            <h2 className="subtitle-scatterplot">
+                                {"(Core #, %)"}
+                            </h2>
+                            <HeatMaps
+                                gColor={props.gColor}
+                                width={plotWidth}
+                                height={PlotHeight}
+                                data={parsedData}
+                                allData={props.data}
+                                marginWidth={plotMarginWidth}
+                                marginHeight={plotMarginHeight}
+                                brushedTime={props.brushedTime}
+                                setBrushedTime={props.setBrushedTime}
+                                type={CPU} />
+                        </div>
+                    )}
+                </div>
+                <div>
+                    {graphVisibility.cpu && (
+
+                        <div style={{ display: "flex" }}>
+                            <h2 className="header-scatterplot">
+                                {"CPU"}
+                            </h2>
+                            <h2 className="subtitle-scatterplot">
+                                {"(Core #, %)"}
+                            </h2>
+                            <HeatMaps
+                                gColor={props.gColor}
+                                width={plotWidth}
+                                height={PlotHeight}
+                                data={parsedData}
+                                allData={props.data}
+                                marginWidth={plotMarginWidth}
+                                marginHeight={plotMarginHeight}
+                                brushedTime={props.brushedTime}
+                                setBrushedTime={props.setBrushedTime}
+                                type={CPU} />
+                        </div>
+                    )}
+                </div>
             </div>
             <div>
                 {graphVisibility.memory && (
@@ -262,7 +288,7 @@ const PlotView = (props) => {
                 )}
             </div>
 
-          
+
 
 
             {/* <div>

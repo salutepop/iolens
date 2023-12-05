@@ -208,7 +208,7 @@ const Correlationplot = (props) => {
         let thresholds = densityData.map(r => r.value);
         let extents = d3.extent(thresholds);
         extents.push(d3.median(thresholds));
-        console.log(gColor)
+        // console.log(gColor)
         const color = d3
             .scaleLinear()
             .domain(extents.sort())

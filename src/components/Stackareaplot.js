@@ -170,7 +170,7 @@ const Stackareaplot = (props) => {
 
         if (selection === null) {
 
-            console.log("brushed nothing")
+            // console.log("brushed nothing")
             // props.setBrushedTime(null);
             return;
         } else {
