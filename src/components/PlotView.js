@@ -122,6 +122,10 @@ const PlotView = (props) => {
                         <h2 className="header-scatterplot">
                             {"Performance"}
                         </h2>
+                        <h2 className="subtitle-scatterplot">
+                            {"(X: MB/s, Y: ms)"}
+                        </h2>
+                
                         <Performanceplot
                             gColor={props.gColor}
                             width={plotWidth}
@@ -130,6 +134,7 @@ const PlotView = (props) => {
                             marginWidth={plotMarginWidth}
                             marginHeight={plotMarginHeight}
                         />
+                       
                     </div>
                 )}
             </div>

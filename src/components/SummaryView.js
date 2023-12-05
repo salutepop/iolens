@@ -204,11 +204,11 @@ const SummaryView = (props) => {
     }, [brushedTime, totalRadarData, totalData]);
 
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", justifyContent: "center"}}>
             {/* SummaryView를 왼쪽에 배치 */}
-            <div>
+            {/* <div>
                 <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
-            </div>
+            </div> */}
 
             {/* Radarplot을 오른쪽에 배치 */}
             <div>
