@@ -4,6 +4,7 @@ import Lineplot from './Lineplot';
 import Stackareaplot from "./Stackareaplot";
 import HeatMaps from './HeatMaps';
 import Performanceplot from './Performanceplot'
+import ControlView from './ControlView'
 
 import * as d3 from "d3";
 import { brush } from "d3";
@@ -34,14 +35,24 @@ const PlotView = (props) => {
     let pcount = cpuData[0].count;
     let tmpData = [];
     let tmpArray = [];
+
+    const [graphVisibility, setGraphVisibility] = useState({
+        performance: true,
+        cpu: true,
+        memory: false,
+        f2fs_status: true,
+        lba: true,
+        queue_count: false,
+    });
+
     cpuData.forEach((d) => {
 
-        let time = d.time;  
+        let time = d.time;
         if (time !== ptime + 1) {
             // console.log("time", d.time)
             // console.log("ptime", ptime)
             for (let i = 0; i <= 7; i++) {
-                
+
                 parsedData.push({
                     time: String(Number(tmpArray[i].time) + 1),
                     value_y: tmpArray[i].value_y,
@@ -91,136 +102,146 @@ const PlotView = (props) => {
     // console.log(calc);
     // console.log(throughput);
 
+    const handleCheckboxChange = (graphName) => {
+        setGraphVisibility((prevVisibility) => ({
+            ...prevVisibility, //현재 상태 복사.
+            [graphName]: !prevVisibility[graphName], //토글된것만 flase로 바꿈
+        }));
+    };
+
     return (
         <div className="plot-container">
-                <div>
-                <div style={{ display: "flex" }}>
-                    <h2 className="header-scatterplot">
-                        {"Performance"}
-                    </h2>
-                    <Performanceplot
-                        gColor={props.gColor}
-                        width={plotWidth}
-                        height={PlotHeight}
-                        allData={props.data}
-                        marginWidth={plotMarginWidth}
-                        marginHeight={plotMarginHeight}
-                    />
-                </div>
+            <ControlView
+                graphVisibility={graphVisibility}
+                handleCheckboxChange={handleCheckboxChange}
+                gColor={props.gColor}
+            />
+            <div>
+                {graphVisibility.performance && (
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"Performance"}
+                        </h2>
+                        <Performanceplot
+                            gColor={props.gColor}
+                            width={plotWidth}
+                            height={PlotHeight}
+                            allData={props.data}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
+                        />
+                    </div>
+                )}
             </div>
             <div>
-                <div style={{ display: "flex" }}>
-                    <h2 className="header-scatterplot">
-                        {"Memory"}
-                    </h2>
-                    <Stackareaplot
-                        gColor={props.gColor}
-                        width={plotWidth}
-                        height={PlotHeight}
-                        allData={props.data}
-                        data={top.map((d) => ({ time: d.time, Used: d.mem_used, Buff: d.mem_buff, Free: d.mem_free }))}
-                        marginWidth={plotMarginWidth}
-                        marginHeight={plotMarginHeight}
-                        brushedTime={props.brushedTime}
-                        setBrushedTime={props.setBrushedTime}
-                    />
-                </div>
+                {graphVisibility.cpu && (
+
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"CPU"}
+                        </h2>
+                        <HeatMaps
+                            gColor={props.gColor}
+                            width={plotWidth}
+                            height={PlotHeight}
+                            data={parsedData}
+                            allData={props.data}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime}
+                            type={CPU} />
+                    </div>
+                )}
+            </div>
+            <div>
+                {graphVisibility.memory && (
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"Memory"}
+                        </h2>
+                        <Stackareaplot
+                            gColor={props.gColor}
+                            width={plotWidth}
+                            height={PlotHeight}
+                            allData={props.data}
+                            data={top.map((d) => ({ time: d.time, Used: d.mem_used, Buff: d.mem_buff, Free: d.mem_free }))}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime}
+                        />
+                    </div>
+                )}
             </div>
 
             <div>
-                <div style={{ display: "flex" }}>
-                    <h2 className="header-scatterplot">
-                        {"F2FS Segment"}
-                    </h2>
-                    <Stackareaplot
-                        gColor={props.gColor}
-                        width={plotWidth}
-                        height={PlotHeight}
-                        allData={props.data}
-                        data={f2fs_status.map((d) => ({ time: d.time, Valid: d.seg_valid, Dirty: d.seg_dirty, Prefree: d.seg_prefree, Free: d.seg_free }))}
-                        checkPointData={f2fs_status.map((d) => ({ time: d.time, gc: d.gc_calls + d.cp_calls}))}
-                        marginWidth={plotMarginWidth}
-                        marginHeight={plotMarginHeight}
-                        brushedTime={props.brushedTime}
-                        setBrushedTime={props.setBrushedTime}
-                    />
-                </div>
+                {graphVisibility.f2fs_status && (
+
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"F2FS Segment"}
+                        </h2>
+                        <Stackareaplot
+                            gColor={props.gColor}
+                            width={plotWidth}
+                            height={PlotHeight}
+                            allData={props.data}
+                            data={f2fs_status.map((d) => ({ time: d.time, Valid: d.seg_valid, Dirty: d.seg_dirty, Prefree: d.seg_prefree, Free: d.seg_free }))}
+                            checkPointData={f2fs_status.map((d) => ({ time: d.time, gc: d.gc_calls + d.cp_calls }))}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime}
+                        />
+                    </div>
+                )}
             </div>
 
 
             {/* heatmap */}
             <div>
-                <div style={{ display: "flex" }}>
-                    <h2 className="header-scatterplot">
-                        {"LBA"}
-                    </h2>
-                    <HeatMaps
-                        gColor={props.gColor}
-                        width={plotWidth}
-                        height={PlotHeight}
-                        data={lba}
-                        allData={props.data}
-                        marginWidth={plotMarginWidth}
-                        marginHeight={plotMarginHeight}
-                        brushedTime={props.brushedTime}
-                        setBrushedTime={props.setBrushedTime}
-                        type={LBA} />
-                </div>
+                {graphVisibility.lba && (
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"LBA"}
+                        </h2>
+                        <HeatMaps
+                            gColor={props.gColor}
+                            width={plotWidth}
+                            height={PlotHeight}
+                            data={lba}
+                            allData={props.data}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime}
+                            type={LBA} />
+                    </div>
+                )}
             </div>
             <div>
-                <div style={{ display: "flex" }}>
-                    <h2 className="header-scatterplot">
-                        {"Queue Count"}
-                    </h2>
-                    <HeatMaps
-                        gColor={props.gColor}
-                        width={plotWidth}
-                        height={PlotHeight}
-                        data={queue}
-                        allData={props.data}
-                        marginWidth={plotMarginWidth}
-                        marginHeight={plotMarginHeight}
-                        brushedTime={props.brushedTime}
-                        setBrushedTime={props.setBrushedTime}
-                        type={Queue} />
-                </div>
+                {graphVisibility.queue_count && (
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"Queue Count"}
+                        </h2>
+                        <HeatMaps
+                            gColor={props.gColor}
+                            width={plotWidth}
+                            height={PlotHeight}
+                            data={queue}
+                            allData={props.data}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime}
+                            type={Queue} />
+                    </div>
+                )}
             </div>
-            <div>
-                <div style={{ display: "flex" }}>
-                    <h2 className="header-scatterplot">
-                        {"Latency"}
-                    </h2>
-                    <HeatMaps
-                        gColor={props.gColor}
-                        width={plotWidth}
-                        height={PlotHeight}
-                        data={latency}
-                        allData={props.data}
-                        marginWidth={plotMarginWidth}
-                        marginHeight={plotMarginHeight}
-                        brushedTime={props.brushedTime}
-                        setBrushedTime={props.setBrushedTime}
-                        type={Latency} />
-                </div>
-            </div>
-            <div>
-                <div style={{ display: "flex" }}>
-                    <h2 className="header-scatterplot">
-                        {"CPU"}
-                    </h2>
-                    <HeatMaps
-                        gColor={props.gColor}
-                        width={plotWidth}
-                        height={PlotHeight}
-                        data={parsedData}
-                        allData={props.data}
-                        marginWidth={plotMarginWidth}
-                        marginHeight={plotMarginHeight}
-                        brushedTime={props.brushedTime}
-                        setBrushedTime={props.setBrushedTime}
-                        type={CPU} />
-                </div>
-            </div>
+
+          
 
 
             {/* <div>

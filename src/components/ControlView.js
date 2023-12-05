@@ -9,65 +9,57 @@ const ControlView = (props) => {
                 <input
                     type="checkbox"
                     className="checkbox-input"
-                    checked={props.stateCheckbox.cpu_user}
-                    onChange={() => props.handleCheckboxChange('cpu_user')}
+                    checked={props.graphVisibility.performance}
+                    onChange={() => props.handleCheckboxChange('performance')}
                 />
-                <label className='checkbox-label'>CPU User</label>
+                <label className='checkbox-label'>I/O Performance</label>
             </div>
             <div className="checkbox-container">
                 <input
                     type="checkbox"
                     className="checkbox-input"
-                    checked={props.stateCheckbox.cpu_system}
-                    onChange={() => props.handleCheckboxChange('cpu_system')}
+                    checked={props.graphVisibility.performance}
+                    onChange={() => props.handleCheckboxChange('cpu')}
                 />
-                <label className='checkbox-label'>CPU System</label>
+                <label className='checkbox-label'>CPU Utilization</label>
             </div>
             <div className="checkbox-container">
                 <input
                     type="checkbox"
                     className="checkbox-input"
-                    checked={props.stateCheckbox.mem_free}
-                    onChange={() => props.handleCheckboxChange('mem_free')}
+                    checked={props.graphVisibility.memory}
+                    onChange={() => props.handleCheckboxChange('memory')}
                 />
-                <label className='checkbox-label'>Free Memory</label>
+                <label className='checkbox-label'>Memory</label>
             </div>
             <div className="checkbox-container">
                 <input
                     type="checkbox"
                     className="checkbox-input"
-                    checked={props.stateCheckbox.throughput}
-                    onChange={() => props.handleCheckboxChange('throughput')}
+                    checked={props.graphVisibility.f2fs_status}
+                    onChange={() => props.handleCheckboxChange('f2fs_status')}
                 />
-                <label className='checkbox-label'>Throughput </label>
+                <label className='checkbox-label'>F2FS Status</label>
             </div>
             <div className="checkbox-container">
                 <input
                     type="checkbox"
                     className="checkbox-input"
-                    checked={props.stateCheckbox.queue}
-                    onChange={() => props.handleCheckboxChange('queue')}
-                />
-                <label className='checkbox-label'>Queue depth</label>
-            </div>
-            <div className="checkbox-container">
-                <input
-                    type="checkbox"
-                    className="checkbox-input"
-                    checked={props.stateCheckbox.latency}
-                    onChange={() => props.handleCheckboxChange('latency')}
-                />
-                <label className='checkbox-label'>Latency </label>
-            </div>
-            <div className="checkbox-container">
-                <input
-                    type="checkbox"
-                    className="checkbox-input"
-                    checked={props.stateCheckbox.lba}
+                    checked={props.graphVisibility.lba}
                     onChange={() => props.handleCheckboxChange('lba')}
                 />
-                <label className='checkbox-label'>LBA </label>
+                <label className='checkbox-label'>LBA</label>
             </div>
+            <div className="checkbox-container">
+                <input
+                    type="checkbox"
+                    className="checkbox-input"
+                    checked={props.graphVisibility.queue_count}
+                    onChange={() => props.handleCheckboxChange('queue_count')}
+                />
+                <label className='checkbox-label'>Queue count</label>
+            </div>
+            
         </div>
 
     )
