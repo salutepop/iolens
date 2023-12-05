@@ -85,15 +85,7 @@ const HeatMapLegend = (props) => {
       .attr("width", legendWidth)
       .attr("height", legendHeight)
       .style("stroke", "black")
-<<<<<<< HEAD
       .style("fill", function (d,i) {
-console.log(type, i)
-        if (type === "CPU") {
-=======
-      .style("fill", function (d, i) {
-
-          console.log(i)
->>>>>>> 7f72c3db445698a09a7c0f9251ec0ef579cce75d
           return myColor(d)
         
       });
