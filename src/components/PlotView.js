@@ -74,7 +74,39 @@ const PlotView = (props) => {
         }
         ptime = time;
     })
-    // console.log("parsedData", parsedData)
+    //stack char CPU data parsing
+    const stackCPUData = props.data.top;
+    const parsedData_cpu = []
+    stackCPUData.forEach((d) => {
+        let sum_usr = 0;
+        let sum_sys = 0;
+        let sum_disk = 0;
+        let sum_idle = 0;
+        let time = d.time
+        for (let i = 0; i <= 7; i++) {
+            let cpuKey_usr = `c${i}_usr`;
+            let cpuKey_sys = `c${i}_sys`;
+            let cpuKey_idle = `c${i}_idle`;
+            sum_usr = sum_usr + d[cpuKey_usr]
+            sum_sys = sum_sys + d[cpuKey_sys]
+            sum_idle = sum_idle + d[cpuKey_idle]
+            // console.log("tmpA", tmpArray[i].time)
+        }
+        tmpData = {
+            time: Number(d.time),
+            usr: sum_usr,
+            sys: sum_sys,
+            idle: sum_idle,
+            disk: 800 - sum_usr - sum_sys - sum_idle
+        }
+        parsedData_cpu.push(tmpData)
+        
+    })
+
+
+
+
+    console.log("parsedData", parsedData_cpu)
     //jw
     // let memFreeScale = d3.scaleLinear()
     //     .domain([d3.min(resource, d => d.mem_free), d3.max(resource, d => d.mem_free)])
@@ -160,6 +192,27 @@ const PlotView = (props) => {
                     </div>
                 )}
             </div>
+           
+            <div>
+                {graphVisibility.cpu && (
+                    <div style={{ display: "flex" }}>
+                        <h2 className="header-scatterplot">
+                            {"CPU"}
+                        </h2>
+                        <Stackareaplot
+                            gColor={props.gColor}
+                            width={plotWidth}
+                            height={PlotHeight}
+                            allData={props.data}
+                            data={parsedData_cpu.map((d) => ({ time: d.time, usr: d.usr, sys: d.sys, disk: d.disk, idle: d.idle}))}
+                            marginWidth={plotMarginWidth}
+                            marginHeight={plotMarginHeight}
+                            brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime}
+                        />
+                    </div>
+                )}
+            </div>
             <div>
                 {graphVisibility.memory && (
                     <div style={{ display: "flex" }}>
@@ -180,7 +233,6 @@ const PlotView = (props) => {
                     </div>
                 )}
             </div>
-
             <div>
                 {graphVisibility.f2fs_status && (
 
