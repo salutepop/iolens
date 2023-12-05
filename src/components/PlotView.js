@@ -123,7 +123,7 @@ const PlotView = (props) => {
                             {"Performance"}
                         </h2>
                         <h2 className="subtitle-scatterplot">
-                            {"(X: MB/s, Y: ms)"}
+                            {"(Y1: MB/s, Y2: ms)"}
                         </h2>
                 
                         <Performanceplot
@@ -146,6 +146,9 @@ const PlotView = (props) => {
                         <h2 className="header-scatterplot">
                             {"CPU"}
                         </h2>
+                        <h2 className="subtitle-scatterplot">
+                            {"(Core #, %)"}
+                        </h2>
                         <HeatMaps
                             gColor={props.gColor}
                             width={plotWidth}
@@ -165,6 +168,9 @@ const PlotView = (props) => {
                     <div style={{ display: "flex" }}>
                         <h2 className="header-scatterplot">
                             {"Memory"}
+                        </h2>
+                        <h2 className="subtitle-scatterplot">
+                            {"(Utilization, MB)"}
                         </h2>
                         <Stackareaplot
                             gColor={props.gColor}
@@ -187,6 +193,9 @@ const PlotView = (props) => {
                     <div style={{ display: "flex" }}>
                         <h2 className="header-scatterplot">
                             {"F2FS Segment"}
+                        </h2>
+                        <h2 className="subtitle-scatterplot">
+                            {"(# of Segments)"}
                         </h2>
                         <Stackareaplot
                             gColor={props.gColor}
@@ -212,6 +221,9 @@ const PlotView = (props) => {
                         <h2 className="header-scatterplot">
                             {"LBA"}
                         </h2>
+                        <h2 className="subtitle-scatterplot">
+                            {"(Address)"}
+                        </h2>
                         <HeatMaps
                             gColor={props.gColor}
                             width={plotWidth}
@@ -230,7 +242,10 @@ const PlotView = (props) => {
                 {graphVisibility.queue_count && (
                     <div style={{ display: "flex" }}>
                         <h2 className="header-scatterplot">
-                            {"Queue Count"}
+                            {"Queue Counts"}
+                        </h2>
+                        <h2 className="subtitle-scatterplot">
+                            {"(# of Requests)"}
                         </h2>
                         <HeatMaps
                             gColor={props.gColor}
