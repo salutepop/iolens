@@ -167,7 +167,7 @@
   white-space: wrap;
   /* 줄 바꿈을 방지합니다. */
   transform: rotate(180deg);
-  position: relative;
+  /* position: relative; */
   justify-content: center;
   margin: 0;
   height: 100;
