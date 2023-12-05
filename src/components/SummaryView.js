@@ -228,14 +228,14 @@ const SummaryView = (props) => {
     // );
 
     const toggleView = () => {
-        setViewMode((prevMode) => (prevMode === "summary" ? "radarplot" : "summary"));
+        setViewMode((prevMode) => (prevMode === "summary" ? "Radar plot" : "summary"));
     };
 
     return (
         <div>
             <div>
             <button onClick={toggleView} className='btn-summary-toggle'>
-                {viewMode === "summary" ? "Radarplot" : "Summary"}
+                {viewMode === "summary" ? "Radar plot" : "Summary"}
             </button>
             <h2 className='header'>Summary</h2>
             </div>

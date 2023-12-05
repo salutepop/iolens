@@ -24,6 +24,11 @@ const PlotView = (props) => {
     const queue = props.data.queue;
     const f2fs_status = props.data.f2fs_status;
 
+    const [cpuMode, setCpuMode] = useState("Split");
+    const toggleView = () => {
+        setCpuMode((prevMode) => (prevMode === "Split" ? "Total" : "Split"));
+    };
+
     //CPU data parsing
     const cpuData = props.data.top;
     const LBA = "LBA"
@@ -100,7 +105,7 @@ const PlotView = (props) => {
             disk: 800 - sum_usr - sum_sys - sum_idle
         }
         parsedData_cpu.push(tmpData)
-        
+
     })
 
 
@@ -172,79 +177,63 @@ const PlotView = (props) => {
                 )}
             </div>
             <div>
-                <div>
-                    {graphVisibility.cpu && (
-
-                        <div style={{ display: "flex" }}>
-                            <h2 className="header-scatterplot">
-                                {"CPU"}
-                            </h2>
-                            <h2 className="subtitle-scatterplot">
-                                {"(Core #, %)"}
-                            </h2>
-                            <HeatMaps
-                                gColor={props.gColor}
-                                width={plotWidth}
-                                height={PlotHeight}
-                                data={parsedData}
-                                allData={props.data}
-                                marginWidth={plotMarginWidth}
-                                marginHeight={plotMarginHeight}
-                                brushedTime={props.brushedTime}
-                                setBrushedTime={props.setBrushedTime}
-                                type={CPU} />
-                        </div>
-                    )}
-                </div>
-                <div>
-                    {graphVisibility.cpu && (
-
-                        <div style={{ display: "flex" }}>
-                            <h2 className="header-scatterplot">
-                                {"CPU"}
-                            </h2>
-                            <h2 className="subtitle-scatterplot">
-                                {"(Core #, %)"}
-                            </h2>
-                            <HeatMaps
-                                gColor={props.gColor}
-                                width={plotWidth}
-                                height={PlotHeight}
-                                data={parsedData}
-                                allData={props.data}
-                                marginWidth={plotMarginWidth}
-                                marginHeight={plotMarginHeight}
-                                brushedTime={props.brushedTime}
-                                setBrushedTime={props.setBrushedTime}
-                                type={CPU} />
-                        </div>
-                    )}
-                </div>
-            </div>
-           
-            <div>
                 {graphVisibility.cpu && (
-                    <div style={{ display: "flex" }}>
-                        <h2 className="header-scatterplot">
-                            {"CPU"}
-                        </h2>
-                        <h2 className="subtitle-scatterplot">
-                            {"(Core #, %)"}
-                        </h2>
-                        <Stackareaplot
-                            gColor={props.gColor}
-                            width={plotWidth}
-                            height={PlotHeight}
-                            allData={props.data}
-                            data={parsedData_cpu.map((d) => ({ time: d.time, usr: d.usr, sys: d.sys, disk: d.disk, idle: d.idle}))}
-                            marginWidth={plotMarginWidth}
-                            marginHeight={plotMarginHeight}
-                            brushedTime={props.brushedTime}
-                            setBrushedTime={props.setBrushedTime}
-                        />
+                    <div>
+                      <button onClick={toggleView} className='btn-summary-toggle'>
+                {cpuMode === "Split" ? "Total" : "Split"}
+
+                        </button>
+                        {cpuMode === "Split" ?(
+                        <div>
+                            <div style={{ display: "flex" }}>
+                                <h2 className="header-scatterplot">
+                                    {"CPU"}
+                                </h2>
+                                <h2 className="subtitle-scatterplot">
+                                    {"(Core #, %)"}
+                                </h2>
+                                <HeatMaps
+                                    gColor={props.gColor}
+                                    width={plotWidth}
+                                    height={PlotHeight}
+                                    data={parsedData}
+                                    allData={props.data}
+                                    marginWidth={plotMarginWidth}
+                                    marginHeight={plotMarginHeight}
+                                    brushedTime={props.brushedTime}
+                                    setBrushedTime={props.setBrushedTime}
+                                    type={CPU} />
+                            </div>
+                        </div>
+                        ) : (
+                        <div>
+                            <div style={{ display: "flex" }}>
+                                <h2 className="header-scatterplot">
+                                    {"CPU"}
+                                </h2>
+                                <h2 className="subtitle-scatterplot">
+                                    {"(Total Util. %)"}
+                                </h2>
+                                <Stackareaplot
+                                    gColor={props.gColor}
+                                    width={plotWidth}
+                                    height={PlotHeight}
+                                    allData={props.data}
+                                    data={parsedData_cpu.map((d) => ({ time: d.time, usr: d.usr, sys: d.sys, disk: d.disk, idle: d.idle }))}
+                                    marginWidth={plotMarginWidth}
+                                    marginHeight={plotMarginHeight}
+                                    brushedTime={props.brushedTime}
+                                    setBrushedTime={props.setBrushedTime}
+                                />
+                            </div>
+                        </div>
+                        )}
+                          
                     </div>
                 )}
             </div>
+
+
             <div>
                 {graphVisibility.memory && (
                     <div style={{ display: "flex" }}>
