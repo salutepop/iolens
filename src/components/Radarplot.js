@@ -9,7 +9,7 @@ const Radarplot = (props) => {
     const svgMargin = 30;
     const plotSize = 250;
     const plotMargin = 50;
-    const svgHeight = plotSize + svgMargin * 4;
+    const svgHeight = plotSize + svgMargin * 3;
     const svgWidth = plotSize + svgMargin * 4
 
     useEffect(() => {
@@ -137,7 +137,7 @@ const Radarplot = (props) => {
         // 범례 추가
         svg.append("g")
             .attr("class", "legend")
-            .attr("transform", `translate(${cfg.w}, ${30})`);
+            .attr("transform", `translate(${cfg.w + 30}, ${30})`);
 
         // Total 범례
         svg.select(".legend")

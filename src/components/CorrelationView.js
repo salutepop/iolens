@@ -8,8 +8,8 @@ import { brush } from "d3";
 const CorrelationView = (props) => {
     const gColor = props.gColor;
     
-    const plotMargin = 40;
-    const plotSize = 300;
+    const plotMargin =45;
+    const plotSize = 250;
     const [r2, setR2] = useState(0);
     const [selectedX, setSelectedX] = useState({ label: "none", value: "none" });
     const [selectedY, setSelectedY] = useState({ label: "none", value: "none" });
@@ -32,7 +32,7 @@ const CorrelationView = (props) => {
     return (
         <div>
             <div className="div-corrView">
-                <h2>Correlation Plot</h2>
+                <h2 className="h2-corr">Correlation</h2>
                 <div className="div-corrPlot">
                     <Correlationplot
                         plotSize={plotSize}
