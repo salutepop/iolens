@@ -15,7 +15,8 @@ const SummaryView = (props) => {
     const [totalData, setTotalData] = useState([]); // save the real data of all
     const [radarData, setRadarData] = useState([]);
     const [totalRadarData, setTotalRadarData] = useState([]);
-
+    //const [viewMode, setViewMode] = useState("summary");
+    
     useEffect(() => {
         const textlines = [];
         let selectedTime = [];
@@ -173,7 +174,7 @@ const SummaryView = (props) => {
                 enter => enter
                     .append('text')
                     .text(textline => textline)
-                    .attr('x', textWidth * 0.1)
+                    .attr('x', textWidth * 0.15)
                     .attr('y', (textline, i) => {
                         return lineHeight * i + svgMargin;
                     })
@@ -181,7 +182,7 @@ const SummaryView = (props) => {
                     .attr('fill', 'black')
                     .attr('text-anchor', 'start')
                     .attr('textbaseline', 'bottom')
-                    .attr('font-size', '20px'),
+                    .attr('font-size', '17px'),
                 update => update
                     .text(textline => textline),
                 exit => exit.remove(),
@@ -203,18 +204,39 @@ const SummaryView = (props) => {
     }, [brushedTime, totalRadarData, totalData]);
 
     return (
-        <div>
-            <svg ref={summarySvg} width={svgWidth} height={svgHeight}>
+        <div style={{ display: "flex" }}>
+            {/* SummaryView를 왼쪽에 배치 */}
+            <div>
+                <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
+            </div>
 
-            </svg>
-
-            {/* <Histogramplot brushedTime={brushedTime} /> */}
-            <Radarplot radarData={radarData}
-                        gColor={props.gColor}
-                        />
-
+            {/* Radarplot을 오른쪽에 배치 */}
+            <div>
+                <Radarplot radarData={radarData} gColor={props.gColor} />
+            </div>
         </div>
-    )
+    );
+
+    // const toggleView = () => {
+    //     setViewMode((prevMode) => (prevMode === "summary" ? "radarplot" : "summary"));
+    // };
+
+    // return (
+    //     <div style={{ position: "relative", textAlign: "left" }}>
+    //         {/* Toggle 버튼 */}
+    //         <button onClick={toggleView} style={{ position: "absolute", top: "-20px", left: "40px" }}>
+    //             {viewMode === "summary" ? "Radarplot" : "Summary"}
+    //         </button>
+
+    //         {/* 조건에 따라 렌더링 */}
+    //         {viewMode === "summary" ? (
+    //             <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
+    //         ) : (
+    //             <Radarplot radarData={radarData} gColor={props.gColor} />
+    //         )}
+    //     </div>
+    // );
+
 };
 
 export default SummaryView;

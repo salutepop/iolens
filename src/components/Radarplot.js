@@ -7,7 +7,7 @@ const Radarplot = (props) => {
     const gColor = props.gColor;
     const svgRadar = useRef(null);
     const svgMargin = 30;
-    const plotSize = 300;
+    const plotSize = 250;
     const plotMargin = 50;
     const svgHeight = plotSize + svgMargin * 4;
     const svgWidth = plotSize + svgMargin * 4
