@@ -18,7 +18,7 @@ const ControlView = (props) => {
                     <input
                         type="checkbox"
                         className="checkbox-input"
-                        checked={props.graphVisibility.performance}
+                        checked={props.graphVisibility.cpu}
                         onChange={() => props.handleCheckboxChange('cpu')}
                     />
                     <label className='checkbox-label'>CPU Utilization</label>

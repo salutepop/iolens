@@ -9,7 +9,7 @@ const HeatMapLegend = (props) => {
 
   const splotSvg = useRef(null);
 
-  const legendWidth = 20;
+  const legendWidth = 30;
   const height = props.height;
   const data = props.data
   // const marginWidth = props.marginWidth;
@@ -87,7 +87,7 @@ const HeatMapLegend = (props) => {
       .style("stroke", "black")
       .style("fill", function (d, i) {
 
-          console.log(i)
+        
           return myColor(d)
         
       });
@@ -99,7 +99,7 @@ const HeatMapLegend = (props) => {
       .data(legendData)
       .enter()
       .append("text")
-      .attr("x", 3)
+      .attr("x", 5)
       .attr("y", (d, i) => i * legendHeight + legendHeight / 2)
       .text( function(d) {
         if(d === 0){

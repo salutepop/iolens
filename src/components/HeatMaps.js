@@ -218,13 +218,18 @@ const HeatMaps = (props) => {
         // console.log(yScale.domain())
         // console.log(points)
         // console.log(points)
-        d3.select(splotSvg.current)
-            .append('g')
-            .attr('transform', `translate(${width}, ${marginHeight})`)
-            .append('path')
-            .style('stroke', 'gray')
-            .style('fill', 'none')
-            .attr('d', d3.line().curve(d3.curveNatural)(points))
+        if(type === "CPU"){
+
+        }else{
+
+            d3.select(splotSvg.current)
+                .append('g')
+                .attr('transform', `translate(${width}, ${marginHeight})`)
+                .append('path')
+                .style('stroke', 'gray')
+                .style('fill', 'none')
+                .attr('d', d3.line().curve(d3.curveNatural)(points))
+        }
         // Histogram End
 
         // drawThroughput()
