@@ -259,6 +259,7 @@ const PlotView = (props) => {
                             marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime}
+                            type="Memory"
                         />
                     </div>
                 )}
