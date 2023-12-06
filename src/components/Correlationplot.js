@@ -230,8 +230,8 @@ const Correlationplot = (props) => {
                     .attr("fill", d => color(d.value))
                     // .attr("stroke", "#e3e3e3"),
                     // .attr("stroke-linejoin", "round")
-                    // .attr("opacity", 0.3)
-                    // .attr("stroke-opacity", 0.15)
+                    .attr("opacity", 0.4)
+                    .attr("stroke-opacity", 0.15)
                     ,
                 update => update
                     .attr("d", d3.geoPath())

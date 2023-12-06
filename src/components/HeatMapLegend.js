@@ -127,7 +127,7 @@ const HeatMapLegend = (props) => {
         }
       })
         
-      .style("font-size", "10px")
+      .style("font-size", "13px")
       .attr("alignment-baseline", "middle");
 
 
