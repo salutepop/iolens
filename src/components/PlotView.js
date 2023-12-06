@@ -34,6 +34,7 @@ const PlotView = (props) => {
     const cpuData = props.data.top;
     const LBA = "LBA"
     const CPU = "CPU"
+    const F2FS = "F2FS"
     const Latency = "Latency"
     const Queue = "Queue"
     const parsedData = [];
@@ -287,6 +288,7 @@ const PlotView = (props) => {
                             marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime}
+                            type={F2FS}
                         />
                     </div>
                 )}

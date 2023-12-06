@@ -88,7 +88,7 @@ const Stackareaplot = (props) => {
 
             colorRGBA = d3.scaleOrdinal()
                 .domain(keys)
-                .range([gColorRGBA[0],gColorRGBA[1],gColorRGBA[3]])
+                .range([gColorRGBA[0], gColorRGBA[1], gColorRGBA[3]])
         }
 
         // Top3 Hovering Begin
@@ -173,6 +173,25 @@ const Stackareaplot = (props) => {
             .attr("y", legendRectSize - legendSpacing)
             .attr('font-size', '13px')
             .text((d) => d);
+        
+        if(props.type === "F2FS"){
+
+            svg.append("text")
+                .attr("x", 20 + width + marginWidth * 2)
+                .attr("y", 4.6 * (legendRectSize + legendSpacing) + marginHeight * 2)
+                .attr('font-size', '13px')
+                .text("GC/CP");
+    
+            svg.append("line")
+                .attr("x1", 0 + width + marginWidth * 2)
+                .attr("x2", 15 + width + marginWidth * 2)
+                .attr("y1", 4.5 * (legendRectSize + legendSpacing) + marginHeight * 2)
+                .attr("y2", 4.5 * (legendRectSize + legendSpacing) + marginHeight * 2)
+                .style("stroke", "black")
+                .style("stroke-width", 2)
+                .style("stroke-dasharray", "3")
+        }
+
         // legend end
 
         const brush = d3.brush()
@@ -246,6 +265,9 @@ const Stackareaplot = (props) => {
                 .style("stroke-dasharray", "2,2")
                 .style("stroke-width", 3)
                 .raise();
+
+            // .attr("transform", `translate(${width + marginWidth * 2}, ${marginHeight * 2})`);
+
 
         }
 
