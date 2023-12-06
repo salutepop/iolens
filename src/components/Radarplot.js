@@ -114,25 +114,25 @@ const Radarplot = (props) => {
             )
 
         //Append the circles
-        blobWrapper
-        .selectAll(".radarCircle")
-        .data(data)
-        // .data(dd=>dd)
-            .join(
-                enter => enter
-                    .append("circle")
-                    .attr("class", "radarCircle")
-                    .attr("r", cfg.dotRadius)
-                    .attr("cx", function (d, i) { return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2); })
-                    .attr("cy", function (d, i) { return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2); })
-                    .style("fill", function (d, i, j) { return cfg.color(j); })
-                    .style("fill-opacity", 0.8),
-                update => update
-                    .attr("cx", function (d, i) { return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2); })
-                    .attr("cy", function (d, i) { return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2); })
-                ,
-                exit => exit.remove()
-        )
+        // blobWrapper
+        // .selectAll(".radarCircle")
+        // .data(data)
+        // // .data(dd=>dd)
+        //     .join(
+        //         enter => enter
+        //             .append("circle")
+        //             .attr("class", "radarCircle")
+        //             .attr("r", cfg.dotRadius)
+        //             .attr("cx", function (d, i) { return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2); })
+        //             .attr("cy", function (d, i) { return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2); })
+        //             .style("fill", function (d, i, j) { return cfg.color(j); })
+        //             .style("fill-opacity", 0.8),
+        //         update => update
+        //             .attr("cx", function (d, i) { return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2); })
+        //             .attr("cy", function (d, i) { return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2); })
+        //         ,
+        //         exit => exit.remove()
+        // )
         
         // 범례 추가
         svg.append("g")
