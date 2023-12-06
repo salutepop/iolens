@@ -3,6 +3,7 @@ import Scatterplot from './Scatterplot';
 import Lineplot from './Lineplot';
 import Stackareaplot from "./Stackareaplot";
 import HeatMaps from './HeatMaps';
+import CPUHeatMaps from './CPUHeatMaps';
 import Performanceplot from './Performanceplot'
 import ControlView from './ControlView'
 
@@ -195,7 +196,7 @@ const PlotView = (props) => {
                                     <h2 className="subtitle-scatterplot">
                                         {"(Core #, %)"}
                                     </h2>
-                                    <HeatMaps
+                                    <CPUHeatMaps
                                         gColor={props.gColor}
                                         gColorRGBA={props.gColorRGBA}
                                         width={plotWidth}

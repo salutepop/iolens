@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import HeatMapLegend from "./HeatMapLegend";
 
 
-const HeatMaps = (props) => {
+const CPUHeatMaps = (props) => {
 
     const splotSvg = useRef(null);
     const gColorRGBA = props.gColorRGBA;
@@ -94,7 +94,7 @@ const HeatMaps = (props) => {
         
         let myColor = d3.scaleLinear()
             // .range(["lightgreen", "#69b3a2"])
-            .range([gColor[0], gColor[5] , gColor[1]])
+            .range([gColor[5], gColor[0] , gColor[1]])
             // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
             // .range(gColor.reverse())
             .domain([0, d3.min(data, d => d.count) + 1,d3.max(data, d => d.count)])
@@ -121,13 +121,28 @@ const HeatMaps = (props) => {
             .attr("stroke", d => myColor(d.count))
             .attr("opacity", function (d) { if (d.count === 0 && type !== "CPU") {
                 return 0;}else{
-                    return 1;
+                    return 0.5;
                 } })
             .style("fill", d => myColor(d.count) )
             .style("pointer-events", "none") //rect위에서 brush
             .lower()
 
-       
+        //grid
+        svg.selectAll("line.horizontalGrid")
+        .data(yVarsArray) 
+        .enter()
+        .append("line")
+        .attr("class", "horizontalGrid")
+        .attr("x1", marginWidth) 
+        .attr("x2", svgWidth - marginWidth) 
+        .attr("y1", d => yScale(d) + marginHeight) 
+        .attr("y2", d => yScale(d) + marginHeight) 
+        .style("stroke", "black") 
+        .style("stroke-width", 1) 
+        .each(function() {
+            
+            this.parentNode.appendChild(this);
+        });
 
         const brush = d3.brush()
             .extent([[0, 0], [width, height]])
@@ -384,4 +399,4 @@ const HeatMaps = (props) => {
     )
 };
 
-export default HeatMaps;
+export default CPUHeatMaps;

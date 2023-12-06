@@ -24,14 +24,14 @@ function App() {
     "#000000",  // black
   ]
   const gColorRGBA = [
-    "rgba(31, 120, 180,   0.3)",  // blue
-    "rgba(227, 26, 28 ,   0.3)",  // red
-    "rgb(51, 160, 44  ,   0.3)",  // green
-    "rgba(255, 255, 255,  0.3)",  // white
-    "rgba(102, 102, 102,  0.3)",  // gray
-    "rgba(166, 206, 227,  0.3)",  // light blue
-    "rgba(251, 154, 153,  0.3)",  // light red
-    "rgba(0, 0, 0,        0.3)",  // black
+    "rgba(31, 120, 180,   0.3)",  // blue 0
+    "rgba(227, 26, 28 ,   0.3)",  // red 1
+    "rgb(51, 160, 44  ,   0.3)",  // green 2
+    "rgba(255, 255, 255,  0.3)",  // white 3
+    "rgba(102, 102, 102,  0.3)",  // gray 4
+    "rgba(166, 206, 227,  0.3)",  // light blue 5
+    "rgba(251, 154, 153,  0.3)",  // light red 6
+    "rgba(0, 0, 0,        0.3)",  // black 7
 
   ]
   //["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f","#bf5b17","#666666"]
