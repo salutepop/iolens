@@ -171,6 +171,7 @@ const PlotView = (props) => {
                             marginWidth={plotMarginWidth}
                             marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
+                            setBrushedTime={props.setBrushedTime}
                         />
 
                     </div>
