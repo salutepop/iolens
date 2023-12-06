@@ -171,6 +171,51 @@ const Performanceplot = (props) => {
             redLines.raise();
         }
         drawThroughput()
+
+        //brush
+        const brush = d3.brush()
+            .extent([[0, 0], [width, height]])
+            .on("start", resetBrushed)
+            .on("end", brushed);
+
+        svg.append('g')
+            .attr('class', 'brush')
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`);
+
+        svg.select('.brush').call(brush);
+
+        function resetBrushed() {
+            svg.select('.brush .selection')
+                .style("fill-opacity", 0.2)
+                .style("stroke-width", 0)
+
+        }
+        function brushed({ selection }) {
+
+
+            if (selection === null) {
+
+                // console.log("brushed nothing")
+                // props.setBrushedTime(null);
+                return;
+            } else {
+
+                let [[x0, y0], [x1, y1]] = selection;
+
+                let selectedTime = new Set;
+
+
+                for (let i = Math.round((x.invert(x0))); i <= Math.round(x.invert(x1)); i++) {
+                    selectedTime.add(i)
+                }
+
+                props.setBrushedTime(Array.from(selectedTime));
+                // console.log("seletedTime", selectedTime)
+            }
+            svg.select('.brush .selection').style("fill-opacity", 0)
+            // console.log("brushed data ", Index);
+        };
+
         // drawLatency()
     }, []);
 
@@ -229,6 +274,9 @@ const Performanceplot = (props) => {
             .attr("fill", "none")
             .attr("stroke", gColor[0])
             .attr("stroke-width", '0.5')
+
+        //brush
+
     }
     useEffect(() => {
         const svg = d3.select(splotSvg.current);

@@ -16,7 +16,7 @@ const Stackareaplot = (props) => {
     const svgWidth = marginWidth * 2 + width + legendWidth;
     const svgHeight = marginHeight * 2 + height;
     let brushedTime = props.brushedTime;
-        
+
     useEffect(() => {
         const svg = d3.select(splotSvg.current);
 
@@ -59,7 +59,7 @@ const Stackareaplot = (props) => {
                 .ticks(10)
                 .tickFormat(d => d3.format(".2s")(d).replace(".0", ""))
             )
-        
+
         // area
         const area = d3.area()
             .x(d => x(d.data.time))
@@ -70,7 +70,7 @@ const Stackareaplot = (props) => {
         const color = d3.scaleOrdinal()
             .domain(keys)
             .range(gColor)
-        
+
 
         // Top3 Hovering Begin
 
@@ -86,7 +86,7 @@ const Stackareaplot = (props) => {
             .style("color", "white")
             .style("visibility", "collapse")
             ;
-            
+
         svg.selectAll()
             .data(stackedData)
             .enter()
@@ -123,13 +123,13 @@ const Stackareaplot = (props) => {
             })
             .style("pointer-events", "none")
         // Top3 Hovering End
-        
+
         // legend
         const legendRectSize = 15;
         const legendSpacing = 5;
 
         const legend = svg.append("g")
-            .attr("transform", `translate(${width + marginWidth *2}, ${marginHeight * 2})`);
+            .attr("transform", `translate(${width + marginWidth * 2}, ${marginHeight * 2})`);
 
         const legendItems = legend.selectAll("legend")
             .data(keys)
@@ -151,48 +151,48 @@ const Stackareaplot = (props) => {
         // legend end
 
         const brush = d3.brush()
-        .extent([[0, 0], [width, height]])
-        .on("start", resetBrushed)
-        .on("end", brushed);
+            .extent([[0, 0], [width, height]])
+            .on("start", resetBrushed)
+            .on("end", brushed);
 
-    svg.append('g')
-        .attr('class', 'brush')
-        .attr('transform', `translate(${marginWidth}, ${marginHeight})`);
+        svg.append('g')
+            .attr('class', 'brush')
+            .attr('transform', `translate(${marginWidth}, ${marginHeight})`);
 
-    svg.select('.brush').call(brush);
+        svg.select('.brush').call(brush);
 
-    function resetBrushed() {
-        svg.select('.brush .selection')
-        .style("fill-opacity", 0.2)
-        .style("stroke-width", 0)
+        function resetBrushed() {
+            svg.select('.brush .selection')
+                .style("fill-opacity", 0.2)
+                .style("stroke-width", 0)
 
-    }
-    function brushed({ selection }) {
-
-
-        if (selection === null) {
-
-            // console.log("brushed nothing")
-            // props.setBrushedTime(null);
-            return;
-        } else {
-
-            let [[x0, y0], [x1, y1]] = selection;
-
-            let selectedTime = new Set;
-            
-
-            for (let i = Math.round((x.invert(x0))); i <= Math.round(x.invert(x1)); i++) {
-                selectedTime.add(i)
-            }
-
-            props.setBrushedTime(Array.from(selectedTime));
-            // console.log("seletedTime", selectedTime)
         }
-        svg.select('.brush .selection').style("fill-opacity", 0)
-        // console.log("brushed data ", Index);
+        function brushed({ selection }) {
+
+
+            if (selection === null) {
+
+                // console.log("brushed nothing")
+                // props.setBrushedTime(null);
+                return;
+            } else {
+
+                let [[x0, y0], [x1, y1]] = selection;
+
+                let selectedTime = new Set;
+
+
+                for (let i = Math.round((x.invert(x0))); i <= Math.round(x.invert(x1)); i++) {
+                    selectedTime.add(i)
+                }
+
+                props.setBrushedTime(Array.from(selectedTime));
+                // console.log("seletedTime", selectedTime)
+            }
+            svg.select('.brush .selection').style("fill-opacity", 0)
+            // console.log("brushed data ", Index);
         };
-        
+
         // gc time check point
         //console.log(checkPointData)
         if (checkPointData != null) {
@@ -223,11 +223,11 @@ const Stackareaplot = (props) => {
                 .raise();
 
         }
-        
+
     }, []);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const svg = d3.select(splotSvg.current);
 
         let xScale = d3.scaleLinear()
@@ -236,38 +236,38 @@ const Stackareaplot = (props) => {
         let bandwidth = d3.max(data, d => d.time) - d3.min(data, d => d.time);
 
         svg.selectAll('rect.background')
-        .data(brushedTime)
-        .join(
-            enter => enter
-                .append('rect')
-                .attr("class", "background")
-                .attr('transform', `translate(${props.marginWidth}, ${props.marginHeight})`)
-                .attr("x", time => xScale(time))
-                .attr("y", 0)
-                .attr("height", props.height)
-                .attr("width", props.width / bandwidth)
-                .style('stroke', "none")
-                .style('opacity', '0.2')
-                .style("fill", "blue"),
-            update => update
-                .attr("x", time => {
-                    // console.log(xScale(minX))
-                    if (xScale(time) < 0) {
-                        return 0
-                    }
-                    else if (xScale(time) > props.width) {
-                        return props.width;
-                    }
-                    else return xScale(time)
-                }),
-            exit => exit.remove()
-        )
+            .data(brushedTime)
+            .join(
+                enter => enter
+                    .append('rect')
+                    .attr("class", "background")
+                    .attr('transform', `translate(${props.marginWidth}, ${props.marginHeight})`)
+                    .attr("x", time => xScale(time))
+                    .attr("y", 0)
+                    .attr("height", props.height)
+                    .attr("width", props.width / bandwidth)
+                    .style('stroke', "none")
+                    .style('opacity', '0.2')
+                    .style("fill", "blue"),
+                update => update
+                    .attr("x", time => {
+                        // console.log(xScale(minX))
+                        if (xScale(time) < 0) {
+                            return 0
+                        }
+                        else if (xScale(time) > props.width) {
+                            return props.width;
+                        }
+                        else return xScale(time)
+                    }),
+                exit => exit.remove()
+            )
 
-        
+
     }, [brushedTime]);
-    
+
     return (
-            <svg ref={splotSvg} width={svgWidth} height={svgHeight}></svg>
+        <svg ref={splotSvg} width={svgWidth} height={svgHeight}></svg>
     );
 };
 
