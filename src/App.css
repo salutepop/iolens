@@ -94,6 +94,7 @@
   text-decoration: none;
   cursor: pointer;
   touch-action: manipulation;
+  visibility: visible; /* 버튼 숨기기 */
   /* position: absolute;
   text-wrap: nowrap;
   font-weight: bold;
