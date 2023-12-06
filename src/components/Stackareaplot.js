@@ -153,7 +153,10 @@ const Stackareaplot = (props) => {
         legendItems.append("rect")
             .attr("width", legendRectSize)
             .attr("height", legendRectSize)
-            .style("fill", color);
+            .style("fill", color)
+            .style("stroke", "black")
+            .style("stroke-width", "0.5")
+            ;
 
         legendItems.append("text")
             .attr("x", legendRectSize + legendSpacing)
