@@ -13,9 +13,17 @@ import throughput from "./data/throughput.json"
 import performance from "./data/performance.json"
 
 function App() {
-  const gColor = ["#e15759", "#a6cee3","#1f78b4","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
-  
-  // ["#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f","#edc949","#af7aa1","#ff9da7","#9c755f","#bab0ab"]
+  const gColor = [
+    "#1f78b4",  // blue
+    "#e31a1c",  // red
+    "#666666",  // gray
+    "#a6cee3",  // light blue
+    "#fb9a99",  // light red
+    "#ffffff",  // white
+    "#000000",  // black
+  ]
+  //["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f","#bf5b17","#666666"]
+    // ["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
     // [
     //   'rgb(43, 42, 76)',
     //   'rgb(179, 19, 18)',
