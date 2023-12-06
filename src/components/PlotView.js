@@ -25,7 +25,7 @@ const PlotView = (props) => {
     const queue = props.data.queue;
     const f2fs_status = props.data.f2fs_status;
 
-    const [cpuMode, setCpuMode] = useState("Split");
+    const [cpuMode, setCpuMode] = useState("Total");
     const toggleView = () => {
         setCpuMode((prevMode) => (prevMode === "Split" ? "Total" : "Split"));
     };
@@ -260,6 +260,7 @@ const PlotView = (props) => {
                             marginHeight={plotMarginHeight}
                             brushedTime={props.brushedTime}
                             setBrushedTime={props.setBrushedTime}
+                            type="Memory"
                         />
                     </div>
                 )}

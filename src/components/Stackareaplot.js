@@ -21,9 +21,9 @@ const Stackareaplot = (props) => {
     useEffect(() => {
         const svg = d3.select(splotSvg.current);
 
-         //doubleclick하면 brushedTime 초기화
-         svg.on("dblclick", () => {
-            
+        //doubleclick하면 brushedTime 초기화
+        svg.on("dblclick", () => {
+
             props.setBrushedTime([]);
         });
 
@@ -73,13 +73,23 @@ const Stackareaplot = (props) => {
             .y0(d => y(d[0]))
             .y1(d => y(d[1]));
 
-        // color palette
-        const color = d3.scaleOrdinal()
+        let color = d3.scaleOrdinal()
             .domain(keys)
             .range(gColor)
-        const colorRGBA= d3.scaleOrdinal()
+        let colorRGBA = d3.scaleOrdinal()
             .domain(keys)
             .range(gColorRGBA)
+
+        // color palette
+        if (props.type === "Memory") {
+            color = d3.scaleOrdinal()
+                .domain(keys)
+                .range([gColor[0], gColor[1], gColor[3]]);
+
+            colorRGBA = d3.scaleOrdinal()
+                .domain(keys)
+                .range([gColorRGBA[0],gColorRGBA[1],gColorRGBA[3]])
+        }
 
         // Top3 Hovering Begin
 
@@ -153,7 +163,10 @@ const Stackareaplot = (props) => {
         legendItems.append("rect")
             .attr("width", legendRectSize)
             .attr("height", legendRectSize)
-            .style("fill", color);
+            .style("fill", color)
+            .style("stroke", "black")
+            .style("stroke-width", "0.5")
+            ;
 
         legendItems.append("text")
             .attr("x", legendRectSize + legendSpacing)

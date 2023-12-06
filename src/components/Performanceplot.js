@@ -137,7 +137,9 @@ const Performanceplot = (props) => {
                     return legendRectSize;
                 }
             })
-            .style("fill", (d, i) => gColor[i]);
+            .style("fill", (d, i) => gColor[i])
+            .style("stroke", "black")
+            .style("stroke-width", "0.5");
 
         legendItems.append("text")
             .attr("x", legendRectSize + legendSpacing)
