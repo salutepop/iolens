@@ -13,7 +13,7 @@ import throughput from "./data/throughput.json"
 import performance from "./data/performance.json"
 
 function App() {
-  const gColor = ["#e15759", "#a6cee3","#1f78b4","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
+  const gColor = ["#e15759", "#a6cee3","#1f78b4","white","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
   
   // ["#4e79a7","#f28e2c","#e15759","#76b7b2","#59a14f","#edc949","#af7aa1","#ff9da7","#9c755f","#bab0ab"]
     // [
