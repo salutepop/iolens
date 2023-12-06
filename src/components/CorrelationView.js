@@ -44,6 +44,7 @@ const CorrelationView = (props) => {
                         brushedTime={props.brushedTime}
                         data={props.data}
                         gColor={props.gColor}
+                        gColorRGBA={gColorRGBA}
                     />
                 </div>
                 <div className="div-dropdownX">
