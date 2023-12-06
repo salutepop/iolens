@@ -15,7 +15,7 @@ const MainView = (props) => {
         <div className='main-container'>
 
 <div>
-<img src='iolens.png' height='50px' />
+<img src='iolens.png' height='40px' />
 <div className="plotview-container">
 
                 <PlotView
