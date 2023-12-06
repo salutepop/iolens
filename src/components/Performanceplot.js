@@ -66,7 +66,7 @@ const Performanceplot = (props) => {
         // Top3 Hovering Begin
 
         // Hard coding, 절대 좌표를 사용하다보니 svg내의 상대적인 위치 활용 어려움
-        let leftShift = 130;
+        let leftShift = 90;
         let tooltip = d3.select("body").append("div")
             .attr("class", "tooltip-top")
             .style('position', 'absolute')
