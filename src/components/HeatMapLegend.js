@@ -10,7 +10,7 @@ const HeatMapLegend = (props) => {
 
   const splotSvg = useRef(null);
 
-  const legendWidth = 30;
+  const legendWidth = 15;
   const height = props.height;
   const data = props.data
   // const marginWidth = props.marginWidth;
@@ -18,7 +18,7 @@ const HeatMapLegend = (props) => {
   const marginWidth = 0;
   const marginHeight = 20
 
-  const svgWidth = marginWidth * 2 + legendWidth;
+  const svgWidth = marginWidth * 2 + legendWidth  + 50;
   const svgHeight = marginHeight * 2 + height;
   const type = props.type
 
@@ -116,7 +116,7 @@ const HeatMapLegend = (props) => {
       .data(legendData)
       .enter()
       .append("text")
-      .attr("x", 5)
+      .attr("x", 18)
       .attr("y", (d, i) => i * legendHeight + legendHeight / 2)
       .text( function(d) {
         if(d === 0 || d === 1){

@@ -23,6 +23,7 @@
 .vertical-line {
   margin: 20px;
   margin-top: 10px;
+  margin-bottom: 10px;
   background-color: gray;
   width: 2px;
   height: 820px;
