@@ -8,7 +8,8 @@ const SummaryView = (props) => {
     const svgMargin = 30;
     const textWidth = 300;
     const lineHeight = 30;
-    const svgHeight = lineHeight * 6 + svgMargin;
+    const svgHeight = 340;
+    // const svgHeight = lineHeight * 6 + svgMargin;
     const svgWidth = textWidth + svgMargin * 2;
     const brushedTime = props.brushedTime;
     const data = props.data;
@@ -174,7 +175,8 @@ const SummaryView = (props) => {
                 enter => enter
                     .append('text')
                     .text(textline => textline)
-                    .attr('x', textWidth * 0.15)
+                    // .attr('x', textWidth * 0.15)
+                    .attr('x', 0)
                     .attr('y', (textline, i) => {
                         return lineHeight * i + svgMargin;
                     })
@@ -203,15 +205,15 @@ const SummaryView = (props) => {
 
     }, [brushedTime, totalRadarData, totalData, viewMode]);
 
-//     useEffect(() => {
-// console.log(viewMode)
-//     }, [viewMode]);
-    
+    //     useEffect(() => {
+    // console.log(viewMode)
+    //     }, [viewMode]);
+
     // return (
     //     <div>
     //         <button className='btn-summary-toggle'>Plane Text</button>
     //         <h2 className='header'>Summary</h2>
-   
+
     //         <div style={{ display: "flex", justifyContent: "center" }}>
     //             {/* SummaryView를 왼쪽에 배치 */}
     //             {/* <div>
@@ -234,21 +236,23 @@ const SummaryView = (props) => {
     return (
         <div>
             <div>
-            <button onClick={toggleView} className='btn-summary-toggle'>
-                {viewMode === "summary" ? "Radar plot" : "Summary"}
-            </button>
-            <h2 className='header'>Summary</h2>
+                <button onClick={toggleView} className='btn-summary-toggle'>
+                    {viewMode === "summary" ? "Radar plot" : "Summary"}
+                </button>
+                <h2 className='header'>Summary</h2>
             </div>
 
             {/* Toggle 버튼 */}
-   
 
-            {/* 조건에 따라 렌더링 */}
-            {viewMode === "summary" ? (
-                <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
-            ) : (
-                <Radarplot radarData={radarData} gColor={props.gColor} gColorRGBA={props.gColorRGBA} />
-            )}
+            <div className="summary-container">
+                {/* 조건에 따라 렌더링 */}
+                {viewMode === "summary" ? (
+                    <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
+                ) : (
+                    <Radarplot radarData={radarData} gColor={props.gColor} gColorRGBA={props.gColorRGBA} />
+                )}
+            </div>
+
         </div>
     );
 
