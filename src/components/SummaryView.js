@@ -15,7 +15,7 @@ const SummaryView = (props) => {
     const [totalData, setTotalData] = useState([]); // save the real data of all
     const [radarData, setRadarData] = useState([]);
     const [totalRadarData, setTotalRadarData] = useState([]);
-    const [viewMode, setViewMode] = useState("summary");
+    const [viewMode, setViewMode] = useState("Radar plot");
 
     useEffect(() => {
         const textlines = [];
