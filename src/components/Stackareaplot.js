@@ -5,6 +5,7 @@ const Stackareaplot = (props) => {
     const splotSvg = useRef(null);
 
     const gColor = props.gColor;
+    const gColorRGBA = props.gColorRGBA;
     const width = props.width;
     const height = props.height;
     const data = props.data;
@@ -76,7 +77,9 @@ const Stackareaplot = (props) => {
         const color = d3.scaleOrdinal()
             .domain(keys)
             .range(gColor)
-
+        const colorRGBA= d3.scaleOrdinal()
+            .domain(keys)
+            .range(gColorRGBA)
 
         // Top3 Hovering Begin
 
@@ -100,7 +103,10 @@ const Stackareaplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .attr("class", "area")
             .attr("d", area)
-            .style("fill", function (d) { return color(d.key); })
+            .style("fill", function (d) { return colorRGBA(d.key); })
+            // .style("fill", "white")
+            .style("stroke-width", "1")
+            .style("stroke", function (d) { return color(d.key); })
             .lower()
 
             .on('mouseover', (d) => {

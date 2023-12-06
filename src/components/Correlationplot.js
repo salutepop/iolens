@@ -9,6 +9,7 @@ import Statistics from "statistics.js";
 
 const Correlationplot = (props) => {
     const gColor = props.gColor;
+    const gColorRGBA = props.gColorRGBA;
     const svgCorr = useRef(null);
     const plotSize = props.plotSize;
     const plotMargin = props.plotMargin;

@@ -152,6 +152,7 @@ const PlotView = (props) => {
                 graphVisibility={graphVisibility}
                 handleCheckboxChange={handleCheckboxChange}
                 gColor={props.gColor}
+                gColorRGBA={props.gColorRGBA}
             />
             <div>
                 {graphVisibility.performance && (
@@ -165,6 +166,7 @@ const PlotView = (props) => {
 
                         <Performanceplot
                             gColor={props.gColor}
+                            gColorRGBA={props.gColorRGBA}
                             width={plotWidth}
                             height={PlotHeight}
                             allData={props.data}
@@ -180,56 +182,58 @@ const PlotView = (props) => {
             <div>
                 {graphVisibility.cpu && (
                     <div>
-                      <button onClick={toggleView} className='btn-summary-toggle'>
-                {cpuMode === "Split" ? "Total" : "Split"}
+                        <button onClick={toggleView} className='btn-summary-toggle'>
+                            {cpuMode === "Split" ? "Total" : "Split"}
 
                         </button>
-                        {cpuMode === "Split" ?(
-                        <div>
-                            <div style={{ display: "flex" }}>
-                                <h2 className="header-scatterplot">
-                                    {"CPU"}
-                                </h2>
-                                <h2 className="subtitle-scatterplot">
-                                    {"(Core #, %)"}
-                                </h2>
-                                <HeatMaps
-                                    gColor={props.gColor}
-                                    width={plotWidth}
-                                    height={PlotHeight}
-                                    data={parsedData}
-                                    allData={props.data}
-                                    marginWidth={plotMarginWidth}
-                                    marginHeight={plotMarginHeight}
-                                    brushedTime={props.brushedTime}
-                                    setBrushedTime={props.setBrushedTime}
-                                    type={CPU} />
+                        {cpuMode === "Split" ? (
+                            <div>
+                                <div style={{ display: "flex" }}>
+                                    <h2 className="header-scatterplot">
+                                        {"CPU"}
+                                    </h2>
+                                    <h2 className="subtitle-scatterplot">
+                                        {"(Core #, %)"}
+                                    </h2>
+                                    <HeatMaps
+                                        gColor={props.gColor}
+                                        gColorRGBA={props.gColorRGBA}
+                                        width={plotWidth}
+                                        height={PlotHeight}
+                                        data={parsedData}
+                                        allData={props.data}
+                                        marginWidth={plotMarginWidth}
+                                        marginHeight={plotMarginHeight}
+                                        brushedTime={props.brushedTime}
+                                        setBrushedTime={props.setBrushedTime}
+                                        type={CPU} />
+                                </div>
                             </div>
-                        </div>
                         ) : (
-                        <div>
-                            <div style={{ display: "flex" }}>
-                                <h2 className="header-scatterplot">
-                                    {"CPU"}
-                                </h2>
-                                <h2 className="subtitle-scatterplot">
-                                    {"(Total Util. %)"}
-                                </h2>
-                                <Stackareaplot
-                                    gColor={props.gColor}
-                                    width={plotWidth}
-                                    height={PlotHeight}
-                                    allData={props.data}
-                                    data={parsedData_cpu.map((d) => ({ time: d.time, usr: d.usr, sys: d.sys, disk: d.disk, idle: d.idle }))}
-                                    marginWidth={plotMarginWidth}
-                                    marginHeight={plotMarginHeight}
-                                    brushedTime={props.brushedTime}
-                                    setBrushedTime={props.setBrushedTime}
-                                />
+                            <div>
+                                <div style={{ display: "flex" }}>
+                                    <h2 className="header-scatterplot">
+                                        {"CPU"}
+                                    </h2>
+                                    <h2 className="subtitle-scatterplot">
+                                        {"(Total Util. %)"}
+                                    </h2>
+                                    <Stackareaplot
+                                        gColor={props.gColor}
+                                        gColorRGBA={props.gColorRGBA}
+                                        width={plotWidth}
+                                        height={PlotHeight}
+                                        allData={props.data}
+                                        data={parsedData_cpu.map((d) => ({ time: d.time, usr: d.usr, sys: d.sys, disk: d.disk, idle: d.idle }))}
+                                        marginWidth={plotMarginWidth}
+                                        marginHeight={plotMarginHeight}
+                                        brushedTime={props.brushedTime}
+                                        setBrushedTime={props.setBrushedTime}
+                                    />
+                                </div>
                             </div>
-                        </div>
                         )}
-                          
+
                     </div>
                 )}
             </div>
@@ -246,6 +250,7 @@ const PlotView = (props) => {
                         </h2>
                         <Stackareaplot
                             gColor={props.gColor}
+                            gColorRGBA={props.gColorRGBA}
                             width={plotWidth}
                             height={PlotHeight}
                             allData={props.data}
@@ -270,6 +275,7 @@ const PlotView = (props) => {
                         </h2>
                         <Stackareaplot
                             gColor={props.gColor}
+                            gColorRGBA={props.gColorRGBA}
                             width={plotWidth}
                             height={PlotHeight}
                             allData={props.data}
@@ -297,6 +303,7 @@ const PlotView = (props) => {
                         </h2>
                         <HeatMaps
                             gColor={props.gColor}
+                            gColorRGBA={props.gColorRGBA}
                             width={plotWidth}
                             height={PlotHeight}
                             data={lba}
@@ -320,6 +327,7 @@ const PlotView = (props) => {
                         </h2>
                         <HeatMaps
                             gColor={props.gColor}
+                            gColorRGBA={props.gColorRGBA}
                             width={plotWidth}
                             height={PlotHeight}
                             data={queue}

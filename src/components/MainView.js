@@ -24,6 +24,7 @@ const MainView = (props) => {
                     brushedTime={brushedTime}
                     data={props.data}
                     gColor={props.gColor}
+                    gColorRGBA = {props.gColorRGBA}
                 //index
                 />
             </div>

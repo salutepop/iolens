@@ -6,6 +6,7 @@ import HeatMapLegend from "./HeatMapLegend";
 const HeatMaps = (props) => {
 
     const splotSvg = useRef(null);
+    const gColorRGBA = props.gColorRGBA;
 
     const gColor = props.gColor;
     const width = props.width;

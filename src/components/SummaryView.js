@@ -247,7 +247,7 @@ const SummaryView = (props) => {
             {viewMode === "summary" ? (
                 <svg ref={summarySvg} width={svgWidth} height={svgHeight}></svg>
             ) : (
-                <Radarplot radarData={radarData} gColor={props.gColor} />
+                <Radarplot radarData={radarData} gColor={props.gColor} gColorRGBA={props.gColorRGBA} />
             )}
         </div>
     );

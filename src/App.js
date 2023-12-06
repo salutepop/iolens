@@ -16,11 +16,23 @@ function App() {
   const gColor = [
     "#1f78b4",  // blue
     "#e31a1c",  // red
+    "#33a02c",  // green
+    "#ffffff",  // white
     "#666666",  // gray
     "#a6cee3",  // light blue
     "#fb9a99",  // light red
-    "#ffffff",  // white
     "#000000",  // black
+  ]
+  const gColorRGBA = [
+    "rgba(31, 120, 180,   0.3)",  // blue
+    "rgba(227, 26, 28 ,   0.3)",  // red
+    "rgb(51, 160, 44  ,   0.3)",  // green
+    "rgba(255, 255, 255,  0.3)",  // white
+    "rgba(102, 102, 102,  0.3)",  // gray
+    "rgba(166, 206, 227,  0.3)",  // light blue
+    "rgba(251, 154, 153,  0.3)",  // light red
+    "rgba(0, 0, 0,        0.3)",  // black
+
   ]
   //["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f","#bf5b17","#666666"]
     // ["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
@@ -82,6 +94,7 @@ function App() {
       <MainView
         data={data}
         gColor = {gColor}
+        gColorRGBA = {gColorRGBA}
       />
     </div>
 

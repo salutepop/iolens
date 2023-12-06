@@ -3,6 +3,7 @@ import * as d3 from "d3";
 
 const Performanceplot = (props) => {
     const splotSvg = useRef(null);
+    const gColorRGBA = props.gColorRGBA;
 
     const gColor = props.gColor;
     const width = props.width;
@@ -59,7 +60,7 @@ const Performanceplot = (props) => {
         // color palette
         const color = d3.scaleOrdinal()
             .domain(keys)
-            .range(gColor)
+            .range(gColorRGBA)
 
 
         // Top3 Hovering Begin
@@ -84,7 +85,9 @@ const Performanceplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .attr("class", "area")
             .attr("d", area)
-            .style("fill", function (d, i) { return gColor[i + 1]; })
+            .style("fill", function (d, i) { return gColorRGBA[i+1]; })
+            .style("stroke-width", "1")
+            .style("stroke", function (d, i) { return gColor[i+1]; })
             .on('mouseover', (d) => {
                 tooltip.style("visibility", "visible");
             })

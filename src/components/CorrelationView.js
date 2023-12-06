@@ -7,6 +7,7 @@ import { brush } from "d3";
 
 const CorrelationView = (props) => {
     const gColor = props.gColor;
+    const gColorRGBA = props.gColorRGBA;
     
     const plotMargin =45;
     const plotSize = 250;

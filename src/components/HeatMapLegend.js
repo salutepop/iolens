@@ -6,6 +6,7 @@ import * as d3 from "d3";
 const HeatMapLegend = (props) => {
 
   const gColor = props.gColor;
+  const gColorRGBA = props.gColorRGBA;
 
   const splotSvg = useRef(null);
 

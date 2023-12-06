@@ -5,6 +5,7 @@ import * as d3 from "d3";
 
 const Radarplot = (props) => {
     const gColor = props.gColor;
+    const gColorRGBA = props.gColorRGBA;
     const svgRadar = useRef(null);
     const svgMargin = 30;
     const plotSize = 250;
