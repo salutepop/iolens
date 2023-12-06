@@ -66,13 +66,20 @@ const HeatMaps = (props) => {
         // console.log("yAxis", yAxisArray[0])
 
         let yAxis_left = [];
+        let yAxis_right = [];
 
         if (type === "Queue") {
             yAxis_left = d3.axisLeft(yScale_axis)
+            yAxis_right = d3.axisRight(yScale_axis)
         } else if (type === "CPU") {
             yAxis_left = d3.axisLeft(yScale)
+            
         } else {
             yAxis_left = d3.axisLeft(yScale_axis)
+                .tickFormat(d => {
+                    return d3.format(".2s")(Number(d))
+                })
+                yAxis_right = d3.axisRight(yScale_axis)
                 .tickFormat(d => {
                     return d3.format(".2s")(Number(d))
                 })
@@ -87,14 +94,19 @@ const HeatMaps = (props) => {
 
         svg.append("g")
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
-            .call(yAxis_left);
+            .call(yAxis_left)
+            // .call(yAxis_right);
+
+            svg.append("g")
+            .attr('transform', `translate(${marginWidth + width}, ${marginHeight})`)
+            .call(yAxis_right)
 
         let gColorRGBA = props.gColorRGBA;
         let gColor = props.gColor;
         
         let myColor = d3.scaleLinear()
             // .range(["lightgreen", "#69b3a2"])
-            .range([gColor[0], gColor[5] , gColor[1]])
+            .range([gColor[5], gColor[5] , gColor[1]])
             // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
             // .range(gColor.reverse())
             .domain([0, d3.min(data, d => d.count) + 1,d3.max(data, d => d.count)])
@@ -223,7 +235,8 @@ const HeatMaps = (props) => {
                 .append('g')
                 .attr('transform', `translate(${width}, ${marginHeight})`)
                 .append('path')
-                .style('stroke', 'gray')
+                .style('stroke', 'black')
+                .style("stroke-width", "1.5")
                 .style('fill', 'none')
                 .attr('d', d3.line().curve(d3.curveNatural)(points))
         }

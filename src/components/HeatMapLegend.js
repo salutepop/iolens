@@ -15,7 +15,7 @@ const HeatMapLegend = (props) => {
   const data = props.data
   // const marginWidth = props.marginWidth;
   // const marginHeight = props.marginHeight;
-  const marginWidth = 10;
+  const marginWidth = 0;
   const marginHeight = 20
 
   const svgWidth = marginWidth * 2 + legendWidth;
@@ -38,13 +38,15 @@ const HeatMapLegend = (props) => {
     
     // console.log("data", type ,data)
     // const gColor = ["#e15759", "#a6cee3","#1f78b4","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
+    let gColor = props.gColor;
 
-      let myColor = d3.scaleLinear()
-            // .range(["lightgreen", "#69b3a2"])
-            .range(["white", "#1f78b4" , "#e15759"])
-            // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
-            // .range(gColor.reverse())
-            .domain([0, d3.min(data, d => d.count) + 1 ,d3.max(data, d => d.count)])
+    let myColor = d3.scaleLinear()
+          .range(["white", gColor[5] , gColor[1]])
+          .domain([0, d3.min(data, d => d.count) + 1 ,d3.max(data, d => d.count)])
+    
+          let myColorCPU = d3.scaleLinear()
+          .range([gColor[5], gColor[0] , gColor[1]])
+          .domain([0, d3.min(data, d => d.count) + 1 ,d3.max(data, d => d.count)])
 
     let colorRange = myColor.range();
     let domainRange = myColor.domain();
@@ -68,8 +70,13 @@ const HeatMapLegend = (props) => {
     const legendData = Array.from({ length: numLegendItems + 1}, (_, i) => domainRange[0] + increment * i);
     // legendData[legendData.length] = d3.max(data, d => d.count);
     legendData[legendData.length - 1] = d3.max(data, d => d.count)
+    console.log("legend Data", legendData)
+    if(type !== "CPU"){
+      legendData.splice(1, 0,d3.min(data, d => d.count)+ 1 )
+      
+    }
     const reverseLegendData = legendData.reverse();
-    // console.log("legend Data", legendData)
+    // legendData[legendData.length - 2] = d3.min(data, d => d.count) + 1000
     // const legendHeight = height / numLegendItems;
     const legendHeight = height/legendData.length;
 
@@ -86,8 +93,19 @@ const HeatMapLegend = (props) => {
       .attr("width", legendWidth)
       .attr("height", legendHeight)
       .style("stroke", "black")
+      .style("opacity", function(d,i) {
+        if(type === "CPU"){
+          return 0.5;
+
+        }
+      })
       .style("fill", function (d,i) {
+        if(type === "CPU"){
+          return myColorCPU(d)
+        }else{
+
           return myColor(d)
+        }
         
       });
       // console.log("max count", d3.max(legendData))
@@ -101,7 +119,7 @@ const HeatMapLegend = (props) => {
       .attr("x", 5)
       .attr("y", (d, i) => i * legendHeight + legendHeight / 2)
       .text( function(d) {
-        if(d === 0){
+        if(d === 0 || d === 1){
           return d
         }else{
 
