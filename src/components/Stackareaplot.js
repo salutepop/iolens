@@ -20,6 +20,12 @@ const Stackareaplot = (props) => {
     useEffect(() => {
         const svg = d3.select(splotSvg.current);
 
+         //doubleclick하면 brushedTime 초기화
+         svg.on("dblclick", () => {
+            
+            props.setBrushedTime([]);
+        });
+
         data.forEach((d) => {
             // console.log(typeof d.time)
             let total = 0

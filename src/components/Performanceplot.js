@@ -172,6 +172,12 @@ const Performanceplot = (props) => {
         }
         drawThroughput()
 
+        //doubleclick하면 brushedTime 초기화
+        svg.on("dblclick", () => {
+            
+            props.setBrushedTime([]);
+        });
+    
         //brush
         const brush = d3.brush()
             .extent([[0, 0], [width, height]])

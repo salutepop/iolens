@@ -77,7 +77,11 @@ const HeatMaps = (props) => {
                 })
         }
 
-    
+         //doubleclick하면 brushedTime 초기화
+         svg.on("dblclick", () => {
+            
+            props.setBrushedTime([]);
+        });
         
 
         svg.append("g")
