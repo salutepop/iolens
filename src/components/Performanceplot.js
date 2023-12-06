@@ -137,6 +137,13 @@ const Performanceplot = (props) => {
                     return legendRectSize;
                 }
             })
+            .attr("y", d => {
+                if (d === "throughput") {
+                    return 5;
+                } else {
+                    return 0;
+                }
+            })
             .style("fill", (d, i) => gColor[i])
             .style("stroke", "black")
             .style("stroke-width", "0.5");

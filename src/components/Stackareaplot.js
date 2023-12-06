@@ -176,17 +176,17 @@ const Stackareaplot = (props) => {
         
         if(props.type === "F2FS"){
 
-            svg.append("text")
-                .attr("x", 20 + width + marginWidth * 2)
-                .attr("y", 4.6 * (legendRectSize + legendSpacing) + marginHeight * 2)
+            legend.append("text")
+                .attr("x", 20)
+                .attr("y", 90)
                 .attr('font-size', '13px')
                 .text("GC/CP");
     
-            svg.append("line")
-                .attr("x1", 0 + width + marginWidth * 2)
-                .attr("x2", 15 + width + marginWidth * 2)
-                .attr("y1", 4.5 * (legendRectSize + legendSpacing) + marginHeight * 2)
-                .attr("y2", 4.5 * (legendRectSize + legendSpacing) + marginHeight * 2)
+            legend.append("line")
+                .attr("x1", 0)
+                .attr("x2", 15)
+                .attr("y1", 87.5)
+                .attr("y2", 87.5)
                 .style("stroke", "black")
                 .style("stroke-width", 2)
                 .style("stroke-dasharray", "3")
