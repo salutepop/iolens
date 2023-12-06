@@ -39,11 +39,13 @@ const MainView = (props) => {
                     brushedTime={brushedTime}
                     data={props.data}
                     gColor={props.gColor}
+                    gColorRGBA={props.gColorRGBA}
                 />
                 <CorrelationView
                     brushedTime={brushedTime}
                     data={props.data}
-                    gColor={props.gColor}>
+                    gColor={props.gColor}
+                    gColorRGBA={props.gColorRGBA}>
                 </CorrelationView>
             </div>
 

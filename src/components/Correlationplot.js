@@ -213,7 +213,7 @@ const Correlationplot = (props) => {
         const color = d3
             .scaleLinear()
             .domain(extents.sort())
-            .range(gColor);
+            .range([gColorRGBA[0], gColorRGBA[1]]);
         // .interpolate(d => {return interpolateRgb("#4f74b7", "red")})
         // .interpolate(d3.interpolateHcl)
 
@@ -228,10 +228,11 @@ const Correlationplot = (props) => {
                     .attr('transform', `translate(${plotMargin}, ${plotMargin})`)
                     .attr("d", d3.geoPath())
                     .attr("fill", d => color(d.value))
-                    .attr("stroke", "#e3e3e3")
+                    // .attr("stroke", "#e3e3e3"),
                     // .attr("stroke-linejoin", "round")
-                    .attr("opacity", 0.3)
-                    .attr("stroke-opacity", 0.15),
+                    // .attr("opacity", 0.3)
+                    // .attr("stroke-opacity", 0.15)
+                    ,
                 update => update
                     .attr("d", d3.geoPath())
                     .attr("fill", d => color(d.value)),
@@ -250,7 +251,9 @@ const Correlationplot = (props) => {
                     .attr("r", radius)
                     .attr("cx", d => xScale(d.x))
                     .attr("cy", d => yScale(d.y))
-                    .style("fill", gColor[0]),
+                    .style("fill", "black")
+                    .style("opacity", "0.4")
+                    ,
                 update => update
                     .attr("cx", d => xScale(d.x))
                     .attr("cy", d => yScale(d.y)),
