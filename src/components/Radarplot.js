@@ -302,6 +302,8 @@ const Radarplot = (props) => {
             .attr("y2", function (d, i) { return rScale(maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2); })
             .attr("class", "line")
             .style("stroke", "white")
+            .style("stroke-dasharray", "3 3")
+            .style("opacity", "0.5")
             .style("stroke-width", "2px");
 
         //Append the labels at each axis
