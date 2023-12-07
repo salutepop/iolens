@@ -12,9 +12,20 @@ const Radarplot = (props) => {
     const plotMargin = 50;
     const svgHeight = plotSize + svgMargin * 3;
     const svgWidth = plotSize + svgMargin * 4
-
+    let totalData = {}
+    let radarData = []
+    const radarUnit = {
+        "Throughput": " MB/s",
+        "Latency": " usec",
+        "Q-Counts": " I/Os",
+        "CPU Util.": " %",
+        "Mem Util.": " MB",
+        "FS Util.": " %"
+    }
     useEffect(() => {
         let data = props.radarData
+        totalData = props.totalData;
+        radarData = props.radarData;
         // console.log(data)
         var cfg = {
             w: plotSize,				//Width of the circle
@@ -278,7 +289,8 @@ const Radarplot = (props) => {
                     .attr("dy", "0.4em")
                     .style("font-size", "12px")
                     .attr("fill", "#737373")
-                    .text(function (d, i) { return Format(maxValue * d / cfg.levels); }),
+                    .text(function (d, i) { return Format(maxValue * d / cfg.levels); })
+                                       ,
                 update => update,
                 exit => exit.remove()
             )
@@ -306,6 +318,16 @@ const Radarplot = (props) => {
             .style("opacity", "0.5")
             .style("stroke-width", "2px");
 
+        let tooltip_radar = d3.select("body").append("div")
+            .attr("class", "tooltip-radar")
+            .style('position', 'absolute')
+            .style("white-space", "pre-line")
+            .style("border-radius", "4px")
+            .style("background", "rgba(0, 0, 0, 0.8)")
+            .style("padding", "10px")
+            .style("color", "white")
+            .style("visibility", "collapse")
+            ;
         //Append the labels at each axis
         axis.append("text")
             .attr("class", "legend")
@@ -314,9 +336,40 @@ const Radarplot = (props) => {
             .attr("dy", "0.35em")
             .attr("x", function (d, i) { return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2); })
             .attr("y", function (d, i) { return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2); })
-            .text(function (d) { return d });
+            .text(function (d) { return d })
+            .on('mouseover', (d) => {
+                tooltip_radar.style("visibility", "visible");
+            })
+            .on("mouseout", () => {
+                tooltip_radar.style("visibility", "collapse")
+            })
+            .on("mousemove", (d) => {
+                let name = d.target.__data__;
+                let rate = 0;
+                let index = 0;
+                radarData[1].map((i,idx)=>{
+                    if (i.axis === name){
+                        rate = i.value;
+                        index = idx;
+                    }
+                })
+                if(radarData[0][index].value == rate){
+                    rate = 1;
+                }
+                // console.log(name, index, rate)
+                // console.log(radarData[1])
+                let data = `Total\u00a0\u00a0\u00a0: ${Math.round(totalData[name])}${radarUnit[name]}
+                            Brushed : ${Math.round(totalData[name] * rate)}${radarUnit[name]}`
+               
+                tooltip_radar
+                    .text(data)
+                    .style("left", (d.x - 100) + "px")
+                    .style("top", (d.y + 30) + "px")
+            })
+            ;
 
-    }, [])
+            
+    }, [radarData, totalData])
 
     return (
         <svg ref={svgRadar} height={svgHeight} width={svgWidth}>

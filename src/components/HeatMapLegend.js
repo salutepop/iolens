@@ -70,7 +70,7 @@ const HeatMapLegend = (props) => {
     const legendData = Array.from({ length: numLegendItems + 1}, (_, i) => domainRange[0] + increment * i);
     // legendData[legendData.length] = d3.max(data, d => d.count);
     legendData[legendData.length - 1] = d3.max(data, d => d.count)
-    console.log("legend Data", legendData)
+    // console.log("legend Data", legendData)
     if(type !== "CPU"){
       legendData.splice(1, 0,d3.min(data, d => d.count)+ 1 )
       
