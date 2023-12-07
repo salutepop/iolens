@@ -81,6 +81,24 @@ const PlotView = (props) => {
         }
         ptime = time;
     })
+
+    //각 코어별로 count를 모두 더해서 가장 사용비율이 많은 코어순으로 나열
+    
+    let coreArray = [0, 0, 0, 0, 0, 0, 0, 0];
+
+    for (let i = 0; i < parsedData.length; i++) {
+
+        coreArray[i % 8] = coreArray[i % 8] + parsedData[i].count;
+
+    }
+    
+    let indexedArray = coreArray.map((value, index) => ({ value, index }));
+
+    indexedArray.sort((a, b) => b.value - a.value);
+
+    let sortedIndex = indexedArray.map(item => `c${item.index}`);
+
+
     //stack char CPU data parsing
     const stackCPUData = props.data.top;
     const parsedData_cpu = []
@@ -208,7 +226,8 @@ const PlotView = (props) => {
                                         marginHeight={plotMarginHeight}
                                         brushedTime={props.brushedTime}
                                         setBrushedTime={props.setBrushedTime}
-                                        type={CPU} />
+                                        type={CPU} 
+                                        sortedIndex={sortedIndex}/>
                                 </div>
                             </div>
                         ) : (
