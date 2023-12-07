@@ -151,3 +151,17 @@ Interaction
 System description 이어서
 Evalution
 Conclusion
+
+
+- stack chart line (100%표현) // 지원
+- correlation chart x축 열리는 방향 전환 // 창민
+- color : performance , memory그래프에서 빨/파 제외한 색 사용 (throughput -> grey, brown, orange, 보라색) // 효림 
+
+- CPU 코어별 정렬해서 표현 //효림
+- tooltip (Hovering) // 설명-창민 event-지원
+- Radar chart에서 마우스 오버로 숫자 데이터 표현 // 창민
+------------------------------------------------
+- zoom in 
+
+
+
