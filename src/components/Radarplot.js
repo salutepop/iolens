@@ -358,7 +358,7 @@ const Radarplot = (props) => {
                 }
                 // console.log(name, index, rate)
                 // console.log(radarData[1])
-                let data = `Total : ${Math.round(totalData[name])}${radarUnit[name]}
+                let data = `Total\u00a0\u00a0\u00a0: ${Math.round(totalData[name])}${radarUnit[name]}
                             Brushed : ${Math.round(totalData[name] * rate)}${radarUnit[name]}`
                
                 tooltip_radar
