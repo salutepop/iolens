@@ -95,6 +95,7 @@
   cursor: pointer;
   touch-action: manipulation;
   visibility: visible; /* 버튼 숨기기 */
+  z-index: 1;
   /* position: absolute;
   text-wrap: nowrap;
   font-weight: bold;
@@ -175,6 +176,7 @@
   align-content: center;
   margin: 0;
   height: 100;
+  
 }
 
 .subtitle-scatterplot {
