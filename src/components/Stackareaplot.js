@@ -116,7 +116,14 @@ const Stackareaplot = (props) => {
             .style("fill", function (d) { return colorRGBA(d.key); })
             // .style("fill", "white")
             .style("stroke-width", "1")
-            .style("stroke", function (d) { return color(d.key); })
+            .style("stroke", function (d) { 
+                if((d.key === "Free") || (d.key === "idle")){
+                    return "grey"
+                }
+                else {
+                    return color(d.key); 
+                }
+            })
             .lower()
 
             .on('mouseover', (d) => {
