@@ -24,7 +24,7 @@ const CPUHeatMaps = (props) => {
 
     useEffect(() => {
              
-
+        const sortedIndex = props.sortedIndex;
 
         const svg = d3.select(splotSvg.current);
 
@@ -37,17 +37,9 @@ const CPUHeatMaps = (props) => {
         const yLength = yVarsArray.length;
         // console.log("yVarsArray", yVarsArray)
         //y축 
-        let yAxisArray = yVarsArray.slice();
-        for (let i = yAxisArray.length - 1; i >= 0; i--) {
-            if (i % 2 == 0) {
-                yAxisArray.splice(i, 1);
-            }
-        }
-
-        let yScale_axis = d3.scaleBand()
-            .domain(yAxisArray)
-            .range([height, 0])
-
+        
+        yVarsArray = sortedIndex
+    
         let xScale = d3.scaleLinear()
             .domain([d3.min(data, d => d.time), d3.max(data, d => d.time)])
             .range([0, width]);
@@ -67,17 +59,9 @@ const CPUHeatMaps = (props) => {
 
         let yAxis_left = [];
 
-        if (type === "Queue") {
-            yAxis_left = d3.axisLeft(yScale_axis)
-        } else if (type === "CPU") {
             yAxis_left = d3.axisLeft(yScale)
-        } else {
-            yAxis_left = d3.axisLeft(yScale_axis)
-                .tickFormat(d => {
-                    return d3.format(".2s")(Number(d))
-                })
-        }
-
+      
+            
          //doubleclick하면 brushedTime 초기화
          svg.on("dblclick", () => {
             
@@ -94,7 +78,7 @@ const CPUHeatMaps = (props) => {
         
         let myColor = d3.scaleLinear()
             // .range(["lightgreen", "#69b3a2"])
-            .range([gColor[5], gColor[0] , gColor[1]])
+            .range(["#a6cee3", "#1f78b4" , "#e31a1c"])
             // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
             // .range(gColor.reverse())
             .domain([0, d3.min(data, d => d.count) + 1,d3.max(data, d => d.count)])

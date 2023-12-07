@@ -85,9 +85,9 @@ const Performanceplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .attr("class", "area")
             .attr("d", area)
-            .style("fill", function (d, i) { return gColorRGBA[i+1]; })
+            .style("fill", function (d, i) { return gColorRGBA[i+4] })
             .style("stroke-width", "1")
-            .style("stroke", function (d, i) { return gColor[i+1]; })
+            .style("stroke", function (d, i) { return gColor[i+4]; })
             .on('mouseover', (d) => {
                 tooltip.style("visibility", "visible");
             })
@@ -113,6 +113,11 @@ const Performanceplot = (props) => {
                     .style("top", (d.y + 30) + "px")
             })
         // Top3 Hovering End
+
+        //color
+        let newColor = ([gColor[8], gColor[4], gColor[5]])
+                //blue, gray, brwon
+                
 
         // legend
         const legendRectSize = 15;
@@ -144,7 +149,7 @@ const Performanceplot = (props) => {
                     return 0;
                 }
             })
-            .style("fill", (d, i) => gColor[i])
+            .style("fill", (d, i) => newColor[i])
             .style("stroke", "black")
             .style("stroke-width", "0.5");
 
@@ -290,7 +295,10 @@ const Performanceplot = (props) => {
             .attr('class', 'throughput')
             .attr("d", throughputLine(data))
             .attr("fill", "none")
-            .attr("stroke", gColor[0])
+            // .attr("stroke", gColor[0])
+            .attr("stroke", "black")
+            // .attr("stroke", "#6a3d9a") //보라색
+            
             .attr("stroke-width", '0.5')
 
         //brush

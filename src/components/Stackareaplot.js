@@ -84,11 +84,19 @@ const Stackareaplot = (props) => {
         if (props.type === "Memory") {
             color = d3.scaleOrdinal()
                 .domain(keys)
-                .range([gColor[0], gColor[1], gColor[3]]);
+                .range([gColor[4], gColor[5], gColor[3]]);
 
             colorRGBA = d3.scaleOrdinal()
                 .domain(keys)
-                .range([gColorRGBA[0], gColorRGBA[1], gColorRGBA[3]])
+                .range([gColorRGBA[4], gColorRGBA[5], gColorRGBA[3]])
+        }else{
+            color = d3.scaleOrdinal()
+                .domain(keys)
+                .range([gColor[4], gColor[5], gColor[2],gColor[3]]);
+
+            colorRGBA = d3.scaleOrdinal()
+                .domain(keys)
+                .range([gColorRGBA[4], gColorRGBA[5], gColorRGBA[2],gColorRGBA[3]])
         }
 
         // Top3 Hovering Begin
