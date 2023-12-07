@@ -50,6 +50,8 @@ const CorrelationView = (props) => {
                 <div className="div-dropdownX">
                     {/* select X */}
                     <Select
+                        menuPlacement="auto"
+
                         defaultValue={selectedX}
                         onChange={setSelectedX}
                         options={parameter.map(o => ({
@@ -66,7 +68,9 @@ const CorrelationView = (props) => {
                         options={parameter.map(o => ({
                             label: o,
                             value: o
-                        }))} />
+                        }))}
+                        menuPlacement="auto"
+                        />
                 </div>
                 <label className="label-r2">
                     R^2 = {r2}
