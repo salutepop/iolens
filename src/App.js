@@ -16,24 +16,39 @@ function App() {
   const gColor = [
     "#1f78b4",  // blue
     "#e31a1c",  // red
-    "#33a02c",  // green
+    // "#6a3d9a",  //purple
+    "#ff7f00", //orange
+    // "#33a02c",  // green
     "#ffffff",  // white
     "#666666",  // gray
+    // "#ff7f00", //orange
+    "#b15928",  // brown
+    // "#ffff33", //yellow
     "#a6cee3",  // light blue
     "#fb9a99",  // light red
     "#000000",  // black
   ]
+  // ["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
+  // ["#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#ffff33","#a65628","#f781bf","#999999"]
+  // ["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
   const gColorRGBA = [
     "rgba(31, 120, 180,   0.3)",  // blue 0
     "rgba(227, 26, 28 ,   0.3)",  // red 1
-    "rgb(51, 160, 44  ,   0.3)",  // green 2
+    // "rgba(106, 61, 154 ,   0.3)", //pruple
+    // "rgb(51, 160, 44  ,   0.3)",  // green 2
+    "rgba(255, 127, 0,    0.3)",  //orange
+    // "rgba(177, 89, 40,    0.3)",  //brown 5
     "rgba(255, 255, 255,  0.3)",  // white 3
     "rgba(102, 102, 102,  0.3)",  // gray 4
-    "rgba(166, 206, 227,  0.3)",  // light blue 5
-    "rgba(251, 154, 153,  0.3)",  // light red 6
-    "rgba(0, 0, 0,        0.3)",  // black 7
+    "rgba(177, 89, 40,    0.3)",  //brown 5
+    // "rgba(255, 255, 51,   0.3)", //yellow
+    // "rgba(255, 127, 0,    0.3)",  //orange
+    "rgba(166, 206, 227,  0.3)",  // light blue 6
+    "rgba(251, 154, 153,  0.3)",  // light red 7
+    "rgba(0, 0, 0,        0.3)",  // black 8
 
   ]
+  //["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
   //["#7fc97f","#beaed4","#fdc086","#ffff99","#386cb0","#f0027f","#bf5b17","#666666"]
     // ["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"]
     // [

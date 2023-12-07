@@ -78,7 +78,7 @@ const CPUHeatMaps = (props) => {
         
         let myColor = d3.scaleLinear()
             // .range(["lightgreen", "#69b3a2"])
-            .range([gColor[5], gColor[0] , gColor[1]])
+            .range(["#a6cee3", "#1f78b4" , "#e31a1c"])
             // .domain([0, d3.min(data, d => d.value) + 1, max/20, d3.max(data, d => d.value)])
             // .range(gColor.reverse())
             .domain([0, d3.min(data, d => d.count) + 1,d3.max(data, d => d.count)])

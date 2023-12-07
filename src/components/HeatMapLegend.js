@@ -41,11 +41,11 @@ const HeatMapLegend = (props) => {
     let gColor = props.gColor;
 
     let myColor = d3.scaleLinear()
-          .range(["white", gColor[5] , gColor[1]])
+          .range(["white", "#a6cee3" , "#e31a1c"])
           .domain([0, d3.min(data, d => d.count) + 1 ,d3.max(data, d => d.count)])
     
           let myColorCPU = d3.scaleLinear()
-          .range([gColor[5], gColor[0] , gColor[1]])
+          .range(["#a6cee3", "#1f78b4" , "#e31a1c"])
           .domain([0, d3.min(data, d => d.count) + 1 ,d3.max(data, d => d.count)])
 
     let colorRange = myColor.range();
