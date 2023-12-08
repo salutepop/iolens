@@ -157,7 +157,14 @@ const Performanceplot = (props) => {
             .attr("x", legendRectSize + legendSpacing)
             .attr("y", legendRectSize - legendSpacing)
             .attr('font-size', '13px')
-            .text((d) => d);
+            .text((d) => {
+                console.log("d", d)
+                if(d == "Buff"){
+                    return "Buff/Cache"
+                }else{
+                    return d;
+                }
+            });
 
         //console.log(checkPointData)
         if (checkPointData != null) {

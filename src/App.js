@@ -16,8 +16,8 @@ function App() {
   const gColor = [
     "#1f78b4",  // blue
     "#e31a1c",  // red
-    // "#6a3d9a",  //purple
-    "#ff7f00", //orange
+    "#6a3d9a",  //purple
+    // "#ff7f00", //orange
     // "#33a02c",  // green
     "#ffffff",  // white
     "#666666",  // gray
@@ -34,9 +34,9 @@ function App() {
   const gColorRGBA = [
     "rgba(31, 120, 180,   0.3)",  // blue 0
     "rgba(227, 26, 28 ,   0.3)",  // red 1
-    // "rgba(106, 61, 154 ,   0.3)", //pruple
+    "rgba(106, 61, 154 ,   0.3)", //pruple
     // "rgb(51, 160, 44  ,   0.3)",  // green 2
-    "rgba(255, 127, 0,    0.3)",  //orange
+    // "rgba(255, 127, 0,    0.3)",  //orange
     // "rgba(177, 89, 40,    0.3)",  //brown 5
     "rgba(255, 255, 255,  0.3)",  // white 3
     "rgba(102, 102, 102,  0.3)",  // gray 4
