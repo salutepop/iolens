@@ -102,7 +102,7 @@ const Stackareaplot = (props) => {
         // Top3 Hovering Begin
 
         // Hard coding, 절대 좌표를 사용하다보니 svg내의 상대적인 위치 활용 어려움
-        let leftShift = 130;
+        let leftShift = 90;
         let tooltip = d3.select("body").append("div")
             .attr("class", "tooltip-top")
             .style('position', 'absolute')
@@ -158,7 +158,12 @@ const Stackareaplot = (props) => {
                     .style("left", (d.x + 30) + "px")
                     .style("top", (d.y + 30) + "px")
             })
-            .style("pointer-events", "none")
+            .style("pointer-events", ()=>{
+                if(props.type === "CPU"){
+
+                }
+                else return "none"
+            } )
         // Top3 Hovering End
 
         // legend
@@ -224,7 +229,9 @@ const Stackareaplot = (props) => {
             .attr('class', 'brush')
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`);
 
-        svg.select('.brush').call(brush);
+        if(props.type != "CPU"){
+            svg.select('.brush').call(brush);
+        }
 
         function resetBrushed() {
             svg.select('.brush .selection')

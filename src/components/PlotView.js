@@ -83,7 +83,7 @@ const PlotView = (props) => {
     })
 
     //각 코어별로 count를 모두 더해서 가장 사용비율이 많은 코어순으로 나열
-    
+
     let coreArray = [0, 0, 0, 0, 0, 0, 0, 0];
 
     for (let i = 0; i < parsedData.length; i++) {
@@ -91,7 +91,7 @@ const PlotView = (props) => {
         coreArray[i % 8] = coreArray[i % 8] + parsedData[i].count;
 
     }
-    
+
     let indexedArray = coreArray.map((value, index) => ({ value, index }));
 
     indexedArray.sort((a, b) => b.value - a.value);
@@ -186,13 +186,13 @@ const PlotView = (props) => {
                         <button className="btn-helper">
                             ?
                             <span className="tooltiptext tooltip-3">
-                            Line and area graphs representing I/O performance.
+                                Line and area graphs representing I/O performance.
                             </span>
                             <span className="tooltiptext tooltip-2">
-                            Shows three f2fs functions with high execution time
+                                Shows three f2fs functions with high execution time
                             </span>
                             <span className="tooltiptext tooltip-1">
-                            through the hovering event.
+                                through the hovering event.
                             </span>
                         </button>
                         <Performanceplot
@@ -219,7 +219,7 @@ const PlotView = (props) => {
                         </button>
                         {cpuMode === "Split" ? (
                             <div>
-                                <div style={{ display: "flex", position:"relative"}}>
+                                <div style={{ display: "flex", position: "relative" }}>
                                     <h2 className="header-scatterplot">
                                         {"CPU"}
                                     </h2>
@@ -227,17 +227,17 @@ const PlotView = (props) => {
                                         {"(Core #, %)"}
                                     </h2>
                                     <button className="btn-helper">
-                            ?
-                            <span className="tooltiptext tooltip-3">
-                            Cumulative stacked area graph representing CPU utilization.
-                            </span>
-                            <span className="tooltiptext tooltip-2">
-                            Provides a toggle button to switch the usage of  
-                            </span>
-                            <span className="tooltiptext tooltip-1">
-                            each core and the overall CPU usage graph.
-                            </span>
-                        </button>
+                                        ?
+                                        <span className="tooltiptext tooltip-3">
+                                            Cumulative stacked area graph representing CPU utilization.
+                                        </span>
+                                        <span className="tooltiptext tooltip-2">
+                                            Provides a toggle button to switch the usage of
+                                        </span>
+                                        <span className="tooltiptext tooltip-1">
+                                            each core and the overall CPU usage graph.
+                                        </span>
+                                    </button>
                                     <CPUHeatMaps
                                         gColor={props.gColor}
                                         gColorRGBA={props.gColorRGBA}
@@ -249,13 +249,13 @@ const PlotView = (props) => {
                                         marginHeight={plotMarginHeight}
                                         brushedTime={props.brushedTime}
                                         setBrushedTime={props.setBrushedTime}
-                                        type={CPU} 
-                                        sortedIndex={sortedIndex}/>
+                                        type={CPU}
+                                        sortedIndex={sortedIndex} />
                                 </div>
                             </div>
                         ) : (
                             <div>
-                                <div style={{ display: "flex", position:"relative" }}>
+                                <div style={{ display: "flex", position: "relative" }}>
                                     <h2 className="header-scatterplot">
                                         {"CPU"}
                                     </h2>
@@ -263,17 +263,17 @@ const PlotView = (props) => {
                                         {"(Total Util. %)"}
                                     </h2>
                                     <button className="btn-helper">
-                            ?
-                            <span className="tooltiptext tooltip-3">
-                            Cumulative stacked area graph representing CPU utilization.
-                            </span>
-                            <span className="tooltiptext tooltip-2">
-                            Provides a toggle button to switch the usage of  
-                            </span>
-                            <span className="tooltiptext tooltip-1">
-                            each core and the overall CPU usage graph.
-                            </span>
-                        </button>
+                                        ?
+                                        <span className="tooltiptext tooltip-3">
+                                            Cumulative stacked area graph representing CPU utilization.
+                                        </span>
+                                        <span className="tooltiptext tooltip-2">
+                                            Provides a toggle button to switch the usage of
+                                        </span>
+                                        <span className="tooltiptext tooltip-1">
+                                            each core and the overall CPU usage graph.
+                                        </span>
+                                    </button>
                                     <Stackareaplot
                                         gColor={props.gColor}
                                         gColorRGBA={props.gColorRGBA}
@@ -285,6 +285,7 @@ const PlotView = (props) => {
                                         marginHeight={plotMarginHeight}
                                         brushedTime={props.brushedTime}
                                         setBrushedTime={props.setBrushedTime}
+                                        type="CPU"
                                     />
                                 </div>
                             </div>
@@ -297,7 +298,7 @@ const PlotView = (props) => {
 
             <div>
                 {graphVisibility.memory && (
-                    <div style={{ display: "flex", position:"relative" }}>
+                    <div style={{ display: "flex", position: "relative" }}>
                         <h2 className="header-scatterplot">
                             {"Memory"}
                         </h2>
@@ -307,13 +308,13 @@ const PlotView = (props) => {
                         <button className="btn-helper">
                             ?
                             <span className="tooltiptext tooltip-3">
-                            Cumulative stacked area graph representing changes in 
+                                Cumulative stacked area graph representing changes in
                             </span>
                             <span className="tooltiptext tooltip-2">
-                            memory utilization.
+                                memory utilization.
                             </span>
                             <span className="tooltiptext tooltip-1">
-                            Memory usage can be analyzed separately by purpose.
+                                Memory usage can be analyzed separately by purpose.
                             </span>
                         </button>
                         <Stackareaplot
@@ -335,7 +336,7 @@ const PlotView = (props) => {
             <div>
                 {graphVisibility.f2fs_status && (
 
-                    <div style={{ display: "flex", position:"relative" }}>
+                    <div style={{ display: "flex", position: "relative" }}>
                         <h2 className="header-scatterplot">
                             {"F2FS Segment"}
                         </h2>
@@ -345,13 +346,13 @@ const PlotView = (props) => {
                         <button className="btn-helper">
                             ?
                             <span className="tooltiptext tooltip-3">
-                            Cumulative stacked area graph showing segment status
+                                Cumulative stacked area graph showing segment status
                             </span>
                             <span className="tooltiptext tooltip-2">
-                            of the F2FS Filesystem. And dashed lines indicate 
+                                of the F2FS Filesystem. And dashed lines indicate
                             </span>
                             <span className="tooltiptext tooltip-1">
-                            when garbage collection and check point events occurred
+                                when garbage collection and check point events occurred
                             </span>
                         </button>
                         <Stackareaplot
@@ -376,7 +377,7 @@ const PlotView = (props) => {
             {/* heatmap */}
             <div>
                 {graphVisibility.lba && (
-                    <div style={{ display: "flex", position:"relative" }}>
+                    <div style={{ display: "flex", position: "relative" }}>
                         <h2 className="header-scatterplot">
                             {"LBA"}
                         </h2>
@@ -386,13 +387,13 @@ const PlotView = (props) => {
                         <button className="btn-helper">
                             ?
                             <span className="tooltiptext tooltip-3">
-                            Heatmap graph representing the access pattern of LBA Address.
+                                Heatmap graph representing the access pattern of LBA Address.
                             </span>
                             <span className="tooltiptext tooltip-2">
-                            The Histogram on the right side of the graph indicates
+                                The Histogram on the right side of the graph indicates
                             </span>
                             <span className="tooltiptext tooltip-1">
-                            the access frequency by address of all data.
+                                the access frequency by address of all data.
                             </span>
                         </button>
                         <HeatMaps
@@ -422,7 +423,7 @@ const PlotView = (props) => {
                         <button className="btn-helper">
                             ?
                             <span className="tooltiptext tooltip-1">
-                            Heatmap graph showing the number of I/O requests waiting in the queue.
+                                Heatmap graph showing the number of I/O requests waiting in the queue.
                             </span>
                         </button>
                         <HeatMaps
