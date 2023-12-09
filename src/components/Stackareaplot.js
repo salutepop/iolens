@@ -188,7 +188,6 @@ const Stackareaplot = (props) => {
             .attr("y", legendRectSize - legendSpacing)
             .attr('font-size', '13px')
             .text((d) => {
-                console.log("d", d)
                 if(d == "Buff"){
                     return "Buff/Cache"
                 }else{
