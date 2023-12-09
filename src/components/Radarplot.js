@@ -23,7 +23,32 @@ const Radarplot = (props) => {
         "FS Util.": " %"
     }
     useEffect(() => {
-        let data = props.radarData
+        let data = [
+            [
+                { axis: "Throughput", value: 0 },
+                { axis: "Latency", value: 0 },
+                { axis: "Q-Counts", value: 0 },
+                { axis: "CPU Util.", value: 0 },
+                { axis: "Mem Util.", value: 0 },
+                { axis: "FS Util.", value: 0 }
+            ],
+            [
+                { axis: "Throughput", value: 0 },
+                { axis: "Latency", value: 0 },
+                { axis: "Q-Counts", value: 0 },
+                { axis: "CPU Util.", value: 0 },
+                { axis: "Mem Util.", value: 0 },
+                { axis: "FS Util.", value: 0 }
+            ],
+        ]
+        
+        if (props.radarData != undefined) {
+            if(props.radarData[0] != undefined){
+                if(props.radarData[0].length > 0){
+                    data = props.radarData;
+                }
+            }
+        }
         totalData = props.totalData;
         radarData = props.radarData;
         // console.log(data)
@@ -73,7 +98,6 @@ const Radarplot = (props) => {
         //     update => update,
         //     exit => exit.remove(),
         // )
-
         //Append the backgrounds	
         blobWrapper
             .selectAll(".radarArea")
@@ -85,22 +109,7 @@ const Radarplot = (props) => {
                     .attr("d", function (d, i) { return radarLine(d); })
                     .style("fill", function (d, i) { return cfg.color(i); })
                     .style("fill-opacity", cfg.opacityArea)
-                    .on('mouseover', function (d, i) {
-                        //Dim all blobs
-                        d3.selectAll(".radarArea")
-                            .transition().duration(200)
-                            .style("fill-opacity", 0.1);
-                        //Bring back the hovered over blob
-                        d3.select(this)
-                            .transition().duration(200)
-                            .style("fill-opacity", 0.7);
-                    })
-                    .on('mouseout', function () {
-                        //Bring back all blobs
-                        d3.selectAll(".radarArea")
-                            .transition().duration(200)
-                            .style("fill-opacity", cfg.opacityArea);
-                    }),
+                    ,
                 update => update
                     .attr("d", function (d, i) { return radarLine(d); })
                 ,
@@ -145,46 +154,8 @@ const Radarplot = (props) => {
         //         ,
         //         exit => exit.remove()
         // )
-        
-        // 범례 추가
-        svg.append("g")
-            .attr("class", "legend")
-            .attr("transform", `translate(${cfg.w + 30}, ${30})`);
 
-        // Total 범례
-        svg.select(".legend")
-            .append("rect")
-            .attr("class", "legendTotal")
-            .attr("width", 15)
-            .attr("height", 15)
-            .style("fill", gColor[0])
-            .style("fill-opacity", cfg.opacityArea);
-
-        svg.select(".legend")
-            .append("text")
-            .attr("class", "legendText")
-            .attr("x", 20)
-            .attr("y", 10)
-            .style("font-size", "12px")
-            .text("Total");
-
-        // Brushed 범례
-        svg.select(".legend")
-            .append("rect")
-            .attr("class", "legendBrushed")
-            .attr("width", 15)
-            .attr("height", 15)
-            .attr("y", 20)
-            .style("fill", gColor[1])
-            .style("fill-opacity", cfg.opacityArea);
-
-        svg.select(".legend")
-            .append("text")
-            .attr("class", "legendText")
-            .attr("x", 20)
-            .attr("y", 30)
-            .style("font-size", "12px")
-            .text("Brushed");
+       
 
         // var blobCircleWrapper = svg.select('.radarG')
         //     .data(data);
@@ -217,6 +188,8 @@ const Radarplot = (props) => {
 
     useEffect(() => {
 
+        totalData = props.totalData;
+        radarData = props.radarData;
 
         var data = []
         if (props.data != undefined) {
@@ -256,6 +229,50 @@ const Radarplot = (props) => {
 
         let svg = d3.select(svgRadar.current);
 
+         // 범례 추가
+         svg.append("g")
+         .attr("class", "legend")
+         .attr("transform", `translate(${cfg.w + 30}, ${30})`);
+
+     // Total 범례
+     svg.select(".legend")
+         .append("rect")
+         .attr("class", "legendTotal")
+         .attr("width", 15)
+         .attr("height", 15)
+         .style("fill", gColor[0])
+         .style("fill-opacity", 1)
+         .style("stroke", "black")
+         .style("stroke-width", "0.5");
+
+     svg.select(".legend")
+         .append("text")
+         .attr("class", "legendText")
+         .attr("x", 20)
+         .attr("y", 10)
+         .style("font-size", "12px")
+         .text("Total");
+
+     // Brushed 범례
+     svg.select(".legend")
+         .append("rect")
+         .attr("class", "legendBrushed")
+         .attr("width", 15)
+         .attr("height", 15)
+         .attr("y", 20)
+         .style("fill", gColor[1])
+         .style("fill-opacity", 1)
+         .style("stroke", "black")
+         .style("stroke-width", "0.5");
+
+     svg.select(".legend")
+         .append("text")
+         .attr("class", "legendText")
+         .attr("x", 20)
+         .attr("y", 30)
+         .style("font-size", "12px")
+         .text("Brushed");
+
         var g = svg.append("g")
             // .attr("transform", "translate(" + (cfg.w / 2 + cfg.margin.left)
             //                 + "," + (cfg.h / 2 + cfg.margin.top) + ")");
@@ -290,7 +307,7 @@ const Radarplot = (props) => {
                     .style("font-size", "12px")
                     .attr("fill", "#737373")
                     .text(function (d, i) { return Format(maxValue * d / cfg.levels); })
-                                       ,
+                ,
                 update => update,
                 exit => exit.remove()
             )
@@ -337,6 +354,94 @@ const Radarplot = (props) => {
             .attr("x", function (d, i) { return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2); })
             .attr("y", function (d, i) { return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2); })
             .text(function (d) { return d })
+            // .on('mouseover', (d) => {
+            //     tooltip_radar.style("visibility", "visible");
+            // })
+            // .on("mouseout", () => {
+            //     tooltip_radar.style("visibility", "collapse")
+            // })
+            // .on("mousemove", (d) => {
+            //     let name = d.target.__data__;
+            //     let rate = 0;
+            //     let index = 0;
+            //     console.log(radarData, totalData)
+            //     radarData[1].map((i,idx)=>{
+            //         if (i.axis === name){
+            //             rate = i.value;
+            //             index = idx;
+            //         }
+            //     })
+            //     if(radarData[0][index].value == rate){
+            //         rate = 1;
+            //     }
+            //     // console.log(name, index, rate)
+            //     // console.log(radarData[1])
+            //     let data = `Total\u00a0\u00a0\u00a0: ${Math.round(totalData[name])}${radarUnit[name]}
+            //                 Brushed : ${Math.round(totalData[name] * rate)}${radarUnit[name]}`
+
+            //     tooltip_radar
+            //         .text(data)
+            //         .style("left", (d.x - 100) + "px")
+            //         .style("top", (d.y + 30) + "px")
+            // })
+            ;
+
+
+    }, [])
+
+    useEffect(() => {
+        var data = []
+        totalData = props.totalData;
+        radarData = props.radarData;
+        if (props.data != undefined) {
+            data = props.radarData
+        }
+
+        var cfg = {
+            w: plotSize,				//Width of the circle
+            h: plotSize,				//Height of the circle
+            margin: plotMargin, //The margins of the SVG
+            levels: 5,				//How many levels or inner circles should there be drawn
+            maxValue: 1, 			//What is the value that the biggest circle will represent
+            labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
+            wrapWidth: 120, 		//The number of pixels after which a label needs to be given a new line
+            opacityArea: 0.35, 	//The opacity of the area of the blob
+            dotRadius: 4, 			//The size of the colored circles of each blog
+            opacityCircles: 0.1, 	//The opacity of the circles of each blob
+            strokeWidth: 2, 		//The width of the stroke around each blob
+            color: d3.scaleOrdinal(gColor)	//Color function
+        };
+
+        var maxValue = 1
+        // var maxValue = Math.max(cfg.maxValue,
+        //     d3.max(data, d => { return d3.max(d.map(o => { return o.value; })) }));
+        // // if (data === undefined){
+        //     maxValue = 1
+        // }
+
+
+        var allAxis = ["Throughput", "Latency", "Q-Counts", "CPU Util.", "Mem Util.", "FS Util."],	//Names of each axis
+            total = allAxis.length,					//The number of different axes
+            radius = Math.min(cfg.w / 2, cfg.h / 2), 	//Radius of the outermost circle
+            Format = d3.format('.0%'),			 	//Percentage formatting
+            angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
+        var rScale = d3.scaleLinear()
+            .range([0, radius])
+            .domain([0, 1]);
+
+        //debugging
+        let tooltip_radar = d3.select("body").selectAll(".tooltip-radar");
+        var axis = d3.select(svgRadar.current)
+            .selectAll(".axis")
+            .select('.legend')
+        // .data(allAxis);
+        axis
+            .style("font-size", "15px")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.35em")
+            .attr("x", function (d, i) { return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2); })
+            .attr("y", function (d, i) { return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2); })
+            .text(function (d) { return d })
             .on('mouseover', (d) => {
                 tooltip_radar.style("visibility", "visible");
             })
@@ -347,20 +452,20 @@ const Radarplot = (props) => {
                 let name = d.target.__data__;
                 let rate = 0;
                 let index = 0;
-                radarData[1].map((i,idx)=>{
-                    if (i.axis === name){
+                radarData[1].map((i, idx) => {
+                    if (i.axis === name) {
                         rate = i.value;
                         index = idx;
                     }
                 })
-                if(radarData[0][index].value == rate){
+                if (radarData[0][index].value == rate) {
                     rate = 1;
                 }
                 // console.log(name, index, rate)
                 // console.log(radarData[1])
                 let data = `Total\u00a0\u00a0\u00a0: ${Math.round(totalData[name])}${radarUnit[name]}
                             Brushed : ${Math.round(totalData[name] * rate)}${radarUnit[name]}`
-               
+
                 tooltip_radar
                     .text(data)
                     .style("left", (d.x - 100) + "px")
@@ -368,8 +473,8 @@ const Radarplot = (props) => {
             })
             ;
 
-            
-    }, [radarData, totalData])
+
+    }, [props.radarData, props.totalData])
 
     return (
         <svg ref={svgRadar} height={svgHeight} width={svgWidth}>
