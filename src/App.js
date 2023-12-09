@@ -16,13 +16,14 @@ function App() {
   const gColor = [
     "#1f78b4",  // blue
     "#e31a1c",  // red
-    "#6a3d9a",  //purple
-    // "#ff7f00", //orange
-    // "#33a02c",  // green
+    "#ff7f00", //orange
     "#ffffff",  // white
-    "#666666",  // gray
+    "#6a3d9a",  //purple
+    "#33a02c",  // green
+    // "#666666",  // gray
     // "#ff7f00", //orange
-    "#b15928",  // brown
+    // "#b15928",  // brown
+    // "#33a02c",  // green
     // "#ffff33", //yellow
     "#a6cee3",  // light blue
     "#fb9a99",  // light red
@@ -34,13 +35,14 @@ function App() {
   const gColorRGBA = [
     "rgba(31, 120, 180,   0.3)",  // blue 0
     "rgba(227, 26, 28 ,   0.3)",  // red 1
-    "rgba(106, 61, 154 ,   0.3)", //pruple
     // "rgb(51, 160, 44  ,   0.3)",  // green 2
-    // "rgba(255, 127, 0,    0.3)",  //orange
     // "rgba(177, 89, 40,    0.3)",  //brown 5
+    // "rgba(102, 102, 102,  0.3)",  // gray 4
+    // "rgba(177, 89, 40,    0.3)",  //brown 5
+    "rgba(255, 127, 0,    0.3)",  //orange
     "rgba(255, 255, 255,  0.3)",  // white 3
-    "rgba(102, 102, 102,  0.3)",  // gray 4
-    "rgba(177, 89, 40,    0.3)",  //brown 5
+    "rgba(106, 61, 154 ,   0.3)", //pruple
+    "rgb(51, 160, 44  ,   0.3)",  // green 2
     // "rgba(255, 255, 51,   0.3)", //yellow
     // "rgba(255, 127, 0,    0.3)",  //orange
     "rgba(166, 206, 227,  0.3)",  // light blue 6

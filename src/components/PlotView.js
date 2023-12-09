@@ -280,7 +280,7 @@ const PlotView = (props) => {
                                         width={plotWidth}
                                         height={PlotHeight}
                                         allData={props.data}
-                                        data={parsedData_cpu.map((d) => ({ time: d.time, usr: d.usr, sys: d.sys, disk: d.disk, idle: d.idle }))}
+                                        data={parsedData_cpu.map((d) => ({ time: d.time, sys: d.sys, usr: d.usr, disk: d.disk, idle: d.idle }))}
                                         marginWidth={plotMarginWidth}
                                         marginHeight={plotMarginHeight}
                                         brushedTime={props.brushedTime}
