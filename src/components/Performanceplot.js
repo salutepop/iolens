@@ -27,7 +27,7 @@ const Performanceplot = (props) => {
         let keys = ['lt99', 'lt99_99'];
 
         const stackedData = d3.stack()
-            .keys(keys)(data);
+            .keys(keys)(data).reverse();
         // console.log(stackedData)
         // x축
         const x = d3.scaleLinear()
@@ -85,9 +85,9 @@ const Performanceplot = (props) => {
             .attr('transform', `translate(${marginWidth}, ${marginHeight})`)
             .attr("class", "area")
             .attr("d", area)
-            .style("fill", function (d, i) { return gColorRGBA[i+4] })
+            .style("fill", function (d, i) { return gColorRGBA[i+6] })
             .style("stroke-width", "1")
-            .style("stroke", function (d, i) { return gColor[i+4]; })
+            .style("stroke", function (d, i) { return gColor[i+6]; })
             .on('mouseover', (d) => {
                 tooltip.style("visibility", "visible");
             })
@@ -115,7 +115,7 @@ const Performanceplot = (props) => {
         // Top3 Hovering End
 
         //color
-        let newColor = ([gColor[8], gColor[4], gColor[5]])
+        let newColor = ([gColor[8], gColor[6], gColor[7]])
                 //blue, gray, brwon
                 
 

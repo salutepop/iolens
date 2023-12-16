@@ -10,6 +10,7 @@ const Stackareaplot = (props) => {
     const height = props.height;
     const data = props.data;
     const checkPointData = props.checkPointData;
+    const gcData = props.gcData;
     const marginWidth = props.marginWidth;
     const marginHeight = props.marginHeight;
     const legendWidth = 100
@@ -206,7 +207,7 @@ const Stackareaplot = (props) => {
                 .attr("x", 20)
                 .attr("y", 90)
                 .attr('font-size', '13px')
-                .text("GC/CP");
+                .text("Checkpoint");
     
             legend.append("line")
                 .attr("x1", 0)
@@ -216,6 +217,21 @@ const Stackareaplot = (props) => {
                 .style("stroke", "black")
                 .style("stroke-width", 2)
                 .style("stroke-dasharray", "3")
+
+            legend.append("text")
+                .attr("x", 20)
+                .attr("y", 110)
+                .attr('font-size', '13px')
+                .text("Cleaning");
+    
+            legend.append("line")
+                .attr("x1", 0)
+                .attr("x2", 15)
+                .attr("y1", 107.5)
+                .attr("y2", 107.5)
+                .style("stroke", "black")
+                .style("stroke-width", 2)
+                // .style("stroke-dasharray", "3")
         }
 
         // legend end
@@ -271,20 +287,20 @@ const Stackareaplot = (props) => {
             let checkPointData_length = 0;
             checkPointData_length = checkPointData.length
             // delta gc time
-            let changingGCTimes = [];
+            let changingEventTimes = [];
             for (let i = 1; i < checkPointData_length; i++) {
-                if (checkPointData[i].gc !== checkPointData[i - 1].gc) {
-                    changingGCTimes.push(checkPointData[i].time);
+                if (checkPointData[i].event !== checkPointData[i - 1].event) {
+                    changingEventTimes.push(checkPointData[i].time);
                 }
             }
             //console.log(changingGCTimes);
 
             // 해당하는 위치에 빨간 선 추가
-            const redLines = svg.selectAll("line.red-line")
-                .data(changingGCTimes)
+            const redLines = svg.selectAll("line.cp-line")
+                .data(changingEventTimes)
                 .enter()
                 .append("line")
-                .attr("class", "red-line")
+                .attr("class", "cp-line")
                 .attr("x1", (d) => x(d) + marginWidth)
                 .attr("y1", marginHeight)
                 .attr("x2", (d) => x(d) + marginWidth)
@@ -296,6 +312,36 @@ const Stackareaplot = (props) => {
 
             // .attr("transform", `translate(${width + marginWidth * 2}, ${marginHeight * 2})`);
 
+        }
+
+        if (gcData != null) {
+            let gcData_length = 0;
+            gcData_length = gcData.length
+            // delta gc time
+            let changingEventTimes = [];
+            for (let i = 1; i < gcData_length; i++) {
+                if (gcData[i].event !== gcData[i - 1].event) {
+                    changingEventTimes.push(gcData[i].time);
+                }
+            }
+            //console.log(changingGCTimes);
+
+            // 해당하는 위치에 빨간 선 추가
+            const redLines = svg.selectAll("line.gc-line")
+                .data(changingEventTimes)
+                .enter()
+                .append("line")
+                .attr("class", "gc-line")
+                .attr("x1", (d) => x(d) + marginWidth)
+                .attr("y1", marginHeight)
+                .attr("x2", (d) => x(d) + marginWidth)
+                .attr("y2", height + marginHeight)
+                .style("stroke", "black")
+                // .style("stroke-dasharray", "2,2")
+                .style("stroke-width", 3)
+                .raise();
+
+            // .attr("transform", `translate(${width + marginWidth * 2}, ${marginHeight * 2})`);
 
         }
 
