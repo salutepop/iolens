@@ -149,7 +149,14 @@ const Performanceplot = (props) => {
                     return 0;
                 }
             })
-            .style("fill", (d, i) => newColor[i])
+            .style("fill", (d, i) => {
+                if (d === "throughput") {
+                    return "black";
+                } else {
+                    return newColor[i];
+                }
+            }
+            )
             .style("stroke", "black")
             .style("stroke-width", "0.5");
 
@@ -165,34 +172,7 @@ const Performanceplot = (props) => {
                 }
             });
 
-        //console.log(checkPointData)
-        if (checkPointData != null) {
-            let checkPointData_length = 0;
-            checkPointData_length = checkPointData.length
-            // delta gc time
-            let changingGCTimes = [];
-            for (let i = 1; i < checkPointData_length; i++) {
-                if (checkPointData[i].gc !== checkPointData[i - 1].gc) {
-                    changingGCTimes.push(checkPointData[i].time);
-                }
-            }
-            //console.log(changingGCTimes);
-
-            // 해당하는 위치에 빨간 선 추가
-            const redLines = svg.selectAll("line.red-line")
-                .data(changingGCTimes)
-                .enter()
-                .append("line")
-                .attr("class", "red-line")
-                .attr("x1", (d) => x(d) + marginWidth)
-                .attr("y1", 0)
-                .attr("x2", (d) => x(d) + marginWidth)
-                .attr("y2", height + marginHeight)
-                .style("stroke", "red")
-                .style("stroke-width", 1);
-
-            redLines.raise();
-        }
+      
         drawThroughput()
 
         //doubleclick하면 brushedTime 초기화
@@ -305,7 +285,7 @@ const Performanceplot = (props) => {
             .attr("stroke", "black")
             // .attr("stroke", "#6a3d9a") //보라색
             
-            .attr("stroke-width", '0.5')
+            .attr("stroke-width", '0.2')
 
         //brush
 
