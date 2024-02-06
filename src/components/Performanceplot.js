@@ -23,7 +23,7 @@ const Performanceplot = (props) => {
 
         // console.log(data)
 
-        let legendKeys = ['throughput', 'lat 99%', 'lat 99.99%'];
+        let legendKeys = ['throughput', 'lat 99.99%', 'lat 99%'];
         let keys = ['lt99', 'lt99_99'];
 
         const stackedData = d3.stack()
